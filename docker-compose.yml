@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  crewai:
+    build: .
+    environment:
+      - SERPER_API_KEY=${SERPER_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
+    command: tail -f /dev/null
