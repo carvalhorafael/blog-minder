@@ -1,2 +1,4 @@
 crewai[tools]
 # Other dependencies
+requests
+pytest

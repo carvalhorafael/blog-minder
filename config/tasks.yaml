@@ -9,7 +9,7 @@ identify_duplicate_keywords_task:
   description: >
     Analyze the fetched posts to identify those with duplicate keywords.
   expected_output: >
-    A report of posts with duplicate keywords and their frequency.
+    A report of posts with duplicate keywords.
   agent: content_analyzer
 
 recommend_post_actions_task:
