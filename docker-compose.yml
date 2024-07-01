@@ -1,11 +1,13 @@
-version: '3.8'
-
 services:
   crewai:
+    container_name: seo_strategist_ai
     build: .
+    tty: true
+    stdin_open: true
+    env_file:
+      - .env
     environment:
       - SERPER_API_KEY=${SERPER_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - .:/app
-    command: tail -f /dev/null
