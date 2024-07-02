@@ -30,7 +30,7 @@ def test_fetch_wordpress_posts(monkeypatch):
     monkeypatch.setattr(requests, "get", mock_get)
 
     # Call the function with a sample URL
-    url = "https://example.com"
+    url = "http://example.com"
     result = fetch_wordpress_posts(url)
 
     # Expected output

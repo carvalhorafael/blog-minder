@@ -30,8 +30,11 @@ A positive side effect of this project is the possibility of interacting with LL
 - enter the address: `http://localhost:8080/`
 
 # Run crewAI 
-Open a terminal inside crewai
+Open a terminal inside crewai:
 - `docker-compose exec crewai bash`
+
+Get crew to work:
+- `python main.py`
 
 # Stop docker containers
 - `docker-compose stop`

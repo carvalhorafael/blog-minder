@@ -1,34 +1,34 @@
 fetch_all_posts_task:
   description: >
-    Fetch all published posts from the WordPress blog.
+    Fetch all published posts from the WordPress blog hosted at {blog_url}.
   expected_output: >
     A list of all posts with their content and metadata.
   agent: content_analyzer
 
-identify_duplicate_keywords_task:
-  description: >
-    Analyze the fetched posts to identify those with duplicate keywords.
-  expected_output: >
-    A report of posts with duplicate keywords.
-  agent: content_analyzer
+# identify_duplicate_keywords_task:
+#   description: >
+#     Analyze the fetched posts to identify those with duplicate keywords.
+#   expected_output: >
+#     A report of posts with duplicate keywords.
+#   agent: content_analyzer
 
-recommend_post_actions_task:
-  description: >
-    For each set of duplicate posts, recommend which ones to keep, delete, or merge.
-  expected_output: >
-    Actionable recommendations for each set of duplicate posts.
-  agent: content_analyzer
+# recommend_post_actions_task:
+#   description: >
+#     For each set of duplicate posts, recommend which ones to keep, delete, or merge.
+#   expected_output: >
+#     Actionable recommendations for each set of duplicate posts.
+#   agent: content_analyzer
 
-suggest_new_keywords_task:
-  description: >
-    Analyze current keyword coverage and suggest new posts to cover important keywords not currently addressed.
-  expected_output: >
-    A list of new post topics with suggested keywords.
-  agent: seo_strategist
+# suggest_new_keywords_task:
+#   description: >
+#     Analyze current keyword coverage and suggest new posts to cover important keywords not currently addressed.
+#   expected_output: >
+#     A list of new post topics with suggested keywords.
+#   agent: seo_strategist
 
-merge_content_task:
-  description: >
-    Provide specific recommendations on how to merge duplicate posts into a single optimized post.
-  expected_output: >
-    Detailed merging guidelines for each set of duplicate posts.
-  agent: content_merger
+# merge_content_task:
+#   description: >
+#     Provide specific recommendations on how to merge duplicate posts into a single optimized post.
+#   expected_output: >
+#     Detailed merging guidelines for each set of duplicate posts.
+#   agent: content_merger

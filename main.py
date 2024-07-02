@@ -1,11 +1,20 @@
 import os
 import yaml
 from crewai import Agent, Task, Crew, Process
-from tools.wordpress_reader import fetch_wordpress_posts
-from tools.keyword_analyzer import keyword_analyzer
-from tools.seo_keyword_suggestion import seo_keyword_suggestion
-from tools.content_quality_analyzer import content_quality_analyzer
-from tools.content_merger import content_merger
+from src.tools.wordpress_reader import fetch_wordpress_posts
+# from src.tools.keyword_analyzer import keyword_analyzer
+# from src.tools.seo_keyword_suggestion import seo_keyword_suggestion
+# from src.tools.content_quality_analyzer import content_quality_analyzer
+# from src.tools.content_merger import content_merger
+
+### OLLAMA (THANKS TO LANGCHAIN)
+from langchain_community.llms import Ollama
+llama3 = Ollama(
+    model="llama3",
+    base_url = os.environ["OLLAMA_BASE_URL"])
+mistral = Ollama(
+    model="mistral",
+    base_url = os.environ["OLLAMA_BASE_URL"])
 
 # Load agent configurations from YAML file
 with open('config/agents.yaml', 'r') as file:
@@ -15,12 +24,14 @@ with open('config/agents.yaml', 'r') as file:
 agents = {}
 for agent_name, agent_info in agents_config.items():
     tools = [globals()[tool_name] for tool_name in agent_info['tools']]
+    llm = globals()[agent_info['llm']]
     agents[agent_name] = Agent(
         role=agent_info['role'],
         goal=agent_info['goal'],
         verbose=True,
-        memory=True,
+        memory=agent_info['memory'],
         backstory=agent_info['backstory'],
+        llm=llm,
         tools=tools
     )
 
@@ -41,9 +52,11 @@ for task_name, task_info in tasks_config.items():
 crew = Crew(
     agents=list(agents.values()),
     tasks=tasks,
-    process=Process.sequential
+    process=Process.sequential,
+    verbose=2
 )
 
 # Run the crew
-result = crew.kickoff(inputs={'blog_url': 'https://example.com'})
+print("Starting the crew execution")
+result = crew.kickoff(inputs={'blog_url': 'https://rafaelcarvalho.tv'})
 print(result)

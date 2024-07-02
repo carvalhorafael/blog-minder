@@ -2,3 +2,4 @@ crewai[tools]
 # Other dependencies
 requests
 pytest
+langchain-community
