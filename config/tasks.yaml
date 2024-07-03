@@ -1,23 +1,23 @@
 fetch_all_posts_task:
   description: >
-    Search for all blog posts published with the URL {blog_url}.
-    Save these posts to a CSV file.
+    1. Get for all blog posts published with the URL {blog_url}.
+    2. Save these posts to a CSV file.
   expected_output: >
-    A string with the path of the CSV file.
-  agent: content_analyzer
+    A string with the path of the CSV file containing the content of the posts.
+  agent: content_cannibalization_identifier
 
 identify_posts_cannibalization_task:
   description: >
-    Read the provided CSV file and analyze title, link and keyword to identify potential content cannibalization.
-    Flag lines where similar content are found. Use your analytical skills to determine if posts are too similar.
+    Read the provided CSV file and analyze the posts, one per line, to identify potential content cannibalization.
+    Flag lines where similar links are found. Use your analytical skills to determine if post links are too similar.
     
-    Also flag links that are not identical, but that could also be cannibalizing.
-    For example:
-      example 1: https://rafaelcarvalho.tv/area-de-pessoas-1/ and https://rafaelcarvalho.tv/area-de-mães/
-      example 2: https://rafaelcarvalho.tv/afiliado/ and https://rafaelcarvalho.tv/afiliados/
+  # Also flag links that are not identical, but that could also be cannibalizing.
+  # For example:
+  #   example 1: https://rafaelcarvalho.tv/area-de-pessoas-1/ and https://rafaelcarvalho.tv/area-de-mães/
+  #   example 2: https://rafaelcarvalho.tv/afiliado/ and https://rafaelcarvalho.tv/afiliados/
   expected_output: >
     A list of flagged lines with potential content cannibalization.
-    The list must be delivered by grouping the posts that were identified similar content as follows:
+  # The list must be delivered by grouping the posts that were identified similar content as follows:
 
   # Cannibalization 01:
   # - post ID: title, link
@@ -26,7 +26,7 @@ identify_posts_cannibalization_task:
   # Cannibalization 02:
   # - post ID: title, link
   # - post ID: title, link
-  agent: content_analyzer
+  agent: content_cannibalization_identifier
 
 # recommend_post_actions_task:
 #   description: >

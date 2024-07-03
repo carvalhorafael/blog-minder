@@ -1,10 +1,9 @@
-content_analyzer:
+content_cannibalization_identifier:
   role: >
-    Content Analyzer
+    Content Cannibalization Identifier
   goal: >
-    Retrieve all posts from a blog, analize and identify potential content cannibalization.
+    Retrieve all posts from a blog and identify potential content cannibalization.
   backstory: >
-    Skilled in analyzing and understanding content and SEO techniques.
     You are skilled at identifying duplicate content and potential content cannibalization.
   llm: llama3
   memory: True
