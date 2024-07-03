@@ -1,20 +1,26 @@
+import os
 import requests
+import base64
+import csv
 from crewai_tools import tool
 
 @tool
-def fetch_wordpress_posts(url: str) -> str:
+def fetch_wordpress_posts(blog_url: str) -> str:
     """
-    Fetches all posts from a WordPress blog.
+    Fetches all posts from a WordPress blog and store in a CSV file.
     
     Args:
-    url (str): The base URL of the WordPress blog.
+    blog_url (str): The base URL of the WordPress blog.
     
     Returns:
-    str: A string containing all the blog posts.
+    str: A string containing the CVS file path.
     """
 
-    print(f"Starting fetch wordpress posts from: {url}")
+    if os.path.isfile(os.environ["POSTS_CSV_FILE_PATH"]):
+        return os.environ["POSTS_CSV_FILE_PATH"]
 
+    credentials = os.environ["WORDPRESS_USER"] + ':' + os.environ["WORDPRESS_APP_PASSWORD"]
+    token = base64.b64encode(credentials.encode())
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -27,20 +33,47 @@ def fetch_wordpress_posts(url: str) -> str:
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'none',
         'Sec-Fetch-User': '?1',
+        'Authorization': 'Basic ' + token.decode('utf-8')
     }
+    page = 1
+    per_page = 100
 
-    response = requests.get(f"{url}/wp-json/wp/v2/posts?per_page=10", headers=headers)
-    # response = requests.get(f"{url}/wp-json/wp/v2/posts", params={"per_page": 100})
-    if response.status_code != 200:
-        return f"Failed to fetch posts: {response.status_code}"
     
+    # print('\n\n PASSEI POR AQUI \n\n')
 
-    # response = requests.get(url, headers=headers)
-    # print(f"Posts HERE: {response.content}")
+    with open(os.environ["POSTS_CSV_FILE_PATH"], 'w', newline='', encoding='utf-8') as csvfile:
+        fieldnames = ['id', 'title', 'keyword']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
 
-    posts = response.json()
-    post_texts = []
-    for post in posts:
-        post_texts.append(post['title']['rendered'] + "\n" + post['content']['rendered'])
-    
-    return "\n\n".join(post_texts)
+
+        # print('\n\n PASSEI POR AQUI: ANTES \n\n')
+
+        while True:
+            # print('\n\n PASSEI POR AQUI: DEPOIS WHILE \n\n')
+
+
+            # Tá com erro aqui, não executa essa request se estiver com URL como variável
+            response = requests.get(f'{os.environ["BLOG_URL"]}/wp-json/wp/v2/posts', headers=headers, params={'per_page': per_page, 'page': page})
+            data = response.json()
+
+            # print('\n\n PASSEI POR AQUI: DEPOIS REQUEST \n\n')
+
+            # Break when finish all pages and receive an error
+            if ((response.status_code == 400) and (data['code'] == 'rest_post_invalid_page_number')):
+                # return os.environ["POSTS_CSV_FILE_PATH"]
+                break
+            
+            # Raise an error to other possible things
+            if response.status_code != 200:
+                raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
+
+            # Insert post information into the CSV file
+            for post in data:
+                keyword = post['slug'].replace('-', ' ')
+                writer.writerow({'id': post['id'], 'title': post['title']['rendered'], 'keyword': keyword})
+
+            # posts.extend(data)
+            page += 1
+        
+    return os.environ["POSTS_CSV_FILE_PATH"]

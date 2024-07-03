@@ -42,10 +42,12 @@ with open('config/tasks.yaml', 'r') as file:
 # Create tasks from configurations
 tasks = []
 for task_name, task_info in tasks_config.items():
+    # tools = [globals()[tool_name] for tool_name in task_info['tools']]
     tasks.append(Task(
         description=task_info['description'],
         expected_output=task_info['expected_output'],
         agent=agents[task_info['agent']],
+        # tools=tools
     ))
 
 # Form the crew
