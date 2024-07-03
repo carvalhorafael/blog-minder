@@ -8,29 +8,24 @@ fetch_all_posts_task:
 
 identify_posts_cannibalization_task:
   description: >
-    When there is more than one URL that has the same meaning, Google sees this as cannibalization.
-    
-    In the CSV file you will find data from blog posts separated by columns.
-    The columns are organized with: ID (article identification number), title, link and keyword.
-    
-    Analyze whether there are similar links that may be generating content cannibalization and
-    flag the lines where this occurs.
+    Read the provided CSV file and analyze title, link and keyword to identify potential content cannibalization.
+    Flag lines where similar content are found. Use your analytical skills to determine if posts are too similar.
     
     Also flag links that are not identical, but that could also be cannibalizing.
     For example:
       example 1: https://rafaelcarvalho.tv/area-de-pessoas-1/ and https://rafaelcarvalho.tv/area-de-mães/
       example 2: https://rafaelcarvalho.tv/afiliado/ and https://rafaelcarvalho.tv/afiliados/
   expected_output: >
-    A report containing posts with content cannibalization.
-    The report must be delivered by grouping the posts that were identified as similar as follows:
+    A list of flagged lines with potential content cannibalization.
+    The list must be delivered by grouping the posts that were identified similar content as follows:
 
-    Cannibalization 01:
-    - post ID: title, link
-    - post ID: title, link
+  # Cannibalization 01:
+  # - post ID: title, link
+  # - post ID: title, link
 
-    Cannibalization 02:
-    - post ID: title, link
-    - post ID: title, link
+  # Cannibalization 02:
+  # - post ID: title, link
+  # - post ID: title, link
   agent: content_analyzer
 
 # recommend_post_actions_task:

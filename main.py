@@ -1,12 +1,16 @@
 import os
 import yaml
 from crewai import Agent, Task, Crew, Process
+from crewai_tools import FileReadTool
 from src.tools.blog_posts_reader import fetch_posts
-from src.tools.csv_reader import read_csv_file
+# from src.tools.csv_reader import read_csv_file
 # from src.tools.keyword_analyzer import keyword_analyzer
 # from src.tools.seo_keyword_suggestion import seo_keyword_suggestion
 # from src.tools.content_quality_analyzer import content_quality_analyzer
 # from src.tools.content_merger import content_merger
+
+# Define crewAI builtin Tools
+read_posts_file_tool = FileReadTool(file_path=os.environ["POSTS_CSV_FILE_PATH"])
 
 ### OLLAMA (THANKS TO LANGCHAIN)
 from langchain_community.llms import Ollama
@@ -61,5 +65,5 @@ crew = Crew(
 
 # Run the crew
 print("Starting the crew execution")
-result = crew.kickoff(inputs={'blog_url': 'https://rafaelcarvalho.tv'})
+result = crew.kickoff(inputs={'blog_url': os.environ["BLOG_URL"]})
 print(result)

@@ -2,16 +2,15 @@ content_analyzer:
   role: >
     Content Analyzer
   goal: >
-    Retrieve and analyze all blog posts to identify duplicate articles and keywords.
+    Retrieve all posts from a blog, analize and identify potential content cannibalization.
   backstory: >
     Skilled in analyzing and understanding content and SEO techniques.
-    Using blog post titles and keywords, you can identify content cannibalization 
-    and suggest which posts to keep, delete or merge.
+    You are skilled at identifying duplicate content and potential content cannibalization.
   llm: llama3
   memory: True
   tools:
     - fetch_posts
-    - read_csv_file
+    - read_posts_file_tool
 #     - keyword_analyzer
 #     - content_quality_analyzer
 
