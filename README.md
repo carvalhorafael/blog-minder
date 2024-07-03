@@ -14,7 +14,7 @@ Just check `docker-compose.yml` and uncomment the snippets.
 
 ### After install Ollama
 Pull `Llama 3` model:
-`ollama pull llama3`
+- `ollama pull llama3`
 
 
 ## All other stuffs 

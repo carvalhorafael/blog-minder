@@ -6,12 +6,12 @@ fetch_all_posts_task:
     A string with the path of the CSV file containing the saved posts.
   agent: content_analyzer
 
-# identify_duplicate_keywords_task:
-#   description: >
-#     Analyze the fetched posts to identify those with duplicate keywords.
-#   expected_output: >
-#     A report of posts with duplicate keywords.
-#   agent: content_analyzer
+load_csv_posts_and_identify_duplicate_keywords_task:
+  description: >
+    Load posts data from a CSV file and perform analysis to identify posts with duplicate keywords.
+  expected_output: >
+    A report of posts with duplicate keywords.
+  agent: content_analyzer
 
 # recommend_post_actions_task:
 #   description: >

@@ -9,6 +9,7 @@ content_analyzer:
   memory: True
   tools:
     - fetch_wordpress_posts
+    - read_csv_file
 #     - keyword_analyzer
 #     - content_quality_analyzer
 
