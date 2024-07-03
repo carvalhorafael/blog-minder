@@ -5,12 +5,12 @@ import csv
 from crewai_tools import tool
 
 @tool
-def fetch_wordpress_posts(blog_url: str) -> str:
+def fetch_posts(url: str) -> str:
     """
     Fetches all posts from a WordPress blog and store in a CSV file.
     
     Args:
-    blog_url (str): The base URL of the WordPress blog.
+    url (str): The base URL of the blog.
     
     Returns:
     str: A string containing the CVS file path.
@@ -30,7 +30,7 @@ def fetch_wordpress_posts(blog_url: str) -> str:
     per_page = 100
 
     with open(os.environ["POSTS_CSV_FILE_PATH"], 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['id', 'title', 'keyword']
+        fieldnames = ['id', 'title', 'link', 'keyword']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -49,8 +49,12 @@ def fetch_wordpress_posts(blog_url: str) -> str:
 
             # Insert post information into the CSV file
             for post in data:
-                keyword = post['slug'].replace('-', ' ')
-                writer.writerow({'id': post['id'], 'title': post['title']['rendered'], 'keyword': keyword})
+                writer.writerow({
+                    'id': post['id'], 
+                    'title': post['title']['rendered'], 
+                    'link': post['link'],
+                    'keyword': post['slug'].replace('-', ' ')
+                    })
 
             # posts.extend(data)
             page += 1

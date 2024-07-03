@@ -1,7 +1,7 @@
 import os
 import yaml
 from crewai import Agent, Task, Crew, Process
-from src.tools.wordpress_reader import fetch_wordpress_posts
+from src.tools.blog_posts_reader import fetch_posts
 from src.tools.csv_reader import read_csv_file
 # from src.tools.keyword_analyzer import keyword_analyzer
 # from src.tools.seo_keyword_suggestion import seo_keyword_suggestion

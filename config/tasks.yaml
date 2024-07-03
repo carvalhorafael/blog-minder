@@ -1,12 +1,12 @@
 fetch_all_posts_task:
   description: >
-    Get all posts published on the WordPress blog hosted at {blog_url}.
-    Save this posts in a CSV file.
+    Search for all blog posts published with the URL {blog_url}.
+    Save these posts to a CSV file.
   expected_output: >
-    A string with the path of the CSV file containing the saved posts.
+    A string with the path of the CSV file.
   agent: content_analyzer
 
-load_csv_posts_and_identify_duplicate_keywords_task:
+identify_duplicate_posts_task:
   description: >
     Load posts data from a CSV file and perform analysis to identify posts with duplicate keywords.
   expected_output: >
