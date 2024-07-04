@@ -1,24 +1,25 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.11-slim
 
+# Configure Poetry
+ENV POETRY_VERSION=1.2.0
+ENV POETRY_HOME=/opt/poetry
+ENV POETRY_VENV=/opt/poetry-venv
+ENV POETRY_CACHE_DIR=/opt/.cache
+
+# Install poetry separated from system interpreter
+RUN python3 -m venv $POETRY_VENV \
+    && $POETRY_VENV/bin/pip install -U pip setuptools \
+    && $POETRY_VENV/bin/pip install poetry==${POETRY_VERSION}
+
+# Add `poetry` to PATH
+ENV PATH="${PATH}:${POETRY_VENV}/bin"
+
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install any dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the working directory contents into the container
+# Copy the working directory contents into the container
 COPY . .
 
-# Set environment variables for CrewAI
-# ENV SERPER_API_KEY=your_serper_api_key
-# ENV OPENAI_API_KEY=your_openai_api_key
-
-# Run the application
-# CMD ["python", "src/project_name/main.py"]
-
-# Keep the container running
-# CMD ["tail", "-f", "/dev/null"]
+# Install dependencies
+RUN poetry install

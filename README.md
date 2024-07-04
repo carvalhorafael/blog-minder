@@ -1,6 +1,25 @@
-# Setup
+# BlogMinder Crew
+Welcome to the BlogMinder Crew project, powered by [crewAI](https://crewai.com).
 
-## Ollama
+## Running the Project
+To kickstart your crew of AI agents and begin task execution:
+
+1. Start `Ollama` (only to Mac Users, read **Setup** section below)
+2. Run docker containers
+    - `docker-compose up -d`
+3. Enter to `crewAI container`
+    - `docker-compose exec crewai bash`
+4. Put your crew to work:
+    - `poetry run blog_minder`
+
+This last command initializes the blog-minder Crew, assembling the agents and assigning them tasks as defined in your configuration.
+
+## Understanding Your Crew
+The blog-minder Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+
+
+# Setup the project
+## Ollama to local LLM models
 ### MacOS users
 Ollama via Docker on Mac OS cannot access GPU processing, as explained here: https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image
 
@@ -13,12 +32,14 @@ Ollama can run with GPU acceleration inside Docker containers for Nvidia GPUs.
 Just check `docker-compose.yml` and uncomment the snippets.
 
 ### After install Ollama
-Pull `Llama 3` model:
+Pull the models, just like:
 - `ollama pull llama3`
+- `ollama pull gemma2`
+- `ollama pull mistral`
 
 
 ## All other stuffs 
-For all other things you can use Docker.
+For all other things you should use Docker.
 
 - Start containers
     - `docker-compose up -d`

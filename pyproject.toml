@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "blog_minder"
+version = "0.1.0"
+description = "blog-minder using crewAI"
+authors = ["Rafael Carvalho <falecomigo@rafaelcarvalho.tv>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+crewai = { extras = ["tools"], version = "^0.35.8" }
+crewai-tools = "^0.4.6"
+pandas = "^2.2.2"
+scikit-learn = "^1.5.1"
+
+[tool.poetry.scripts]
+blog_minder = "blog_minder.main:run"
+train = "blog_minder.main:train"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

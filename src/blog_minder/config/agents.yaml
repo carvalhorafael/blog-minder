@@ -5,8 +5,6 @@ content_downloader:
     Retrieve all posts from a blog and save them at a CSV file.
   backstory: >
     You are skilled at access and download content from Wordpess blogs.
-  llm: gemma2
-  memory: True
 
 content_analyst:
   role: >
@@ -16,14 +14,6 @@ content_analyst:
   backstory: >
     As a content analyst, you excel in identifying patterns and 
     similarities in large datasets, ensuring content uniqueness.
-  llm: gemma2
-  memory: True
-  # tools:
-  #   - read_csv
-  #   - find_duplicates_and_similarities
-#     - read_posts_file_tool
-#     - keyword_analyzer
-#     - content_quality_analyzer
 
 # seo_strategist:
 #   role: >

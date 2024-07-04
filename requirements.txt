@@ -1,7 +1,0 @@
-crewai[tools]
-# Other dependencies
-requests
-pytest
-langchain-community
-pandas
-scikit-learn
