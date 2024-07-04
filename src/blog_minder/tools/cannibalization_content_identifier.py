@@ -5,15 +5,26 @@ from crewai_tools import BaseTool
 
 
 class FindDuplicatesAndSimilarities(BaseTool):
-    name: str = "Fetch duplicate and similarities"
+    name: str = "Fetch duplicate and similarities on blog posts"
     description: str = (
-        "Finds duplicate and similar posts in the given DataFrame. Returns a report indicating duplicates and similarities."
+        "Reads the CSV file at {blog_posts_file_path} and finds duplicate and similar posts. Returns a report indicating duplicates and similarities."
     )
 
-    def _run(self, data: list) -> str:
-        df = pd.DataFrame(data)
+    def _run(self, blog_posts_file_path: str) -> str:
+        df = pd.read_csv(blog_posts_file_path)
+        df = df.to_dict(orient='records')
+        df = pd.DataFrame(df)
+        
+        # print(df)
+        # return df.to_dict(orient='records')
+        # df = pd.DataFrame(data)
         titles = df['title'].tolist()
-        keywords = df['Keyword'].tolist()
+        
+        keywords = df['Keyword'].tolist() # erro aqui 
+
+        print("\n\n ENTREI NA FUNÇÃO \n\n")
+
+        # print("\n\n ENTREI NA FUNÇÃO \n\n")
         
         # Combine titles and keywords for similarity check
         combined_texts = [f"{title} {keyword}" for title, keyword in zip(titles, keywords)]

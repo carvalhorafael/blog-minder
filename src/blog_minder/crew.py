@@ -9,15 +9,16 @@ from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesA
 
 # LLM Models
 from langchain_community.llms import Ollama
+ollama_base_url = os.environ["OLLAMA_BASE_URL"]
 llama3 = Ollama(
-    model="llama3",
-    base_url = os.environ["OLLAMA_BASE_URL"])
+    model = "llama3",
+    base_url = ollama_base_url)
 gemma2 = Ollama(
-    model="gemma2",
-    base_url = os.environ["OLLAMA_BASE_URL"])
+    model = "gemma2",
+    base_url = ollama_base_url)
 mistral = Ollama(
-    model="mistral",
-    base_url = os.environ["OLLAMA_BASE_URL"])
+    model = "mistral",
+    base_url = ollama_base_url)
 
 
 @CrewBase
@@ -42,7 +43,7 @@ class BlogMinderCrew():
 			config=self.agents_config['content_analyst'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
+			memory=False,
 			llm=gemma2
 		)
 
@@ -59,7 +60,7 @@ class BlogMinderCrew():
 		return Task(
 			config=self.tasks_config['identify_posts_cannibalization_task'],
 			agent=self.content_analyst(),
-			tools=[ReadCsv(), FindDuplicatesAndSimilarities()],
+			tools=[FindDuplicatesAndSimilarities()],
 			output_file='report.md'
 		)
 
