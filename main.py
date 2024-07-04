@@ -17,6 +17,9 @@ from langchain_community.llms import Ollama
 llama3 = Ollama(
     model="llama3",
     base_url = os.environ["OLLAMA_BASE_URL"])
+gemma2 = Ollama(
+    model="gemma2",
+    base_url = os.environ["OLLAMA_BASE_URL"])
 mistral = Ollama(
     model="mistral",
     base_url = os.environ["OLLAMA_BASE_URL"])

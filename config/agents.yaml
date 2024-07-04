@@ -5,7 +5,7 @@ content_cannibalization_identifier:
     Retrieve all posts from a blog and identify potential content cannibalization.
   backstory: >
     You are skilled at identifying duplicate content and potential content cannibalization.
-  llm: llama3
+  llm: gemma2
   memory: True
   tools:
     - fetch_posts
