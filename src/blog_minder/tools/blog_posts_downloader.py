@@ -8,12 +8,12 @@ from crewai_tools import BaseTool
 class FetchPosts(BaseTool):
     name: str = "Fetch posts"
     description: str = (
-        "Fetches all posts from a WordPress blog and store in a CSV file."
+        "Fetches all posts from the WordPress blog {blog_url} and store in a CSV file at {blog_posts_file_path}."
     )
 
-    def _run(self, file_path: str) -> str:
-        if os.path.isfile(os.environ["POSTS_CSV_FILE_PATH"]):
-            return os.environ["POSTS_CSV_FILE_PATH"]
+    def _run(self, blog_url: str, blog_posts_file_path: str) -> str:
+        if os.path.isfile(blog_posts_file_path):
+            return blog_posts_file_path
 
         credentials = os.environ["WORDPRESS_USER"] + ':' + os.environ["WORDPRESS_APP_PASSWORD"]
         token = base64.b64encode(credentials.encode())
@@ -31,12 +31,11 @@ class FetchPosts(BaseTool):
             writer.writeheader()
 
             while True:
-                response = requests.get(f'{os.environ["BLOG_URL"]}/wp-json/wp/v2/posts', headers=headers, params={'per_page': per_page, 'page': page})
+                response = requests.get(f'{blog_url}/wp-json/wp/v2/posts', headers=headers, params={'per_page': per_page, 'page': page})
                 data = response.json()
 
                 # Break when finish all pages and receive an error
                 if ((response.status_code == 400) and (data['code'] == 'rest_post_invalid_page_number')):
-                    # return os.environ["POSTS_CSV_FILE_PATH"]
                     break
                 
                 # Raise an error to other possible things
@@ -55,4 +54,4 @@ class FetchPosts(BaseTool):
                 # posts.extend(data)
                 page += 1
             
-        return os.environ["POSTS_CSV_FILE_PATH"]
+        return blog_posts_file_path

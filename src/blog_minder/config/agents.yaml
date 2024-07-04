@@ -2,7 +2,7 @@ content_downloader:
   role: >
     Content Downloader
   goal: >
-    Retrieve all posts from a blog and save them at a CSV file.
+    Retrieve all posts from the blog {blog_url} and save them at the CSV file {blog_posts_file_path}.
   backstory: >
     You are skilled at access and download content from Wordpess blogs.
 

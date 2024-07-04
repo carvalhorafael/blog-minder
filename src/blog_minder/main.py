@@ -4,9 +4,9 @@ from blog_minder.crew import BlogMinderCrew
 
 
 def run():
-    # Replace with your inputs, it will automatically interpolate any tasks and agents information
     inputs = {
-        'topic': 'AI LLMs'
+        'blog_url': 'https://rafaelcarvalho.tv',
+        'blog_posts_file_path': 'tmp/blog_posts.csv'
     }
     BlogMinderCrew().crew().kickoff(inputs=inputs)
 

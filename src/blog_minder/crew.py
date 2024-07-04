@@ -4,7 +4,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
 from blog_minder.tools.csv_reader import ReadCsv
-from blog_minder.tools.blog_posts_reader import FetchPosts
+from blog_minder.tools.blog_posts_downloader import FetchPosts
 from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
@@ -32,7 +32,7 @@ class BlogMinderCrew():
 			config=self.agents_config['content_downloader'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
+			memory=False,
 			llm=gemma2
 		)
 
