@@ -7,7 +7,7 @@ To kickstart your crew of AI agents and begin task execution:
 1. Start `Ollama` (only to Mac Users, read **Setup** section below)
 2. Run docker containers
     - `docker-compose up -d`
-3. Enter to `crewAI container`
+3. Enter to crewAI container
     - `docker-compose exec crewai bash`
 4. Put your crew to work:
     - `poetry run blog_minder`
@@ -49,13 +49,6 @@ A positive side effect of this project is the possibility of interacting with LL
 
 - open the browser
 - enter the address: `http://localhost:8080/`
-
-# Run crewAI 
-Open a terminal inside crewai:
-- `docker-compose exec crewai bash`
-
-Get crew to work:
-- `python main.py`
 
 # Stop docker containers
 - `docker-compose stop`
