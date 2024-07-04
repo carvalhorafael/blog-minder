@@ -3,8 +3,8 @@ import yaml
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import FileReadTool
 from src.tools.blog_posts_reader import fetch_posts
-# from src.tools.csv_reader import read_csv_file
-# from src.tools.keyword_analyzer import keyword_analyzer
+from src.tools.csv_reader import read_csv
+from src.tools.cannibalization_content_identifier import find_duplicates_and_similarities
 # from src.tools.seo_keyword_suggestion import seo_keyword_suggestion
 # from src.tools.content_quality_analyzer import content_quality_analyzer
 # from src.tools.content_merger import content_merger
@@ -55,6 +55,7 @@ for task_name, task_info in tasks_config.items():
         description=task_info['description'],
         expected_output=task_info['expected_output'],
         agent=agents[task_info['agent']],
+        inputs=task_info['inputs']
         # tools=tools
     ))
 

@@ -1,15 +1,29 @@
-content_cannibalization_identifier:
+content_downloader:
   role: >
-    Content Cannibalization Identifier
+    Content Downloader
   goal: >
-    Retrieve all posts from a blog and identify potential content cannibalization.
+    Retrieve all posts from a blog and save them at a CSV file.
   backstory: >
-    You are skilled at identifying duplicate content and potential content cannibalization.
+    You are skilled at access and download content from Wordpess blogs.
   llm: gemma2
   memory: True
   tools:
     - fetch_posts
-    - read_posts_file_tool
+
+content_analyst:
+  role: >
+    Content Analyst
+  goal: >
+    Identify duplicate and similar blog posts from a CSV file.
+  backstory: >
+    As a content analyst, you excel in identifying patterns and 
+    similarities in large datasets, ensuring content uniqueness.
+  llm: gemma2
+  memory: True
+  tools:
+    - read_csv
+    - find_duplicates_and_similarities
+#     - read_posts_file_tool
 #     - keyword_analyzer
 #     - content_quality_analyzer
 

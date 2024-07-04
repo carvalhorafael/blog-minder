@@ -3,3 +3,5 @@ crewai[tools]
 requests
 pytest
 langchain-community
+pandas
+scikit-learn

@@ -1,24 +1,10 @@
-import os
-import csv
+import pandas as pd
 from crewai_tools import tool
 
 @tool
-def read_csv_file(file_path: str) -> list:
+def read_csv(file_path: str) -> dict:
     """
-    Reads data from a CSV file.
-    
-    Args:
-    file_path (str): The path to the CSV file.
-    
-    Returns:
-    list: A list of dictionaries containing the data from the CSV file.
+    Reads a CSV file and returns its contents as a DataFrame.
     """
-    data = []
-    try:
-        with open(os.environ["POSTS_CSV_FILE_PATH"], mode='r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                data.append(row)
-        return data
-    except Exception as e:
-        return f"Failed to read CSV file: {e}"
+    df = pd.read_csv(file_path)
+    return df.to_dict(orient='records')
