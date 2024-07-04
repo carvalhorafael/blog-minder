@@ -5,7 +5,8 @@ fetch_all_posts_task:
   expected_output: >
     A string with the path of the CSV file containing the content of the posts.
   agent: content_downloader
-  inputs:
+  tools:
+    - fetch_posts
 
 identify_posts_cannibalization_task:
   description: >
@@ -29,8 +30,21 @@ identify_posts_cannibalization_task:
   # - post ID: title, link
   # - post ID: title, link
   agent: content_analyst
+  tools:
+    - read_csv
+    - find_duplicates_and_similarities
   inputs:
     filepath: tmp/blog_posts.csv
+  outputs:
+    data: $read_csv.data
+  steps:
+    - tool: read_csv
+      args:
+        file_path: $inputs.file_path
+    - tool: find_duplicates_and_similarities
+      args:
+        data: $steps[0].output
+
 
 # recommend_post_actions_task:
 #   description: >

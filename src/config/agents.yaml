@@ -7,8 +7,6 @@ content_downloader:
     You are skilled at access and download content from Wordpess blogs.
   llm: gemma2
   memory: True
-  tools:
-    - fetch_posts
 
 content_analyst:
   role: >
@@ -20,9 +18,9 @@ content_analyst:
     similarities in large datasets, ensuring content uniqueness.
   llm: gemma2
   memory: True
-  tools:
-    - read_csv
-    - find_duplicates_and_similarities
+  # tools:
+  #   - read_csv
+  #   - find_duplicates_and_similarities
 #     - read_posts_file_tool
 #     - keyword_analyzer
 #     - content_quality_analyzer
