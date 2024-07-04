@@ -32,7 +32,7 @@ class BlogMinderCrew():
 			config=self.agents_config['content_downloader'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
+			memory=True,
 			llm=gemma2
 		)
 
