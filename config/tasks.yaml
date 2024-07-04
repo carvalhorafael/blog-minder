@@ -1,7 +1,7 @@
 fetch_all_posts_task:
   description: >
-    1. Get for all blog posts published with the URL {blog_url}.
-    2. Save these posts to a CSV file.
+    Fetch all blog posts.
+    Save these posts to a CSV file.
   expected_output: >
     A string with the path of the CSV file containing the content of the posts.
   agent: content_cannibalization_identifier

@@ -5,12 +5,9 @@ import csv
 from crewai_tools import tool
 
 @tool
-def fetch_posts(url: str) -> str:
+def fetch_posts() -> str:
     """
     Fetches all posts from a WordPress blog and store in a CSV file.
-    
-    Args:
-    url (str): The base URL of the blog.
     
     Returns:
     str: A string containing the CVS file path.

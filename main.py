@@ -12,7 +12,7 @@ from src.tools.blog_posts_reader import fetch_posts
 # Define crewAI builtin Tools
 read_posts_file_tool = FileReadTool(file_path=os.environ["POSTS_CSV_FILE_PATH"])
 
-### OLLAMA (THANKS TO LANGCHAIN)
+### MODELS (THANKS TO LANGCHAIN)
 from langchain_community.llms import Ollama
 llama3 = Ollama(
     model="llama3",
@@ -65,5 +65,5 @@ crew = Crew(
 
 # Run the crew
 print("Starting the crew execution")
-result = crew.kickoff(inputs={'blog_url': os.environ["BLOG_URL"]})
+result = crew.kickoff()
 print(result)
