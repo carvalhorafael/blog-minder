@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -12,6 +13,12 @@ class FindDuplicatesAndSimilarities(BaseTool):
     )
 
     def _run(self, blog_posts_file_path: str, result_of_analysis_path: str) -> str:
+        if not os.path.isfile(blog_posts_file_path):
+            raise Exception(f'File {blog_posts_file_path} DO NOT exist.')
+        
+        if os.path.isfile(result_of_analysis_path):
+            return result_of_analysis_path
+        
         df = pd.read_csv(blog_posts_file_path)
         
         links = df['link'].tolist()
