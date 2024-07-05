@@ -2,15 +2,16 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from crewai_tools import BaseTool
+import json
 
 
 class FindDuplicatesAndSimilarities(BaseTool):
     name: str = "Fetch duplicate and similarities on blog posts"
     description: str = (
-        "Reads the CSV file at {blog_posts_file_path} and finds duplicate and similar posts. Returns a report indicating duplicates and similarities."
+        "Reads a CSV file at {blog_posts_file_path}, finds duplicate and similar posts then save a JSON file at {result_of_analysis_path} as result of analysis."
     )
 
-    def _run(self, blog_posts_file_path: str) -> str:
+    def _run(self, blog_posts_file_path: str, result_of_analysis_path: str) -> str:
         df = pd.read_csv(blog_posts_file_path)
         
         links = df['link'].tolist()
@@ -32,17 +33,22 @@ class FindDuplicatesAndSimilarities(BaseTool):
         for i in range(len(links)):
             for j in range(i + 1, len(links)):
                 if cosine_matrix[i][j] > 0.9:  # Duplicate threshold
-                    duplicates.append((df.iloc[i]['id'], df.iloc[j]['id']))
+                    duplicate = []
+                    duplicate.append(df.iloc[i].to_dict())
+                    duplicate.append(df.iloc[j].to_dict())
+                    duplicates.append(duplicate)
                 elif 0.7 < cosine_matrix[i][j] <= 0.9:  # Similarity threshold
-                    similarities.append((df.iloc[i]['id'], df.iloc[j]['id']))
+                    similarity = []
+                    similarity.append(df.iloc[i].to_dict())
+                    similarity.append(df.iloc[j].to_dict())
+                    similarities.append(similarity)
         
-        # Generate report
-        report = "Duplicate Posts:\n"
-        for dup in duplicates:
-            report += f"Post {dup[0]} and Post {dup[1]} are duplicates.\n"
+        result = {
+            "duplicates": duplicates,
+            "similarities": similarities
+        }
+
+        with open(result_of_analysis_path, 'w', encoding='utf-8') as f:
+            json.dump(result, f, ensure_ascii=False, indent=4)
         
-        report += "\nSimilar Posts:\n"
-        for sim in similarities:
-            report += f"Post {sim[0]} and Post {sim[1]} are similar.\n"
-        
-        return report
+        return result_of_analysis_path

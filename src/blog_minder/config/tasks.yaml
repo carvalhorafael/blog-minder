@@ -5,39 +5,13 @@ fetch_all_posts_task:
   expected_output: >
     A string with the path of the CSV file containing the content of the posts.
 
-
 identify_posts_cannibalization_task:
   description: >
-    Read the CSV file containing blog posts and identify duplicates and similar posts.
-    Your final report should list all duplicate and similar posts with their IDs.
-
-  # Also flag links that are not identical, but that could also be cannibalizing.
-  # For example:
-  #   example 1: https://rafaelcarvalho.tv/area-de-pessoas-1/ and https://rafaelcarvalho.tv/area-de-mães/
-  #   example 2: https://rafaelcarvalho.tv/afiliado/ and https://rafaelcarvalho.tv/afiliados/
+    Read a CSV file containing all posts from a blog and identify duplicate and similar posts.
+    Create a JSON file at {result_of_analysis_path} containing a list of all duplicate and similar posts.
   expected_output: >
-    A report listing duplicate and similar posts with their IDs.
-  # A list of flagged lines with potential content cannibalization.
-  # The list must be delivered by grouping the posts that were identified similar content as follows:
-
-  # Cannibalization 01:
-  # - post ID: title, link
-  # - post ID: title, link
-
-  # Cannibalization 02:
-  # - post ID: title, link
-  # - post ID: title, link
-  # inputs:
-  #   filepath: tmp/blog_posts.csv
-  # outputs:
-  #   data: $read_csv.data
-  # steps:
-  #   - tool: read_csv
-  #     args:
-  #       file_path: $inputs.file_path
-  #   - tool: find_duplicates_and_similarities
-  #     args:
-  #       data: $steps[0].output
+    A JSON file at {result_of_analysis_path} with duplicates and similarities.
+  
 
 
 # recommend_post_actions_task:

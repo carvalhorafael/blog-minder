@@ -10,7 +10,8 @@ content_analyst:
   role: >
     Content Analyst
   goal: >
-    Identify duplicate and similar blog posts from a CSV file.
+    Identify duplicate and similar blog posts from the CSV file at {blog_posts_file_path}.
+    Save the result as a JSON file at {result_of_analysis_path}.
   backstory: >
     As a content analyst, you excel in identifying patterns and 
     similarities in large datasets, ensuring content uniqueness.

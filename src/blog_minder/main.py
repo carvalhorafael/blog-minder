@@ -6,7 +6,8 @@ from blog_minder.crew import BlogMinderCrew
 def run():
     inputs = {
         'blog_url': 'https://rafaelcarvalho.tv',
-        'blog_posts_file_path': 'tmp/blog_posts.csv'
+        'blog_posts_file_path': 'tmp/blog_posts.csv',
+        'result_of_analysis_path': 'tmp/duplicate_and_silimar_blog_posts.json'
     }
     BlogMinderCrew().crew().kickoff(inputs=inputs)
 
