@@ -3,7 +3,6 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
-from blog_minder.tools.csv_reader import ReadCsv
 from blog_minder.tools.blog_posts_downloader import FetchPosts
 from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
@@ -43,7 +42,7 @@ class BlogMinderCrew():
 			config=self.agents_config['content_analyst'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
+			memory=True,
 			llm=gemma2
 		)
 
@@ -60,8 +59,7 @@ class BlogMinderCrew():
 		return Task(
 			config=self.tasks_config['identify_posts_cannibalization_task'],
 			agent=self.content_analyst(),
-			tools=[FindDuplicatesAndSimilarities()],
-			output_file='report.md'
+			tools=[FindDuplicatesAndSimilarities()]
 		)
 
 	@crew

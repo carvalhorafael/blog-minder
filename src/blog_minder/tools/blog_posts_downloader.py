@@ -25,8 +25,8 @@ class FetchPosts(BaseTool):
         page = 1
         per_page = 100
 
-        with open(os.environ["POSTS_CSV_FILE_PATH"], 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['id', 'title', 'link', 'keyword']
+        with open(blog_posts_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['id', 'title', 'link', 'seo_keyword']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
 
@@ -48,7 +48,7 @@ class FetchPosts(BaseTool):
                         'id': post['id'], 
                         'title': post['title']['rendered'], 
                         'link': post['link'],
-                        'keyword': post['slug'].replace('-', ' ')
+                        'seo_keyword': post['slug'].replace('-', ' ')
                         })
 
                 # posts.extend(data)

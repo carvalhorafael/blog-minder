@@ -12,22 +12,12 @@ class FindDuplicatesAndSimilarities(BaseTool):
 
     def _run(self, blog_posts_file_path: str) -> str:
         df = pd.read_csv(blog_posts_file_path)
-        df = df.to_dict(orient='records')
-        df = pd.DataFrame(df)
         
-        # print(df)
-        # return df.to_dict(orient='records')
-        # df = pd.DataFrame(data)
-        titles = df['title'].tolist()
+        links = df['link'].tolist()
+        seo_keywords = df['seo_keyword'].tolist()
         
-        keywords = df['Keyword'].tolist() # erro aqui 
-
-        print("\n\n ENTREI NA FUNÇÃO \n\n")
-
-        # print("\n\n ENTREI NA FUNÇÃO \n\n")
-        
-        # Combine titles and keywords for similarity check
-        combined_texts = [f"{title} {keyword}" for title, keyword in zip(titles, keywords)]
+        # Combine links and keywords for similarity check
+        combined_texts = [f"{link} {seo_keyword}" for link, seo_keyword in zip(links, seo_keywords)]
         
         # TF-IDF Vectorization
         vectorizer = TfidfVectorizer().fit_transform(combined_texts)
@@ -39,12 +29,12 @@ class FindDuplicatesAndSimilarities(BaseTool):
         duplicates = []
         similarities = []
         
-        for i in range(len(titles)):
-            for j in range(i + 1, len(titles)):
+        for i in range(len(links)):
+            for j in range(i + 1, len(links)):
                 if cosine_matrix[i][j] > 0.9:  # Duplicate threshold
-                    duplicates.append((df.iloc[i]['ID'], df.iloc[j]['ID']))
+                    duplicates.append((df.iloc[i]['id'], df.iloc[j]['id']))
                 elif 0.7 < cosine_matrix[i][j] <= 0.9:  # Similarity threshold
-                    similarities.append((df.iloc[i]['ID'], df.iloc[j]['ID']))
+                    similarities.append((df.iloc[i]['id'], df.iloc[j]['id']))
         
         # Generate report
         report = "Duplicate Posts:\n"
