@@ -1,7 +1,6 @@
 import os
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from pydantic import BaseModel, Field
 
 # Importing tools
 from blog_minder.tools.blog_posts_downloader import FetchPosts
@@ -22,8 +21,8 @@ mistral = Ollama(
 
 
 @CrewBase
-class BlogMinderCrew():
-	"""BlogMinder crew"""
+class BlogIntegrityCrew():
+	"""Blog Integrity Crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 
@@ -65,7 +64,7 @@ class BlogMinderCrew():
 
 	@crew
 	def crew(self) -> Crew:
-		"""Creates the BlogMinder crew"""
+		"""Creates the Blog Integrity Crew"""
 		return Crew(
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator
