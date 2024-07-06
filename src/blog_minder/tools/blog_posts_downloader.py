@@ -55,3 +55,30 @@ class FetchPosts(BaseTool):
                 page += 1
             
         return blog_posts_file_path
+    
+
+class FetchPostContent(BaseTool):
+    name: str = "Fetch post content"
+    description: str = (
+        "Fetch a specific post, using post_id, from the WordPress blog {blog_url} and return its content."
+    )
+
+    def _run(self, blog_url: str, post_id: int) -> str:
+        credentials = os.environ["WORDPRESS_USER"] + ':' + os.environ["WORDPRESS_APP_PASSWORD"]
+        token = base64.b64encode(credentials.encode())
+        headers = {
+            'Authorization': 'Basic ' + token.decode('utf-8'),
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
+            'Accept': 'application/json'
+        }
+        
+        response = requests.get(f'{blog_url}/wp-json/wp/v2/posts/{post_id}', headers=headers)
+        
+        # Raise an error to other possible things
+        if response.status_code != 200:
+            raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
+        
+        data = response.json()
+        post_content = data['content']['rendered']
+
+        return post_content

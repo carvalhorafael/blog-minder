@@ -12,6 +12,52 @@ identify_posts_cannibalization_task:
   expected_output: >
     A JSON file at {result_of_analysis_path} with duplicates and similarities.
   
+decide_winning_post:
+  description: >
+    You will receive a JSON with two duplicate or similar posts. 
+    The JSON has the following information about the posts:
+      - post01_id: field with an integer that identifies the blog post
+      - title: post title
+      - link: public link of the post
+      - seo_keyword: the focus keyword of the post
+
+    Frist, for each of the two posts you must:
+      1. Access the post content at the blog hosted at {blog_url} usind {post01_id} and after {post02_id}
+
+    After having the content of the two posts, their link and title, you must:
+      1. Analyze the content of both posts
+      2. Decide which of the two posts has the largest and most complete content.
+        2.1 This post must be declared a winner and the other a loser
+      3. Return a JSON string with data from the winning and losing posts
+        3.1 The JSON format you must return must be:
+          winner: 
+            id: integer with the post id
+            title: string with the title of the post
+            link: string with post link,
+            seo_keyword: string with the post's focus keyword
+            justification: string justification for why you consider this post a winner
+          loser:
+            id: integer with the post id,
+            title: string with the title of the post,
+            link: string with post link,
+            seo_keyword: string with the post's focus keyword
+            justification: string justification for why you consider this post a loser
+          
+  expected_output: >
+    A JSON string with data from the winning and losing posts
+    The JSON format you must return must be:
+      winner: 
+        id: integer with the winner post id
+        title: string with the title of the winner post
+        link: string with winner post link,
+        seo_keyword: string with the winner post's focus keyword
+        justification: string justification for why you consider this post a winner
+      loser:
+        id: integer with the loser post id,
+        title: string with the title of the loser post,
+        link: string with loser post link,
+        seo_keyword: string with the loser post's focus keyword
+        justification: string justification for why you consider this post a loser
 
 
 # recommend_post_actions_task:

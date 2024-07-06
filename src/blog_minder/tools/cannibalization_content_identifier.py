@@ -40,14 +40,30 @@ class FindDuplicatesAndSimilarities(BaseTool):
         for i in range(len(links)):
             for j in range(i + 1, len(links)):
                 if cosine_matrix[i][j] > 0.9:  # Duplicate threshold
-                    duplicate = []
-                    duplicate.append(df.iloc[i].to_dict())
-                    duplicate.append(df.iloc[j].to_dict())
+                    duplicate = {}
+                    post01 = df.iloc[i].to_dict()
+                    post02 = df.iloc[j].to_dict()
+                    duplicate['post01_id'] = post01['id']
+                    duplicate['post01_title'] = post01['title']
+                    duplicate['post01_link'] = post01['link']
+                    duplicate['post01_keyword'] = post01['seo_keyword']
+                    duplicate['post02_id'] = post02['id']
+                    duplicate['post02_title'] = post02['title']
+                    duplicate['post02_link'] = post02['link']
+                    duplicate['post02_keyword'] = post02['seo_keyword']
                     duplicates.append(duplicate)
                 elif 0.7 < cosine_matrix[i][j] <= 0.9:  # Similarity threshold
-                    similarity = []
-                    similarity.append(df.iloc[i].to_dict())
-                    similarity.append(df.iloc[j].to_dict())
+                    similarity = {}
+                    post01 = df.iloc[i].to_dict()
+                    post02 = df.iloc[j].to_dict()
+                    similarity['post01_id'] = post01['id']
+                    similarity['post01_title'] = post01['title']
+                    similarity['post01_link'] = post01['link']
+                    similarity['post01_keyword'] = post01['seo_keyword']
+                    similarity['post02_id'] = post02['id']
+                    similarity['post02_title'] = post02['title']
+                    similarity['post02_link'] = post02['link']
+                    similarity['post02_keyword'] = post02['seo_keyword']
                     similarities.append(similarity)
         
         result = {

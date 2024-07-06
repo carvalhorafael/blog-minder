@@ -8,8 +8,8 @@ from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesA
 
 # LLM Models
 from langchain_community.llms import Ollama
-mistral = Ollama(
-    model = "mistral",
+gemma2 = Ollama(
+    model = "gemma2",
     base_url = os.environ["OLLAMA_BASE_URL"])
 
 
@@ -26,7 +26,7 @@ class BlogIntegrityCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=True,
-			llm=mistral
+			llm=gemma2
 		)
 
 	@agent
@@ -36,7 +36,7 @@ class BlogIntegrityCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=True,
-			llm=mistral
+			llm=gemma2
 		)
 
 	@task
