@@ -30,9 +30,9 @@ class BlogIntegrityCrew():
 		)
 
 	@agent
-	def content_analyst(self) -> Agent:
+	def content_inspector(self) -> Agent:
 		return Agent(
-			config=self.agents_config['content_analyst'],
+			config=self.agents_config['content_inspector'],
 			verbose=True,
 			allow_delegation=False,
 			memory=True,
@@ -51,7 +51,7 @@ class BlogIntegrityCrew():
 	def identify_posts_cannibalization_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['identify_posts_cannibalization_task'],
-			agent=self.content_analyst(),
+			agent=self.content_inspector(),
 			tools=[FindDuplicatesAndSimilarities()]
 		)
 

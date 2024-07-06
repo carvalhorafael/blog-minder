@@ -30,9 +30,9 @@ class ContentConsolidationCrew():
 	tasks_config = 'config/tasks.yaml'
 
 	@agent
-	def senior_content_analyst(self) -> Agent:
+	def content_evaluator(self) -> Agent:
 		return Agent(
-			config=self.agents_config['senior_content_analyst'],
+			config=self.agents_config['content_evaluator'],
 			verbose=True,
 			allow_delegation=False,
 			memory=True,
@@ -43,7 +43,7 @@ class ContentConsolidationCrew():
 	def decide_winning_post(self) -> Task:
 		return Task(
 			config=self.tasks_config['decide_winning_post'],
-			agent=self.senior_content_analyst(),
+			agent=self.content_evaluator(),
 			tools=[FetchPostContent()]
 		)
 	
