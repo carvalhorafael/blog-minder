@@ -36,17 +36,34 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=True,
-			llm=gemma2_27b
+			llm=gemma2
+		)
+	
+	@agent
+	def content_writer(self) -> Agent:
+		return Agent(
+			config=self.agents_config['content_writer'],
+			verbose=True,
+			allow_delegation=False,
+			memory=True,
+			llm=gemma2
 		)
 
 	@task
-	def decide_winning_post(self) -> Task:
+	def decide_winning_post_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['decide_winning_post'],
+			config=self.tasks_config['decide_winning_post_task'],
 			agent=self.content_evaluator(),
 			tools=[FetchPostContent()]
 		)
 	
+	@task
+	def merge_and_improve_post_content_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['merge_and_improve_post_content_task'],
+			agent=self.content_writer(),
+			context=[self.decide_winning_post_task()]
+		)
 
 	@crew
 	def crew(self) -> Crew:

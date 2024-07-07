@@ -1,31 +1,30 @@
 #!/usr/bin/env python
 import sys
 import os
-import json
+import yaml
 from blog_minder.blog_integrity_crew import BlogIntegrityCrew
 from blog_minder.content_consolidation_crew import ContentConsolidationCrew
 
 
 def run():
-    duplicate_and_similar_posts_path = 'tmp/duplicate_and_similar_blog_posts.json'
+    duplicate_and_similar_posts_path = 'tmp/duplicate_and_similar_blog_posts.yaml'
+    blog_url = 'https://rafaelcarvalho.tv'
 
-    blog_integrity_crew_inputs = {
-        'blog_url': 'https://rafaelcarvalho.tv',
+    # Crew to download, analyze and identify duplicate and similar posts
+    BlogIntegrityCrew().crew().kickoff(inputs={
+        'blog_url': blog_url,
         'blog_posts_file_path': 'tmp/blog_posts.csv',
         'result_of_analysis_path': duplicate_and_similar_posts_path
-    }
+    })
 
-    BlogIntegrityCrew().crew().kickoff(inputs=blog_integrity_crew_inputs)
-
+    # Crew to consolidate duplicate posts and improve their content
     if os.path.isfile(duplicate_and_similar_posts_path):    
-        with open(duplicate_and_similar_posts_path, 'r') as json_file:
-            duplicate_and_similar_posts = json.load(json_file)
+        with open(duplicate_and_similar_posts_path, 'r') as yaml_file:
+            duplicate_and_similar_posts = yaml.safe_load(yaml_file)
 
-        blog_url = 'https://rafaelcarvalho.tv'
-        for dataset in duplicate_and_similar_posts['duplicates']:
-            dataset['blog_url'] = blog_url
-        ContentConsolidationCrew().crew().kickoff_for_each(inputs=duplicate_and_similar_posts['duplicates'])
-
+        for duplicate_and_similar_post in duplicate_and_similar_posts['duplicates']:
+            duplicate_and_similar_post['blog_url'] = blog_url
+            ContentConsolidationCrew().crew().kickoff(inputs=duplicate_and_similar_post)
 
 
 def train():

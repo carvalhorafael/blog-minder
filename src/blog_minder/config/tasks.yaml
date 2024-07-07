@@ -8,56 +8,87 @@ fetch_all_posts_task:
 identify_posts_cannibalization_task:
   description: >
     Read a CSV file containing all posts from a blog and identify duplicate and similar posts.
-    Create a JSON file at {result_of_analysis_path} containing a list of all duplicate and similar posts.
+    Save the result to a YAML file.
   expected_output: >
-    A JSON file at {result_of_analysis_path} with duplicates and similarities.
+    A string with the path of the YAML file containing the result of work.
   
-decide_winning_post:
+decide_winning_post_task:
   description: >
-    You will receive a JSON with two duplicate or similar posts. 
-    The JSON has the following information about the posts:
-      - post01_id: field with an integer that identifies the blog post
-      - title: post title
-      - link: public link of the post
-      - seo_keyword: the focus keyword of the post
+    You will receive a YAML with two similar posts. The posts could be identified by the prefix "post01" or "post02"
+    The YAML file has the following information about the posts:
+      - _id: field with an integer that identifies the blog post
+      - _keyword: the focus keyword of the post
+      - _title: post title
+      - _link: public link of the post
+      
+    For each of the two posts (post01 and post02) you must:
+      1. Access the post content at the blog hosted at {blog_url} usind {post01_id} and after {post02_id}.
 
-    Frist, for each of the two posts you must:
-      1. Access the post content at the blog hosted at {blog_url} usind {post01_id} and after {post02_id}
-
-    After having the content of the two posts, their link and title, you must:
+    After having the content of the both posts, their link and title, you must:
       1. Analyze the content of both posts
       2. Decide which of the two posts has the largest and most complete content.
         2.1 This post must be declared a winner and the other a loser
-      3. Return a JSON string with data from the winning and losing posts
-        3.1 The JSON format you must return must be:
+      3. Return a YAML string with data from the winning and losing posts
+        3.1 The YAML format you must return must be:
           winner: 
             id: integer with the post id
             title: string with the title of the post
             link: string with post link,
-            seo_keyword: string with the post's focus keyword
+            keyword: string with the post's focus keyword
             justification: string justification for why you consider this post a winner
+            content: string with the post's content
           loser:
             id: integer with the post id,
             title: string with the title of the post,
             link: string with post link,
-            seo_keyword: string with the post's focus keyword
+            keyword: string with the post's focus keyword
             justification: string justification for why you consider this post a loser
-          
+            content: string with the post's content  
   expected_output: >
-    A JSON string with data from the winning and losing posts
-    The JSON format you must return must be:
+    A YAML string with data from the winning and losing posts
+    The YAML format you must return must be:
       winner: 
         id: integer with the winner post id
         title: string with the title of the winner post
         link: string with winner post link,
-        seo_keyword: string with the winner post's focus keyword
+        keyword: string with the winner post's focus keyword
         justification: string justification for why you consider this post a winner
+        content: string with winner post content
       loser:
         id: integer with the loser post id,
         title: string with the title of the loser post,
         link: string with loser post link,
-        seo_keyword: string with the loser post's focus keyword
+        keyword: string with the loser post's focus keyword
         justification: string justification for why you consider this post a loser
+        content: string with loser post content
+        
+merge_and_improve_post_content_task:
+  description: >
+    You will receive a YAML string with information about two blog posts, one classified as winner and other as loser.
+    The YAML will be like this format below:
+      winner: 
+        id: integer with the winner post id
+        title: string with the title of the winner post
+        link: string with winner post link,
+        keyword: string with the winner post's focus keyword
+        justification: string justification for why you consider this post a winner
+        content: string with winner post content
+      loser:
+        id: integer with the loser post id,
+        title: string with the title of the loser post,
+        link: string with loser post link,
+        keyword: string with the loser post's focus keyword
+        justification: string justification for why you consider this post a loser
+        content: string with loser post content
+        
+    Your mission is to enrich the content of the winning post with the content of the losing post. 
+    The resulting content must be better and more complete than the posts alone.
+  expected_output: >
+    A YAML string with data from posts and the new content.
+    The YAML format you must return must contain:
+      winner_id: integer with the winner post id
+      loser_id: integer with the loser post id
+      new_content: string with the content of the new post produced by you
 
 
 # recommend_post_actions_task:
@@ -74,9 +105,4 @@ decide_winning_post:
 #     A list of new post topics with suggested keywords.
 #   agent: seo_strategist
 
-# merge_content_task:
-#   description: >
-#     Provide specific recommendations on how to merge duplicate posts into a single optimized post.
-#   expected_output: >
-#     Detailed merging guidelines for each set of duplicate posts.
-#   agent: content_merger
+

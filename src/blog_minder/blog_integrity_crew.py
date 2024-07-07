@@ -25,7 +25,7 @@ class BlogIntegrityCrew():
 			config=self.agents_config['content_downloader'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
+			memory=False,
 			llm=gemma2
 		)
 
@@ -35,7 +35,7 @@ class BlogIntegrityCrew():
 			config=self.agents_config['content_inspector'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
+			memory=False,
 			llm=gemma2
 		)
 

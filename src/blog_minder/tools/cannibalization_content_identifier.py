@@ -3,13 +3,13 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from crewai_tools import BaseTool
-import json
+import yaml
 
 
 class FindDuplicatesAndSimilarities(BaseTool):
     name: str = "Fetch duplicate and similarities on blog posts"
     description: str = (
-        "Reads a CSV file at {blog_posts_file_path}, finds duplicate and similar posts then save a JSON file at {result_of_analysis_path} as result of analysis."
+        "Reads a CSV file at {blog_posts_file_path}, finds duplicate and similar posts then save a YAML file at {result_of_analysis_path} as result of analysis."
     )
 
     def _run(self, blog_posts_file_path: str, result_of_analysis_path: str) -> str:
@@ -72,6 +72,7 @@ class FindDuplicatesAndSimilarities(BaseTool):
         }
 
         with open(result_of_analysis_path, 'w', encoding='utf-8') as f:
-            json.dump(result, f, ensure_ascii=False, indent=4)
+            yaml.dump(result, f, default_flow_style=False)
+            # json.dump(result, f, ensure_ascii=False, indent=4)
         
         return result_of_analysis_path
