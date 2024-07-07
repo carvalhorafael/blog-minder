@@ -73,6 +73,5 @@ class FindDuplicatesAndSimilarities(BaseTool):
 
         with open(result_of_analysis_path, 'w', encoding='utf-8') as f:
             yaml.dump(result, f, default_flow_style=False)
-            # json.dump(result, f, ensure_ascii=False, indent=4)
         
         return result_of_analysis_path

@@ -35,7 +35,7 @@ class ContentConsolidationCrew():
 			config=self.agents_config['content_evaluator'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
+			memory=False,
 			llm=gemma2
 		)
 	
@@ -45,8 +45,8 @@ class ContentConsolidationCrew():
 			config=self.agents_config['content_writer'],
 			verbose=True,
 			allow_delegation=False,
-			memory=True,
-			llm=gemma2
+			memory=False,
+			llm=llama3
 		)
 
 	@task
