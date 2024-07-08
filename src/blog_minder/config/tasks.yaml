@@ -5,70 +5,37 @@ fetch_all_posts_task:
   expected_output: >
     A string with the path of the CSV file containing the content of the posts.
 
+
 identify_posts_cannibalization_task:
   description: >
     Read a CSV file containing all posts from a blog and identify duplicate and similar posts.
     Save the result to a YAML file.
   expected_output: >
     A string with the path of the YAML file containing the result of work.
-  
+
+
 decide_winning_post_task:
   description: >
     Consider that you have the information listed below about two blog posts:
       - post01_id: {post01_id}
       - post01_keyword: {post01_keyword}
       - post01_link: {post01_link}
-      - post01_title: {post01_title}
       - post02_id: {post02_id}
       - post02_keyword: {post02_keyword}
       - post02_link: {post02_link}
-      - post02_title: {post02_title}
     
     The first post has the prefix "post01_" and the second has the prefix "post02_".
     The suffixes of both posts represent information about their attributes.
     
-    Fetch the content of both posts at {blog_url} usind {post01_id} and {post02_id} as identifier.
+    Identify which of the posts is the winner using their URLs as {post01_link} and {post02_link}.
 
-    Then return the content of both posts.
-# After having the content of the both posts, their link and title, you must:
-#   1. Analyze and compare the content of both posts
-  
-#   2. Decide which of the two posts has the largest and most complete content.
-#     2.1 This post must be declared a winner and the other a loser
-  
-#   3. Return a YAML string with data from the winning and losing posts
-#     winner: 
-#       id: integer with the post id
-#       title: string with the title of the post
-#       link: string with post link,
-#       keyword: string with the post's focus keyword
-#       justification: string justification for why you consider this post a winner
-#       content: string with the post's content
-#     loser:
-#       id: integer with the post id,
-#       title: string with the title of the post,
-#       link: string with post link,
-#       keyword: string with the post's focus keyword
-#       justification: string justification for why you consider this post a loser
-#       content: string with the post's content  
+    Return a string in YAML format containing:
+      - winner_id: post id of the winner post
+      - winner_keyword: keyword of the winner post
+      - loser_id: post id of the loser post
   expected_output: >
-    String with the content of both posts.
-# A YAML string with data from the winning and losing posts.
-# The YAML format you return  must be:
-#   winner: 
-#     id: integer with the winner post id
-#     title: string with the title of the winner post
-#     link: string with winner post link,
-#     keyword: string with the winner post's focus keyword
-#     justification: string justification for why you consider this post a winner
-#     content: string with winner post content
-#   loser:
-#     id: integer with the loser post id,
-#     title: string with the title of the loser post,
-#     link: string with loser post link,
-#     keyword: string with the loser post's focus keyword
-#     justification: string justification for why you consider this post a loser
-#     content: string with loser post content
+    A YAML string with data from the winning and losing posts.
+ 
         
 merge_and_improve_post_content_task:
   description: >

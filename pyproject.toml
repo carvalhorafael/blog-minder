@@ -10,6 +10,10 @@ crewai = { extras = ["tools"], version = "^0.35.8" }
 crewai-tools = "^0.4.6"
 pandas = "^2.2.2"
 scikit-learn = "^1.5.1"
+google-auth = "^2.31.0"
+google-auth-oauthlib = "^1.2.0"
+google-auth-httplib2 = "^0.2.0"
+google-api-python-client = "^2.136.0"
 
 [tool.poetry.scripts]
 blog_minder = "blog_minder.main:run"

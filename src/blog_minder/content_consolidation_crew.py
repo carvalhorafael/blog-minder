@@ -4,6 +4,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
 from blog_minder.tools.blog_posts_manager import FetchPostContent, UpdatePostStatus
+from blog_minder.tools.seo_performance_analyzer import IdentifyWinningPost
 # from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
@@ -65,7 +66,7 @@ class ContentConsolidationCrew():
 		return Task(
 			config=self.tasks_config['decide_winning_post_task'],
 			agent=self.content_evaluator(),
-			tools=[FetchPostContent()]
+			tools=[IdentifyWinningPost()]
 		)
 	
 	# @task
