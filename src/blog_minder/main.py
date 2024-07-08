@@ -11,11 +11,11 @@ def run():
     blog_url = 'https://rafaelcarvalho.tv'
 
     # Crew to download, analyze and identify duplicate and similar posts
-    BlogIntegrityCrew().crew().kickoff(inputs={
-        'blog_url': blog_url,
-        'blog_posts_file_path': 'tmp/blog_posts.csv',
-        'result_of_analysis_path': duplicate_and_similar_posts_path
-    })
+    # BlogIntegrityCrew().crew().kickoff(inputs={
+    #     'blog_url': blog_url,
+    #     'blog_posts_file_path': 'tmp/blog_posts.csv',
+    #     'result_of_analysis_path': duplicate_and_similar_posts_path
+    # })
 
     # Crew to consolidate duplicate posts and improve their content
     if os.path.isfile(duplicate_and_similar_posts_path):    

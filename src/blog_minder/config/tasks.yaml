@@ -14,82 +14,92 @@ identify_posts_cannibalization_task:
   
 decide_winning_post_task:
   description: >
-    You will receive a YAML with two similar posts. The posts could be identified by the prefix "post01" or "post02"
-    The YAML file has the following information about the posts:
-      - _id: field with an integer that identifies the blog post
-      - _keyword: the focus keyword of the post
-      - _title: post title
-      - _link: public link of the post
-      
-    For each of the two posts you must:
-      1. Access the post content at the blog hosted at {blog_url} usind {post01_id} and after {post02_id}.
+    Consider that you have the information listed below about two blog posts:
+      - post01_id: {post01_id}
+      - post01_keyword: {post01_keyword}
+      - post01_link: {post01_link}
+      - post01_title: {post01_title}
+      - post02_id: {post02_id}
+      - post02_keyword: {post02_keyword}
+      - post02_link: {post02_link}
+      - post02_title: {post02_title}
+    
+    The first post has the prefix "post01_" and the second has the prefix "post02_".
+    The suffixes of both posts represent information about their attributes.
+    
+    Fetch the content of both posts at {blog_url} usind {post01_id} and {post02_id} as identifier.
 
-    After having the content of the both posts, their link and title, you must:
-      1. Analyze and compare the content of both posts
-      
-      2. Decide which of the two posts has the largest and most complete content.
-        2.1 This post must be declared a winner and the other a loser
-      
-      3. Return a YAML string with data from the winning and losing posts
-        winner: 
-          id: integer with the post id
-          title: string with the title of the post
-          link: string with post link,
-          keyword: string with the post's focus keyword
-          justification: string justification for why you consider this post a winner
-          content: string with the post's content
-        loser:
-          id: integer with the post id,
-          title: string with the title of the post,
-          link: string with post link,
-          keyword: string with the post's focus keyword
-          justification: string justification for why you consider this post a loser
-          content: string with the post's content  
+    Then return the content of both posts.
+# After having the content of the both posts, their link and title, you must:
+#   1. Analyze and compare the content of both posts
+  
+#   2. Decide which of the two posts has the largest and most complete content.
+#     2.1 This post must be declared a winner and the other a loser
+  
+#   3. Return a YAML string with data from the winning and losing posts
+#     winner: 
+#       id: integer with the post id
+#       title: string with the title of the post
+#       link: string with post link,
+#       keyword: string with the post's focus keyword
+#       justification: string justification for why you consider this post a winner
+#       content: string with the post's content
+#     loser:
+#       id: integer with the post id,
+#       title: string with the title of the post,
+#       link: string with post link,
+#       keyword: string with the post's focus keyword
+#       justification: string justification for why you consider this post a loser
+#       content: string with the post's content  
   expected_output: >
-    A YAML string with data from the winning and losing posts.
-    The YAML format you return  must be:
-      winner: 
-        id: integer with the winner post id
-        title: string with the title of the winner post
-        link: string with winner post link,
-        keyword: string with the winner post's focus keyword
-        justification: string justification for why you consider this post a winner
-        content: string with winner post content
-      loser:
-        id: integer with the loser post id,
-        title: string with the title of the loser post,
-        link: string with loser post link,
-        keyword: string with the loser post's focus keyword
-        justification: string justification for why you consider this post a loser
-        content: string with loser post content
+    String with the content of both posts.
+# A YAML string with data from the winning and losing posts.
+# The YAML format you return  must be:
+#   winner: 
+#     id: integer with the winner post id
+#     title: string with the title of the winner post
+#     link: string with winner post link,
+#     keyword: string with the winner post's focus keyword
+#     justification: string justification for why you consider this post a winner
+#     content: string with winner post content
+#   loser:
+#     id: integer with the loser post id,
+#     title: string with the title of the loser post,
+#     link: string with loser post link,
+#     keyword: string with the loser post's focus keyword
+#     justification: string justification for why you consider this post a loser
+#     content: string with loser post content
         
 merge_and_improve_post_content_task:
   description: >
-    You will receive a YAML string with information about two blog posts, one classified as winner and other as loser.
-    The YAML will be like this format below:
-      winner: 
+   You will receive a YAML string with information about two blog posts: one classified as the winner and the other as the loser. The YAML format will be as follows:
+      winner:
         id: integer with the winner post id
         title: string with the title of the winner post
-        link: string with winner post link,
+        link: string with the winner post link
         keyword: string with the winner post's focus keyword
         justification: string justification for why you consider this post a winner
         content: string with winner post content
       loser:
-        id: integer with the loser post id,
-        title: string with the title of the loser post,
-        link: string with loser post link,
+        id: integer with the loser post id
+        title: string with the title of the loser post
+        link: string with the loser post link
         keyword: string with the loser post's focus keyword
         justification: string justification for why you consider this post a loser
         content: string with loser post content
 
-    Your mission is to enrich the content of the winning post with the content of the losing post. 
+    Your mission is to enrich the content of the winning post with the content of the losing post. Follow these steps:
+    1. Analyze the content of both posts.
+    2. Identify key points from the loser's content that can enhance the winner's content.
+    3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
+    4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
+
     The resulting content must be better and more complete than the posts alone.
   expected_output: >
-    A YAML string with data from posts and the new content.
-    The YAML format you must return must contain:
+    A YAML string with data from the posts and the new content. The YAML format you must return should contain:
       winner_id: integer with the winner post id
       loser_id: integer with the loser post id
-      new_content: string with the content of the new post produced by you
+      new_content: string with the enriched content of the winner post
 
 update_winner_and_loser_posts:
   description: >

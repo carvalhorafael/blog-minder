@@ -46,7 +46,7 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=llama3
+			llm=gemma2
 		)
 
 	@agent
@@ -68,21 +68,21 @@ class ContentConsolidationCrew():
 			tools=[FetchPostContent()]
 		)
 	
-	@task
-	def merge_and_improve_post_content_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['merge_and_improve_post_content_task'],
-			agent=self.content_writer(),
-			context=[self.decide_winning_post_task()]
-		)
+	# @task
+	# def merge_and_improve_post_content_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['merge_and_improve_post_content_task'],
+	# 		agent=self.content_writer(),
+	# 		context=[self.decide_winning_post_task()]
+	# 	)
 
-	@task
-	def update_winner_and_loser_posts(self) -> Task:
-		return Task(
-			config=self.tasks_config['update_winner_and_loser_posts'],
-			agent=self.blog_editor(),
-			context=[self.merge_and_improve_post_content_task()]
-		)
+	# @task
+	# def update_winner_and_loser_posts(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['update_winner_and_loser_posts'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.merge_and_improve_post_content_task()]
+	# 	)
 	
 
 	@crew

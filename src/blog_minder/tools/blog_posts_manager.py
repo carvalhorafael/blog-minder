@@ -61,7 +61,7 @@ class FetchPosts(BaseTool):
 class FetchPostContent(BaseTool):
     name: str = "Fetch post content."
     description: str = (
-        "Fetch a specific post, using post_id, from the WordPress blog {blog_url} and return its content."
+        "Fetch a post identified by {post_id} from the WordPress blog {blog_url} and return its content."
     )
 
     def _run(self, blog_url: str, post_id: int) -> str:        
