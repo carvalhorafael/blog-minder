@@ -1,7 +1,7 @@
 fetch_all_posts_task:
   description: >
-    Fetch all blog posts.
-    Save these posts to a CSV file.
+    Fetch all blog posts from the blog {blog_url}.
+    Save these posts to a CSV file at {blog_posts_file_path}.
   expected_output: >
     A string with the path of the CSV file containing the content of the posts.
 
@@ -91,6 +91,16 @@ merge_and_improve_post_content_task:
       loser_id: integer with the loser post id
       new_content: string with the content of the new post produced by you
 
+update_winner_and_loser_posts:
+  description: >
+    You will receive a YAML string with information about two blog posts. The information are:
+      winner_id: integer with the post_id form the post labeled as the winner
+      loser_id: integer with the post_id from the post labeled as the losing
+      new_content: string with the content to be used to update the contento of the winner post
+
+    You must update the status of the losing post to "private".
+  expected_output: >
+    A string with the post new status.
 
 # recommend_post_actions_task:
 #   description: >

@@ -3,7 +3,7 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
-from blog_minder.tools.blog_posts_downloader import FetchPostContent
+from blog_minder.tools.blog_posts_manager import FetchPostContent, UpdatePostStatus
 # from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
@@ -49,6 +49,17 @@ class ContentConsolidationCrew():
 			llm=llama3
 		)
 
+	@agent
+	def blog_editor(self) -> Agent:
+		return Agent(
+			config=self.agents_config['blog_editor'],
+			verbose=True,
+			allow_delegation=False,
+			memory=False,
+			llm=gemma2,
+			tools=[UpdatePostStatus()]
+		)
+
 	@task
 	def decide_winning_post_task(self) -> Task:
 		return Task(
@@ -64,6 +75,15 @@ class ContentConsolidationCrew():
 			agent=self.content_writer(),
 			context=[self.decide_winning_post_task()]
 		)
+
+	@task
+	def update_winner_and_loser_posts(self) -> Task:
+		return Task(
+			config=self.tasks_config['update_winner_and_loser_posts'],
+			agent=self.blog_editor(),
+			context=[self.merge_and_improve_post_content_task()]
+		)
+	
 
 	@crew
 	def crew(self) -> Crew:

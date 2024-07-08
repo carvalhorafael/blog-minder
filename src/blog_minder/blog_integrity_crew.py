@@ -3,7 +3,7 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
-from blog_minder.tools.blog_posts_downloader import FetchPosts
+from blog_minder.tools.blog_posts_manager import FetchPosts
 from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
@@ -20,13 +20,14 @@ class BlogIntegrityCrew():
 	tasks_config = 'config/tasks.yaml'
 
 	@agent
-	def content_downloader(self) -> Agent:
+	def blog_editor(self) -> Agent:
 		return Agent(
-			config=self.agents_config['content_downloader'],
+			config=self.agents_config['blog_editor'],
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=gemma2
+			llm=gemma2,
+			tools=[FetchPosts()]
 		)
 
 	@agent
@@ -43,8 +44,7 @@ class BlogIntegrityCrew():
 	def fetch_all_posts_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['fetch_all_posts_task'],
-			agent=self.content_downloader(),
-			tools=[FetchPosts()]
+			agent=self.blog_editor()
 		)
 
 	@task
