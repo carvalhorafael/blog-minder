@@ -2,6 +2,7 @@ import os
 import requests
 import base64
 import csv
+import re
 from crewai_tools import BaseTool
 
 
@@ -58,23 +59,38 @@ class FetchPosts(BaseTool):
         return blog_posts_file_path
     
 
-class FetchPostContent(BaseTool):
-    name: str = "Fetch post content."
+class FetchAndSavePostsContent(BaseTool):
+    name: str = "Fetch and save posts content."
     description: str = (
-        "Fetch a post identified by {post_id} from the WordPress blog {blog_url} and return its content."
+        "Fetch content of two posts identified by 'winner_id' and 'loser_id' from the WordPress blog {blog_url} and save them."
     )
 
-    def _run(self, blog_url: str, post_id: int) -> str:        
-        response = requests.get(f'{blog_url}/wp-json/wp/v2/posts/{post_id}', headers=wordpress_header)
+    def _run(self, blog_url: str, winner_id: int, loser_id: int) -> str:        
         
+        ## Fetch the winner post
+        winner_response = requests.get(f'{blog_url}/wp-json/wp/v2/posts/{winner_id}?context=edit', headers=wordpress_header)
         # Raise an error to other possible things
-        if response.status_code != 200:
-            raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
-        
-        data = response.json()
-        post_content = data['content']['rendered']
+        if winner_response.status_code != 200:
+            raise Exception(f'Error fetching posts: {winner_response.status_code} {winner_response.text}')
+        data = winner_response.json()
+        winner_post_content = data['content']['raw']
+        winner_post_content = re.sub(r'<!--.*?-->', '', winner_post_content, flags=re.DOTALL)
 
-        return post_content
+        ## Fetch the loser post
+        loser_response = requests.get(f'{blog_url}/wp-json/wp/v2/posts/{loser_id}?context=edit', headers=wordpress_header)
+        # Raise an error to other possible things
+        if loser_response.status_code != 200:
+            raise Exception(f'Error fetching posts: {loser_response.status_code} {loser_response.text}')
+        data = loser_response.json()
+        loser_post_content = data['content']['raw']
+        loser_post_content = re.sub(r'<!--.*?-->', '', loser_post_content, flags=re.DOTALL)
+
+        with open(f'tmp/winner_post_{winner_id}.html', 'w') as file:
+            file.write(winner_post_content)
+        with open(f'tmp/loser_post_{loser_id}.html', 'w') as file:
+            file.write(loser_post_content)
+
+        return 'Posts were saved!'
     
 class UpdatePostStatus(BaseTool):
     name: str = "Update status of a blog post."

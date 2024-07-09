@@ -30,54 +30,92 @@ decide_winning_post_task:
     Identify which of the posts is the winner using their URLs as {post01_link} and {post02_link}.
 
     Return a string in YAML format containing:
+      - winner_id: post id of the winner post ({post01_id} or {post02_id})
+      - winner_link: link of the winner post ({post01_link} or {post02_link})
+      - winner_keyword: keyword of the winner post
+      - loser_id: post id of the loser post ({post01_id} or {post02_id})
+      - loser_link: link of the loser post ({post01_link} or {post02_link})
+  expected_output: >
+    A YAML string with data from the winning and losing posts.
+
+
+fetch_and_save_content_of_posts_task:
+  description: >
+    Consider that you have the information in YAML format about two blog posts:
+      - winner_id: post id of the winner post ({post01_id} or {post02_id})
+      - winner_link: link of the winner post ({post01_link} or {post02_link})
+      - winner_keyword: keyword of the winner post
+      - loser_id: post id of the loser post ({post01_id} or {post02_id})
+      - loser_link: link of the loser post ({post01_link} or {post02_link})
+
+    Fetch and save the content of winner and loser posts hosted at {blog_url} with the id parameters "winner_id" and "loser_id".
+
+    Return a string in YAML format with the information about the posts, according to the format below:
       - winner_id: post id of the winner post
       - winner_keyword: keyword of the winner post
       - loser_id: post id of the loser post
   expected_output: >
-    A YAML string with data from the winning and losing posts.
- 
-        
-merge_and_improve_post_content_task:
-  description: >
-   You will receive a YAML string with information about two blog posts: one classified as the winner and the other as the loser. The YAML format will be as follows:
-      winner:
-        id: integer with the winner post id
-        title: string with the title of the winner post
-        link: string with the winner post link
-        keyword: string with the winner post's focus keyword
-        justification: string justification for why you consider this post a winner
-        content: string with winner post content
-      loser:
-        id: integer with the loser post id
-        title: string with the title of the loser post
-        link: string with the loser post link
-        keyword: string with the loser post's focus keyword
-        justification: string justification for why you consider this post a loser
-        content: string with loser post content
+    A YAML string with content from the winning and losing posts, as below:
+      - winner_id: post id of the winner post
+      - winner_keyword: keyword of the winner post
+      - loser_id: post id of the loser post
 
-    Your mission is to enrich the content of the winning post with the content of the losing post. Follow these steps:
-    1. Analyze the content of both posts.
-    2. Identify key points from the loser's content that can enhance the winner's content.
-    3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
-    4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
+# merge_and_improve_post_content_task:
+#   description: >
+#     Consider that you have the information in YAML format about two blog posts:
+#       - winner_id: post id of the winner post
+#       - winner_keyword: keyword of the winner post
+#       - loser_id: post id of the loser post
 
-    The resulting content must be better and more complete than the posts alone.
-  expected_output: >
-    A YAML string with data from the posts and the new content. The YAML format you must return should contain:
-      winner_id: integer with the winner post id
-      loser_id: integer with the loser post id
-      new_content: string with the enriched content of the winner post
+#     Your mission is to enrich the content of the winning post with the content of the losing post.
+#     Follow these steps:
+#       1. Fetch the content of both posts
+#       1. Analyze the content of both posts.
+#       2. Identify key points from the loser's content that can enhance the winner's content.
+#       3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
+#       4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
 
-update_winner_and_loser_posts:
-  description: >
-    You will receive a YAML string with information about two blog posts. The information are:
-      winner_id: integer with the post_id form the post labeled as the winner
-      loser_id: integer with the post_id from the post labeled as the losing
-      new_content: string with the content to be used to update the contento of the winner post
+#       The resulting content must be better and more complete than the posts alone.
 
-    You must update the status of the losing post to "private".
-  expected_output: >
-    A string with the post new status.
+#  You will receive a YAML string with information about two blog posts: one classified as the winner and the other as the loser. The YAML format will be as follows:
+#     winner:
+#       id: integer with the winner post id
+#       title: string with the title of the winner post
+#       link: string with the winner post link
+#       keyword: string with the winner post's focus keyword
+#       justification: string justification for why you consider this post a winner
+#       content: string with winner post content
+#     loser:
+#       id: integer with the loser post id
+#       title: string with the title of the loser post
+#       link: string with the loser post link
+#       keyword: string with the loser post's focus keyword
+#       justification: string justification for why you consider this post a loser
+#       content: string with loser post content
+
+# Your mission is to enrich the content of the winning post with the content of the losing post. Follow these steps:
+# 1. Analyze the content of both posts.
+# 2. Identify key points from the loser's content that can enhance the winner's content.
+# 3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
+# 4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
+
+# The resulting content must be better and more complete than the posts alone.
+  # expected_output: >
+  #   A YAML string with data from the posts and the new content. The YAML format you must return should contain:
+  #     winner_id: integer with the winner post id
+  #     loser_id: integer with the loser post id
+  #     new_content: string with the enriched content of the winner post
+
+# update_winner_and_loser_posts:
+#   description: >
+#     You will receive a YAML string with information about two blog posts. The information are:
+#       winner_id: integer with the post_id form the post labeled as the winner
+#       loser_id: integer with the post_id from the post labeled as the losing
+#       new_content: string with the content to be used to update the contento of the winner post
+
+#     You must update the status of the losing post to "private".
+#   expected_output: >
+#     A string with the post new status.
 
 # recommend_post_actions_task:
 #   description: >
