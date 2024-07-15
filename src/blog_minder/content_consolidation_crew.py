@@ -5,6 +5,7 @@ from crewai.project import CrewBase, agent, crew, task
 # Importing tools
 from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus
 from blog_minder.tools.seo_performance_analyzer import IdentifyWinningPost
+from crewai_tools import FileReadTool
 # from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
@@ -47,7 +48,8 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=gemma2
+			llm=gemma2,
+			tools=[FileReadTool()]
 		)
 
 	@agent
@@ -84,6 +86,12 @@ class ContentConsolidationCrew():
 			tools=[UpdatePostStatus()]
 		)
 	
+	@task
+	def merge_and_improve_winner_post_content_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
+			agent=self.content_writer()
+		)
 	# @task
 	# def merge_and_improve_post_content_task(self) -> Task:
 	# 	return Task(
