@@ -85,9 +85,9 @@ class FetchAndSavePostsContent(BaseTool):
         loser_post_content = data['content']['raw']
         loser_post_content = re.sub(r'<!--.*?-->', '', loser_post_content, flags=re.DOTALL)
 
-        with open(f'tmp/winner_post_{winner_id}.html', 'w') as file:
+        with open(f'tmp/posts/winner_post_{winner_id}.html', 'w') as file:
             file.write(winner_post_content)
-        with open(f'tmp/loser_post_{loser_id}.html', 'w') as file:
+        with open(f'tmp/posts/loser_post_{loser_id}.html', 'w') as file:
             file.write(loser_post_content)
 
         return 'Posts were saved!'

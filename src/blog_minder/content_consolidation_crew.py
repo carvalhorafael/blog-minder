@@ -76,6 +76,14 @@ class ContentConsolidationCrew():
 			agent=self.blog_editor()
 		)
 	
+	@task
+	def put_the_losing_post_in_draft_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['put_the_losing_post_in_draft_task'],
+			agent=self.blog_editor(),
+			tools=[UpdatePostStatus()]
+		)
+	
 	# @task
 	# def merge_and_improve_post_content_task(self) -> Task:
 	# 	return Task(

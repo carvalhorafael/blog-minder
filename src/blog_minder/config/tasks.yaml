@@ -60,6 +60,22 @@ fetch_and_save_content_of_posts_task:
       - winner_keyword: keyword of the winner post
       - loser_id: post id of the loser post
 
+
+put_the_losing_post_in_draft_task:
+  description: >
+    Consider that you have the information in YAML format about two blog posts:
+      - winner_id: post id of the winner post ({post01_id} or {post02_id})
+      - loser_id: post id of the loser post ({post01_id} or {post02_id})
+      - winner_keyword: keyword of the winner post
+
+    You must change the status of the losing post (post_status attribute), hosted at {blog_url}, to "draft".
+  expected_output: >
+    A YAML string with content from the winning and losing posts, as below:
+      - winner_id: post id of the winner post
+      - winner_keyword: keyword of the winner post
+      - loser_id: post id of the loser post
+
+
 # merge_and_improve_post_content_task:
 #   description: >
 #     Consider that you have the information in YAML format about two blog posts:
