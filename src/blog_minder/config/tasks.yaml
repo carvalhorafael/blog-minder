@@ -28,15 +28,13 @@ decide_winning_post_task:
     The suffixes of both posts represent information about their attributes.
     
     Identify which of the posts is the winner using their URLs as {post01_link} and {post02_link}.
-
-    Return a string in YAML format containing:
+  expected_output: >
+    A YAML string with data from the winning and losing posts, as below:
       - winner_id: post id of the winner post ({post01_id} or {post02_id})
       - winner_link: link of the winner post ({post01_link} or {post02_link})
       - winner_keyword: keyword of the winner post
       - loser_id: post id of the loser post ({post01_id} or {post02_id})
       - loser_link: link of the loser post ({post01_link} or {post02_link})
-  expected_output: >
-    A YAML string with data from the winning and losing posts.
 
 
 fetch_and_save_content_of_posts_task:
@@ -49,11 +47,6 @@ fetch_and_save_content_of_posts_task:
       - loser_link: link of the loser post ({post01_link} or {post02_link})
 
     Fetch and save the content of winner and loser posts hosted at {blog_url} with the id parameters "winner_id" and "loser_id".
-
-    Return a string in YAML format with the information about the posts, according to the format below:
-      - winner_id: post id of the winner post
-      - winner_keyword: keyword of the winner post
-      - loser_id: post id of the loser post
   expected_output: >
     A YAML string with content from the winning and losing posts, as below:
       - winner_id: post id of the winner post
@@ -83,12 +76,15 @@ merge_and_improve_winner_post_content_task:
       - loser_id: post id of the loser post ({post01_id} or {post02_id})
       - winner_keyword: keyword of the winner post
     
-    You must read the files with the contents of the winner and loser posts.
+    You MUST READ THE TWO FILES with content of the winner and loser posts.
       To do this, you can construct the path for each file like this:
         - path to winning article: tmp/posts/winner_post_winner_id.html (replace "winner_id" with the post id you received in YAML
         - path to losing article: tmp/posts/loser_post_loser_id.html (replace "loser_id" with the post id you received in YAML
     
-    Now your goal is to improve the "winner post" using valuable elements found in the "loser post". Follow the guidelines below:
+    Before proceeding, ensure that you have read the contents of both files. 
+    DO NOT PROCEED if you have read the contents of only one of the files.
+    
+    With the contents of the two files, now your goal is to improve the "winner post" using valuable elements found in the "loser post". Follow the guidelines below:
 
     1. Introduction:
       Add an engaging introduction that highlights the importance of the article's topic.

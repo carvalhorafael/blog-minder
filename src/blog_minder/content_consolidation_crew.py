@@ -25,7 +25,15 @@ gemma2_27b = Ollama(
 mistral = Ollama(
     model = "mistral",
     base_url = ollama_base_url)
-gpt_4o = ChatOpenAI(model='gpt-4o')
+
+# About Temperature - 0 to 1
+# Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+gpt_4o = ChatOpenAI(
+	model = 'gpt-4o',
+	temperature = 0.8)
+gpt_3_turbo = ChatOpenAI(
+	model = 'gpt-3.5-turbo',
+	temperature = 0.8)
 
 
 @CrewBase
@@ -51,7 +59,7 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=gpt_4o,
+			llm=llama3,
 			tools=[FileReadTool()]
 		)
 
