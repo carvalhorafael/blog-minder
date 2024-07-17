@@ -10,6 +10,8 @@ from crewai_tools import FileReadTool
 
 # LLM Models
 from langchain_community.llms import Ollama
+from langchain_openai import ChatOpenAI
+
 ollama_base_url = os.environ["OLLAMA_BASE_URL"]
 llama3 = Ollama(
     model = "llama3",
@@ -23,6 +25,7 @@ gemma2_27b = Ollama(
 mistral = Ollama(
     model = "mistral",
     base_url = ollama_base_url)
+gpt_4o = ChatOpenAI(model='gpt-4o')
 
 
 @CrewBase
@@ -48,7 +51,7 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=gemma2,
+			llm=gpt_4o,
 			tools=[FileReadTool()]
 		)
 
@@ -71,20 +74,20 @@ class ContentConsolidationCrew():
 			tools=[IdentifyWinningPost()]
 		)
 	
-	@task
-	def fetch_and_save_content_of_posts_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['fetch_and_save_content_of_posts_task'],
-			agent=self.blog_editor()
-		)
+	# @task
+	# def fetch_and_save_content_of_posts_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['fetch_and_save_content_of_posts_task'],
+	# 		agent=self.blog_editor()
+	# 	)
 	
-	@task
-	def put_the_losing_post_in_draft_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['put_the_losing_post_in_draft_task'],
-			agent=self.blog_editor(),
-			tools=[UpdatePostStatus()]
-		)
+	# @task
+	# def put_the_losing_post_in_draft_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
+	# 		agent=self.blog_editor(),
+	# 		tools=[UpdatePostStatus()]
+	# 	)
 	
 	@task
 	def merge_and_improve_winner_post_content_task(self) -> Task:
@@ -92,6 +95,7 @@ class ContentConsolidationCrew():
 			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
 			agent=self.content_writer()
 		)
+
 	# @task
 	# def merge_and_improve_post_content_task(self) -> Task:
 	# 	return Task(
