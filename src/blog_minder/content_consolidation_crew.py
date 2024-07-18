@@ -3,10 +3,9 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
-from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus
+from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus, SavePostContent
 from blog_minder.tools.seo_performance_analyzer import IdentifyWinningPost
 from crewai_tools import FileReadTool
-# from blog_minder.tools.cannibalization_content_identifier import FindDuplicatesAndSimilarities
 
 # LLM Models
 from langchain_community.llms import Ollama
@@ -27,9 +26,10 @@ mistral = Ollama(
     base_url = ollama_base_url)
 
 # About Temperature - 0 to 1
-# Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+# Higher values like 0.8 will make the output more random, 
+# while lower values like 0.2 will make it more focused and deterministic.
 gpt_4o = ChatOpenAI(
-	model = 'gpt-4o',
+	model = 'gpt-4o-mini',
 	temperature = 0.8)
 gpt_3_turbo = ChatOpenAI(
 	model = 'gpt-3.5-turbo',
@@ -59,8 +59,8 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			memory=False,
-			llm=llama3,
-			tools=[FileReadTool()]
+			llm=gpt_4o,
+			tools=[FileReadTool(), SavePostContent()]
 		)
 
 	@agent
@@ -86,38 +86,43 @@ class ContentConsolidationCrew():
 	# def fetch_and_save_content_of_posts_task(self) -> Task:
 	# 	return Task(
 	# 		config=self.tasks_config['fetch_and_save_content_of_posts_task'],
-	# 		agent=self.blog_editor()
-	# 	)
-	
-	# @task
-	# def put_the_losing_post_in_draft_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
 	# 		agent=self.blog_editor(),
-	# 		tools=[UpdatePostStatus()]
+	# 		context=[self.decide_winning_post_task()]
 	# 	)
 	
-	@task
-	def merge_and_improve_winner_post_content_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
-			agent=self.content_writer()
-		)
-
 	# @task
-	# def merge_and_improve_post_content_task(self) -> Task:
+	# def merge_and_improve_winner_post_content_task(self) -> Task:
 	# 	return Task(
-	# 		config=self.tasks_config['merge_and_improve_post_content_task'],
+	# 		config=self.tasks_config['merge_and_improve_winner_post_content_task'],
 	# 		agent=self.content_writer(),
 	# 		context=[self.decide_winning_post_task()]
 	# 	)
 
 	# @task
-	# def update_winner_and_loser_posts(self) -> Task:
+	# def put_the_losing_post_in_draft_task(self) -> Task:
 	# 	return Task(
-	# 		config=self.tasks_config['update_winner_and_loser_posts'],
+	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
 	# 		agent=self.blog_editor(),
-	# 		context=[self.merge_and_improve_post_content_task()]
+	# 		context=[self.decide_winning_post_task()],
+	# 		tools=[UpdatePostStatus()]
+	# 	)
+	
+	# @task
+	# def put_the_winning_post_in_pending_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['put_the_winning_post_in_pending_task'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.decide_winning_post_task()],
+	# 		tools=[UpdatePostStatus()]
+	# 	)
+
+	# this task is the next mission
+	# @task
+	# def update_winner_post_content_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['update_winner_post_content_task'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.decide_winning_post_task()],
 	# 	)
 	
 

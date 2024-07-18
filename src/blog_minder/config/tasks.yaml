@@ -46,12 +46,9 @@ fetch_and_save_content_of_posts_task:
       - loser_id: post id of the loser post ({post01_id} or {post02_id})
       - loser_link: link of the loser post ({post01_link} or {post02_link})
 
-    Fetch and save the content of winner and loser posts hosted at {blog_url} with the id parameters "winner_id" and "loser_id".
+    Fetch and save the content of winner and loser posts hosted at {blog_url} with the id parameters "winner_id", "loser_id" and duplicate_hash={duplicate_hash}
   expected_output: >
-    A YAML string with content from the winning and losing posts, as below:
-      - winner_id: post id of the winner post
-      - winner_keyword: keyword of the winner post
-      - loser_id: post id of the loser post
+    A string informing that the posts were saved.
 
 
 put_the_losing_post_in_draft_task:
@@ -63,11 +60,18 @@ put_the_losing_post_in_draft_task:
 
     You must change the status of the losing post (post_status attribute), hosted at {blog_url}, to "draft".
   expected_output: >
-    A YAML string with content from the winning and losing posts, as below:
-      - winner_id: post id of the winner post
-      - winner_keyword: keyword of the winner post
-      - loser_id: post id of the loser post
+    A string informing that the post status were changed.
 
+put_the_winning_post_in_pending_task:
+  description: >
+    Consider that you have the information in YAML format about two blog posts:
+      - winner_id: post id of the winner post ({post01_id} or {post02_id})
+      - loser_id: post id of the loser post ({post01_id} or {post02_id})
+      - winner_keyword: keyword of the winner post
+
+    You must change the status of the winner post (post_status attribute), hosted at {blog_url}, to "pending".
+  expected_output: >
+    A string informing that the post status were changed.
 
 merge_and_improve_winner_post_content_task:
   description: >
@@ -78,8 +82,8 @@ merge_and_improve_winner_post_content_task:
     
     You MUST READ THE TWO FILES with content of the winner and loser posts.
       To do this, you can construct the path for each file like this:
-        - path to winning article: tmp/posts/winner_post_winner_id.html (replace "winner_id" with the post id you received in YAML
-        - path to losing article: tmp/posts/loser_post_loser_id.html (replace "loser_id" with the post id you received in YAML
+        - path to winning article: tmp/posts/{duplicate_hash}_winner_winner_id.html (replace "winner_id" with the post id you received in YAML
+        - path to losing article: tmp/posts/{duplicate_hash}_loser_loser_id.html (replace "loser_id" with the post id you received in YAML
     
     Before proceeding, ensure that you have read the contents of both files. 
     DO NOT PROCEED if you have read the contents of only one of the files.
@@ -130,59 +134,13 @@ merge_and_improve_winner_post_content_task:
       - Focus on adding value to the content without losing clarity and objectivity.
       - Use elements from the "loser post" only when they are pertinent and significantly improve the "winner post".
 
-
+    Finally, use SavePostContent tool to save the post content (post_content) you created assuming duplicate_hash={duplicate_hash}.
   expected_output: >
-    A YAML string with content from the winner and new posts, as below:
-      - winner_id: post id of the winner post
-      - new_content: content produced to update the winning post
+    The created content is saved.
+    To do that use SavePostContent tool assuming post_content="content created" and duplicate_hash={duplicate_hash}.
 
-# merge_and_improve_post_content_task:
-#   description: >
-#     Consider that you have the information in YAML format about two blog posts:
-#       - winner_id: post id of the winner post
-#       - winner_keyword: keyword of the winner post
-#       - loser_id: post id of the loser post
 
-#     Your mission is to enrich the content of the winning post with the content of the losing post.
-#     Follow these steps:
-#       1. Fetch the content of both posts
-#       1. Analyze the content of both posts.
-#       2. Identify key points from the loser's content that can enhance the winner's content.
-#       3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
-#       4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
-
-#       The resulting content must be better and more complete than the posts alone.
-
-#  You will receive a YAML string with information about two blog posts: one classified as the winner and the other as the loser. The YAML format will be as follows:
-#     winner:
-#       id: integer with the winner post id
-#       title: string with the title of the winner post
-#       link: string with the winner post link
-#       keyword: string with the winner post's focus keyword
-#       justification: string justification for why you consider this post a winner
-#       content: string with winner post content
-#     loser:
-#       id: integer with the loser post id
-#       title: string with the title of the loser post
-#       link: string with the loser post link
-#       keyword: string with the loser post's focus keyword
-#       justification: string justification for why you consider this post a loser
-#       content: string with loser post content
-
-# Your mission is to enrich the content of the winning post with the content of the losing post. Follow these steps:
-# 1. Analyze the content of both posts.
-# 2. Identify key points from the loser's content that can enhance the winner's content.
-# 3. Integrate the relevant parts of the loser's content into the winner's content in a coherent and seamless manner.
-# 4. Ensure the resulting content is more comprehensive, engaging, and informative than either post alone.
-
-# The resulting content must be better and more complete than the posts alone.
-  # expected_output: >
-  #   A YAML string with data from the posts and the new content. The YAML format you must return should contain:
-  #     winner_id: integer with the winner post id
-  #     loser_id: integer with the loser post id
-  #     new_content: string with the enriched content of the winner post
-
-# update_winner_and_loser_posts:
+# update_winner_post_content_task:
 #   description: >
 #     You will receive a YAML string with information about two blog posts. The information are:
 #       winner_id: integer with the post_id form the post labeled as the winner
@@ -192,19 +150,3 @@ merge_and_improve_winner_post_content_task:
 #     You must update the status of the losing post to "private".
 #   expected_output: >
 #     A string with the post new status.
-
-# recommend_post_actions_task:
-#   description: >
-#     For each set of duplicate posts, recommend which ones to keep, delete, or merge.
-#   expected_output: >
-#     Actionable recommendations for each set of duplicate posts.
-#   agent: content_analyzer
-
-# suggest_new_keywords_task:
-#   description: >
-#     Analyze current keyword coverage and suggest new posts to cover important keywords not currently addressed.
-#   expected_output: >
-#     A list of new post topics with suggested keywords.
-#   agent: seo_strategist
-
-

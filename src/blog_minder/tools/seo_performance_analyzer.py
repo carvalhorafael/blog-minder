@@ -34,7 +34,7 @@ def get_search_console_data(url):
     }
     
     response = webmasters_service.searchanalytics().query(siteUrl=site_url, body=request).execute()
-    # print(response)
+    
     return response
 
 

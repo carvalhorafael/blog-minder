@@ -4,7 +4,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from crewai_tools import BaseTool
 import yaml
+import hashlib
+import secrets
 
+def generate_hash(length=9):
+        random_string = secrets.token_hex(16)
+        hash_object = hashlib.sha256(random_string.encode())
+        hex_dig = hash_object.hexdigest()
+        return hex_dig[:length]
 
 class FindDuplicatesAndSimilarities(BaseTool):
     name: str = "Fetch duplicate and similarities on blog posts"
@@ -43,6 +50,7 @@ class FindDuplicatesAndSimilarities(BaseTool):
                     duplicate = {}
                     post01 = df.iloc[i].to_dict()
                     post02 = df.iloc[j].to_dict()
+                    duplicate['duplicate_hash'] = generate_hash()
                     duplicate['post01_id'] = post01['id']
                     duplicate['post01_title'] = post01['title']
                     duplicate['post01_link'] = post01['link']
@@ -56,6 +64,7 @@ class FindDuplicatesAndSimilarities(BaseTool):
                     similarity = {}
                     post01 = df.iloc[i].to_dict()
                     post02 = df.iloc[j].to_dict()
+                    similarity['duplicate_hash'] = generate_hash()
                     similarity['post01_id'] = post01['id']
                     similarity['post01_title'] = post01['title']
                     similarity['post01_link'] = post01['link']

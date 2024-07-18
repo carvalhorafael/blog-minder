@@ -65,7 +65,7 @@ class FetchAndSavePostsContent(BaseTool):
         "Fetch content of two posts identified by 'winner_id' and 'loser_id' from the WordPress blog {blog_url} and save them."
     )
 
-    def _run(self, blog_url: str, winner_id: int, loser_id: int) -> str:        
+    def _run(self, blog_url: str, winner_id: int, loser_id: int, duplicate_hash: str) -> str:        
         
         ## Fetch the winner post
         winner_response = requests.get(f'{blog_url}/wp-json/wp/v2/posts/{winner_id}?context=edit', headers=wordpress_header)
@@ -85,9 +85,9 @@ class FetchAndSavePostsContent(BaseTool):
         loser_post_content = data['content']['raw']
         loser_post_content = re.sub(r'<!--.*?-->', '', loser_post_content, flags=re.DOTALL)
 
-        with open(f'tmp/posts/winner_post_{winner_id}.html', 'w') as file:
+        with open(f'tmp/posts/{duplicate_hash}_winner_{winner_id}.html', 'w') as file:
             file.write(winner_post_content)
-        with open(f'tmp/posts/loser_post_{loser_id}.html', 'w') as file:
+        with open(f'tmp/posts/{duplicate_hash}_loser_{loser_id}.html', 'w') as file:
             file.write(loser_post_content)
 
         return 'Posts were saved!'
@@ -110,3 +110,19 @@ class UpdatePostStatus(BaseTool):
             raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
         
         return response.status_code
+    
+
+class SavePostContent(BaseTool):
+    name: str = "Save post content."
+    description: str = (
+        "Save post content and return a string with the file path."
+    )
+
+    def _run(self, post_content: str, duplicate_hash: str) -> str:
+        
+        filepath = f'tmp/posts/{duplicate_hash}_winner_new.html' 
+        
+        with open(filepath, 'w') as file:
+            file.write(post_content)
+    
+        return filepath
