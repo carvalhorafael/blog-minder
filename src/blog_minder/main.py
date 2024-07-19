@@ -12,11 +12,11 @@ def run():
     blog_url = os.environ["BLOG_URL"]
 
     # Put Content Integrity Crew to work
-    ContentIntegrityCrew().crew().kickoff(inputs={
-        'blog_url': blog_url,
-        'blog_posts_file_path': blog_posts_csv_file_path,
-        'result_of_analysis_path': duplicate_and_similar_posts_path
-    })
+    # ContentIntegrityCrew().crew().kickoff(inputs={
+    #     'blog_url': blog_url,
+    #     'blog_posts_file_path': blog_posts_csv_file_path,
+    #     'result_of_analysis_path': duplicate_and_similar_posts_path
+    # })
 
     # If there is a list of duplicate post files, a crew may have work
     if os.path.isfile(duplicate_and_similar_posts_path):    
