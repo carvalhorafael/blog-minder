@@ -15,7 +15,7 @@ gemma2 = Ollama(
 
 @CrewBase
 class BlogIntegrityCrew():
-	"""Blog Integrity Crew"""
+	"""Content Integrity Crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 
@@ -25,7 +25,6 @@ class BlogIntegrityCrew():
 			config=self.agents_config['blog_editor'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
 			llm=gemma2,
 			tools=[FetchPosts()]
 		)
@@ -36,7 +35,6 @@ class BlogIntegrityCrew():
 			config=self.agents_config['content_inspector'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
 			llm=gemma2
 		)
 
@@ -57,7 +55,7 @@ class BlogIntegrityCrew():
 
 	@crew
 	def crew(self) -> Crew:
-		"""Creates the Blog Integrity Crew"""
+		"""Creates the Content Integrity Crew"""
 		return Crew(
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator

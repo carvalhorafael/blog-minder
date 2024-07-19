@@ -48,7 +48,6 @@ class ContentConsolidationCrew():
 			config=self.agents_config['content_evaluator'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
 			llm=gemma2
 		)
 	
@@ -58,7 +57,6 @@ class ContentConsolidationCrew():
 			config=self.agents_config['content_writer'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
 			llm=gpt_4o,
 			tools=[FileReadTool(), SavePostContent()]
 		)
@@ -69,7 +67,6 @@ class ContentConsolidationCrew():
 			config=self.agents_config['blog_editor'],
 			verbose=True,
 			allow_delegation=False,
-			memory=False,
 			llm=gemma2,
 			tools=[UpdatePostStatus(), FetchAndSavePostsContent(), UpdatePostContent()]
 		)
