@@ -11,18 +11,19 @@ def run():
     duplicate_and_similar_posts_path = os.environ["LIST_OF_DUPLICATE_POSTS_PATH"]
     blog_url = os.environ["BLOG_URL"]
 
-    # Crew to download, analyze and identify duplicate and similar posts
-    # ContentIntegrityCrew().crew().kickoff(inputs={
-    #     'blog_url': blog_url,
-    #     'blog_posts_file_path': blog_posts_csv_file_path,
-    #     'result_of_analysis_path': duplicate_and_similar_posts_path
-    # })
+    # Put Content Integrity Crew to work
+    ContentIntegrityCrew().crew().kickoff(inputs={
+        'blog_url': blog_url,
+        'blog_posts_file_path': blog_posts_csv_file_path,
+        'result_of_analysis_path': duplicate_and_similar_posts_path
+    })
 
-    # Crew to consolidate duplicate posts and improve their content
+    # If there is a list of duplicate post files, a crew may have work
     if os.path.isfile(duplicate_and_similar_posts_path):    
         with open(duplicate_and_similar_posts_path, 'r') as yaml_file:
             duplicate_and_similar_posts = yaml.safe_load(yaml_file)
 
+        # Put Content Consolidation Crew to work for each duplicate content
         for duplicate_and_similar_post in duplicate_and_similar_posts['duplicates']:
             duplicate_and_similar_post['blog_url'] = blog_url
             ContentConsolidationCrew().crew().kickoff(inputs=duplicate_and_similar_post)
