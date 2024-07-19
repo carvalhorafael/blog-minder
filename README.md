@@ -78,6 +78,22 @@ GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN=
 LIST_OF_DUPLICATE_POSTS_PATH=
 ~~~
 
+## Directory for temporary files
+Agents create several temporary files while carrying out their tasks. These temporary files are not versioned, but you need to create the directory structure below so that agents can create the files.
+
+~~~
+tmp
+  |
+  credentials
+  |
+  posts
+~~~
+
+## Credentials for Google Search Console
+The credentials for accessing the Google Search Console API are in a `.json` file that must be stored in `/tmp/credentials`.
+
+The path to this file must be added to the `GOOGLE_SEARCH_CONSOLE_JSON_CREDENTIAL` variable in the `.env` file.
+
 # Open Ollama-WebUI
 A positive side effect of this project is the possibility of interacting with LLM models from the browser (similar to ChatGPT). To do this, simply:
 
