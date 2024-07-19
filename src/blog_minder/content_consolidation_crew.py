@@ -29,7 +29,7 @@ mistral = Ollama(
 # Higher values like 0.8 will make the output more random, 
 # while lower values like 0.2 will make it more focused and deterministic.
 gpt_4o = ChatOpenAI(
-	model = 'gpt-4o-mini',
+	model = 'gpt-4o',
 	temperature = 0.8)
 gpt_3_turbo = ChatOpenAI(
 	model = 'gpt-3.5-turbo',
