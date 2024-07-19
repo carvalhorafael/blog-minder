@@ -62,6 +62,7 @@ put_the_losing_post_in_draft_task:
   expected_output: >
     A string informing that the post status were changed.
 
+
 put_the_winning_post_in_pending_task:
   description: >
     Consider that you have the information in YAML format about two blog posts:
@@ -72,6 +73,7 @@ put_the_winning_post_in_pending_task:
     You must change the status of the winner post (post_status attribute), hosted at {blog_url}, to "pending".
   expected_output: >
     A string informing that the post status were changed.
+
 
 merge_and_improve_winner_post_content_task:
   description: >

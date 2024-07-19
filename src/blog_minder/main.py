@@ -7,8 +7,8 @@ from blog_minder.content_consolidation_crew import ContentConsolidationCrew
 
 
 def run():
-    duplicate_and_similar_posts_path = 'tmp/duplicate_and_similar_blog_posts.yaml'
-    blog_url = 'https://rafaelcarvalho.tv'
+    duplicate_and_similar_posts_path = os.environ["LIST_OF_DUPLICATE_POSTS_PATH"]
+    blog_url = os.environ["BLOG_URL"]
 
     # Crew to download, analyze and identify duplicate and similar posts
     # BlogIntegrityCrew().crew().kickoff(inputs={
