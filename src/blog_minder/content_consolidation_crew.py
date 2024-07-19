@@ -79,13 +79,13 @@ class ContentConsolidationCrew():
 			tools=[IdentifyWinningPost()]
 		)
 	
-	# @task
-	# def fetch_and_save_content_of_posts_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['fetch_and_save_content_of_posts_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()]
-	# 	)
+	@task
+	def fetch_and_save_content_of_posts_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['fetch_and_save_content_of_posts_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()]
+		)
 	
 	@task
 	def merge_and_improve_winner_post_content_task(self) -> Task:
@@ -95,21 +95,14 @@ class ContentConsolidationCrew():
 			context=[self.decide_winning_post_task()]
 		)
 	
-	# @task
-	# def save_merged_posts_content_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['save_merged_posts_content_task'],
-	# 		agent=self.blog_editor()
-	# 	)
-
-	# @task
-	# def put_the_losing_post_in_draft_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 		tools=[UpdatePostStatus()]
-	# 	)
+	@task
+	def put_the_losing_post_in_draft_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['put_the_losing_post_in_draft_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostStatus()]
+		)
 	
 	@task
 	def put_the_winning_post_in_pending_task(self) -> Task:

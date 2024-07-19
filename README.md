@@ -27,7 +27,7 @@ These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, l
 ### Content Integrity Crew
 Responsible for:
 - download the list of all blog posts and save it in a CSV file;
-- identify which posts are experiencing content cannibalization due to being duplicates or very similar.
+- identify which posts are experiencing content cannibalization due to being duplicates or very similar posts.
 
 File: `content_integrity_crew.py`.
 
