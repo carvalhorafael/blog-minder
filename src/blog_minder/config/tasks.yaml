@@ -136,10 +136,9 @@ merge_and_improve_winner_post_content_task:
       - Focus on adding value to the content without losing clarity and objectivity.
       - Use elements from the "loser post" only when they are pertinent and significantly improve the "winner post".
 
-    Finally, use SavePostContent tool to save the post content (post_content) you created assuming duplicate_hash={duplicate_hash}.
+    You MUST save the content you've created. Use SavePostContent tool to save the post content (post_content) you created assuming duplicate_hash={duplicate_hash}.
   expected_output: >
-    The created content is saved.
-    To do that use SavePostContent tool assuming post_content="content created" and duplicate_hash={duplicate_hash}.
+    New post with the content of the winning post and improvements added from the losing post saved as a file.
 
 
 update_winner_post_content_task:

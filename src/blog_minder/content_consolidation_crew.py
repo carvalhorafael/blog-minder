@@ -97,6 +97,13 @@ class ContentConsolidationCrew():
 			agent=self.content_writer(),
 			context=[self.decide_winning_post_task()]
 		)
+	
+	# @task
+	# def save_merged_posts_content_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['save_merged_posts_content_task'],
+	# 		agent=self.blog_editor()
+	# 	)
 
 	# @task
 	# def put_the_losing_post_in_draft_task(self) -> Task:
@@ -121,7 +128,8 @@ class ContentConsolidationCrew():
 		return Task(
 			config=self.tasks_config['update_winner_post_content_task'],
 			agent=self.blog_editor(),
-			context=[self.decide_winning_post_task()]
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostContent()]
 		)
 	
 
