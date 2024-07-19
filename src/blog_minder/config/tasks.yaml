@@ -140,13 +140,16 @@ merge_and_improve_winner_post_content_task:
     To do that use SavePostContent tool assuming post_content="content created" and duplicate_hash={duplicate_hash}.
 
 
-# update_winner_post_content_task:
-#   description: >
-#     You will receive a YAML string with information about two blog posts. The information are:
-#       winner_id: integer with the post_id form the post labeled as the winner
-#       loser_id: integer with the post_id from the post labeled as the losing
-#       new_content: string with the content to be used to update the contento of the winner post
+update_winner_post_content_task:
+  description: >
+    Your goal is update the content of a wordpress blog post.
 
-#     You must update the status of the losing post to "private".
-#   expected_output: >
-#     A string with the post new status.
+    Consider that you have the information in YAML format about the post to be updated:
+      - winner_id: post id ({post01_id} or {post02_id}) of the post you will update content
+
+    You must now update the blog post hosted on {blog_url}.
+    To do that assume:
+      - post_id = winner_id
+      - file_path = tmp/posts/{duplicate_hash}_winner_new.html
+  expected_output: >
+    Updated post content.

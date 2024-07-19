@@ -3,7 +3,7 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
-from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus, SavePostContent
+from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus, SavePostContent, UpdatePostContent
 from blog_minder.tools.seo_performance_analyzer import IdentifyWinningPost
 from crewai_tools import FileReadTool
 
@@ -71,7 +71,7 @@ class ContentConsolidationCrew():
 			allow_delegation=False,
 			memory=False,
 			llm=gemma2,
-			tools=[UpdatePostStatus(), FetchAndSavePostsContent()]
+			tools=[UpdatePostStatus(), FetchAndSavePostsContent(), UpdatePostContent()]
 		)
 
 	@task
@@ -116,14 +116,13 @@ class ContentConsolidationCrew():
 	# 		tools=[UpdatePostStatus()]
 	# 	)
 
-	# this task is the next mission
-	# @task
-	# def update_winner_post_content_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['update_winner_post_content_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 	)
+	@task
+	def update_winner_post_content_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['update_winner_post_content_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()]
+		)
 	
 
 	@crew
