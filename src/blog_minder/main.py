@@ -2,18 +2,19 @@
 import sys
 import os
 import yaml
-from blog_minder.blog_integrity_crew import BlogIntegrityCrew
+from blog_minder.content_integrity_crew import ContentIntegrityCrew
 from blog_minder.content_consolidation_crew import ContentConsolidationCrew
 
 
 def run():
+    blog_posts_csv_file_path = os.environ["BLOG_POSTS_CSV_FILE_PATH"]
     duplicate_and_similar_posts_path = os.environ["LIST_OF_DUPLICATE_POSTS_PATH"]
     blog_url = os.environ["BLOG_URL"]
 
     # Crew to download, analyze and identify duplicate and similar posts
-    # BlogIntegrityCrew().crew().kickoff(inputs={
+    # ContentIntegrityCrew().crew().kickoff(inputs={
     #     'blog_url': blog_url,
-    #     'blog_posts_file_path': 'tmp/blog_posts.csv',
+    #     'blog_posts_file_path': blog_posts_csv_file_path,
     #     'result_of_analysis_path': duplicate_and_similar_posts_path
     # })
 

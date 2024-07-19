@@ -14,7 +14,7 @@ gemma2 = Ollama(
 
 
 @CrewBase
-class BlogIntegrityCrew():
+class ContentIntegrityCrew():
 	"""Content Integrity Crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'

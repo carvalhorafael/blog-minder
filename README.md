@@ -23,6 +23,26 @@ Each crew has a file with the suffix `_crew.py` in which it is possible to find 
 
 These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file describes the capabilities and configurations of each agent.
 
+## Understanding each crew
+### Content Integrity Crew
+Responsible for:
+- download the list of all blog posts and save it in a CSV file;
+- identify which posts are experiencing content cannibalization due to being duplicates or very similar.
+
+File: `content_integrity_crew.py`.
+
+### Content Consolidation Crew
+This crew always works with two duplicate or very similar posts. And for every two posts the crew is responsible for improving the content of the best positioned post and unpublishing the content of the worst positioned post (removing content duplication).
+
+In detail, this team is responsible for:
+- determine which post is the best and worst positioned in Google search;
+- download the content of both posts;
+- improve the best positioned post by adding elements from the worst positioned one;
+- update the content of the best positioned post with the new content created;
+- change the status of the worst positioned post to draft;
+- change the status of the best positioned post to pending
+
+File: `content_consolidation_crew.py`.
 
 # Setup the project
 ## Ollama to local LLM models
@@ -74,8 +94,9 @@ WORDPRESS_APP_PASSWORD=
 GOOGLE_SEARCH_CONSOLE_JSON_CREDENTIAL=
 GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN=
 
-# Path to save the list with duplicate posts
+# Paths to some utils files
 LIST_OF_DUPLICATE_POSTS_PATH=
+BLOG_POSTS_CSV_FILE_PATH=
 ~~~
 
 ## Directory for temporary files
