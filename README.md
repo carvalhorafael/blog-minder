@@ -1,5 +1,7 @@
-# BlogMinder Crew
-Welcome to the BlogMinder Crew project, powered by [crewAI](https://crewai.com).
+# BlogMinder
+Welcome to the BlogMinder project. The objective of this project is to delegate maintenance and content creation tasks for a blog to AI.
+
+To achieve this objective, this project uses a set of crews powered by [crewAI](https://crewai.com).
 
 ## Running the Project
 To kickstart your crew of AI agents and begin task execution:
@@ -12,10 +14,14 @@ To kickstart your crew of AI agents and begin task execution:
 4. Put your crew to work:
     - `poetry run blog_minder`
 
-This last command initializes the blog-minder Crew, assembling the agents and assigning them tasks as defined in your configuration.
+This last command initializes the blog-minder, bringing crews together with their agents and assigning them tasks as defined in their configuration.
 
-## Understanding Your Crew
-The blog-minder Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+## Understanding the project
+The blog-minder is made up of several crews, each one created to perform complex activities in the project.
+
+Each crew has a file with the suffix `_crew.py` in which it is possible to find its set of AI agents, each with roles, objectives and tools.
+
+These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file describes the capabilities and configurations of each agent.
 
 
 # Setup the project
@@ -38,11 +44,39 @@ Pull the models, just like:
 - `ollama pull mistral`
 
 
-## All other stuffs 
-For all other things you should use Docker.
+## Docker for all other dependencies
+For all other dependencies you should use Docker.
 
 - Start containers
     - `docker-compose up -d`
+
+## API Settings and Keys
+All settings must be stored in a `.env` file in the project directory root. For security reasons this file is not versioned.
+
+Create a file called `.env` in the project directory root with the following content:
+
+~~~
+# For the native tool that searches the internet
+SERPER_API_KEY=
+
+# OpenAI API key for using GPTs models
+OPENAI_API_KEY=
+
+# Ollama server URL on localhost
+OLLAMA_BASE_URL=
+
+# To connect to the wordpress blog.
+BLOG_URL=
+WORDPRESS_USER=
+WORDPRESS_APP_PASSWORD=
+
+# To access Google Search Console
+GOOGLE_SEARCH_CONSOLE_JSON_CREDENTIAL=
+GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN=
+
+# Path to save the list with duplicate posts
+LIST_OF_DUPLICATE_POSTS_PATH=
+~~~
 
 # Open Ollama-WebUI
 A positive side effect of this project is the possibility of interacting with LLM models from the browser (similar to ChatGPT). To do this, simply:
