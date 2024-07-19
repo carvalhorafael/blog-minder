@@ -142,7 +142,6 @@ class UpdatePostContent(BaseTool):
             post_content = file.read()
         
         post_data = {
-            'status': 'pending',
             'content': post_content
         }
         response = requests.put(f'{blog_url}/wp-json/wp/v2/posts/{post_id}', json=post_data, headers=wordpress_header)

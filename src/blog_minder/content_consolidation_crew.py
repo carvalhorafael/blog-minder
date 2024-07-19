@@ -90,13 +90,13 @@ class ContentConsolidationCrew():
 	# 		context=[self.decide_winning_post_task()]
 	# 	)
 	
-	# @task
-	# def merge_and_improve_winner_post_content_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['merge_and_improve_winner_post_content_task'],
-	# 		agent=self.content_writer(),
-	# 		context=[self.decide_winning_post_task()]
-	# 	)
+	@task
+	def merge_and_improve_winner_post_content_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
+			agent=self.content_writer(),
+			context=[self.decide_winning_post_task()]
+		)
 
 	# @task
 	# def put_the_losing_post_in_draft_task(self) -> Task:
@@ -107,14 +107,14 @@ class ContentConsolidationCrew():
 	# 		tools=[UpdatePostStatus()]
 	# 	)
 	
-	# @task
-	# def put_the_winning_post_in_pending_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['put_the_winning_post_in_pending_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 		tools=[UpdatePostStatus()]
-	# 	)
+	@task
+	def put_the_winning_post_in_pending_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['put_the_winning_post_in_pending_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostStatus()]
+		)
 
 	@task
 	def update_winner_post_content_task(self) -> Task:
