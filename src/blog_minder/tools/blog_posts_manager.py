@@ -33,7 +33,7 @@ class FetchPosts(BaseTool):
             writer.writeheader()
 
             while True:
-                response = requests.get(f'{blog_url}/wp-json/wp/v2/posts', headers=wordpress_header, params={'per_page': per_page, 'page': page})
+                response = requests.get(f'{blog_url}/wp-json/wp/v2/posts', headers=wordpress_header, params={'per_page': per_page, 'page': page, 'status': 'publish'})
                 data = response.json()
 
                 # Break when finish all pages and receive an error
