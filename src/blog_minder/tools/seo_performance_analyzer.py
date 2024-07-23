@@ -1,4 +1,5 @@
 import os
+import csv
 import google.auth
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -31,11 +32,21 @@ def get_search_console_data(url):
                 'expression': url
             }]
         }]
-    }
-    
+    }    
     response = webmasters_service.searchanalytics().query(siteUrl=site_url, body=request).execute()
-    
     return response
+
+
+def add_log_entry(log_entry):
+    file_path = 'tmp/log_posts_not_indexed_by_google.csv'
+    file_exists = os.path.isfile(file_path)
+    with open(file_path, 'a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)        
+        # If the file does not exist, write the header first
+        if not file_exists:
+            writer.writerow(["URL"])  # Example header, modify as needed
+        # Write the log entry
+        writer.writerow(log_entry)
 
 
 class IdentifyWinningPost(BaseTool):
@@ -48,7 +59,17 @@ class IdentifyWinningPost(BaseTool):
         data_url1 = get_search_console_data(post01_url)
         data_url2 = get_search_console_data(post02_url)
 
-        if data_url1['rows'][0]['position'] <= data_url2['rows'][0]['position']:
-            return post01_url
-        else:
+        # Some URLs may have problems and may not be indexed by Google.
+        # In this case, the other URL will be declared the winner and the unindexed URL will be added to the log.
+        # If both URLs are indexed, the one with the best position is declared the winner.
+        if 'rows' not in data_url1:
+            add_log_entry([post01_url])
             return post02_url
+        elif 'rows' not in data_url2:
+            add_log_entry([post02_url])
+            return post01_url
+        else:    
+            if data_url1['rows'][0]['position'] <= data_url2['rows'][0]['position']:
+                return post01_url
+            else:
+                return post02_url
