@@ -29,14 +29,14 @@ def run():
     #
     print('\n\nChecking if is necessary to analyze the integrity of posts...')
     if not find_files('duplicate_and_similar', 'tmp'):
-        print('\n\nYes. Its necessary. Putting Content Integrity Crew to work.')
+        print('Yes. Its necessary. Putting Content Integrity Crew to work.')
         ContentIntegrityCrew().crew().kickoff(inputs={
             'blog_url': blog_url,
             'blog_posts_file_path': blog_posts_csv_file_path,
             'result_of_analysis_path': duplicate_and_similar_posts_path
         })
     else:
-        print('\n\nIt is not necessary to check the integrity of posts.')
+        print('It is not necessary to check the integrity of posts.')
 
 
     #
@@ -47,19 +47,19 @@ def run():
         with open(duplicate_and_similar_posts_path, 'r') as yaml_file:
             duplicate_and_similar_posts = yaml.safe_load(yaml_file)
 
-        print('\n\nChecking DUPLICATE posts to consolidate...')
+        print('\nChecking DUPLICATE posts to consolidate...')
         for duplicate_and_similar_post in duplicate_and_similar_posts['duplicates']:
             
             # Check is is necessary put Content Consolidation Crew to work
             duplicate_hash = duplicate_and_similar_post['duplicate_hash']
             if not find_files(f'{duplicate_hash}_winner_new', 'tmp/posts'):
-                print(f'\n\nPutting Content Consolidation Crew to work on: {duplicate_hash}')
+                print(f'\nPutting Content Consolidation Crew to work on: {duplicate_hash}\n\n')
                 duplicate_and_similar_post['blog_url'] = blog_url
                 ContentConsolidationCrew().crew().kickoff(inputs=duplicate_and_similar_post)
             else:
-                print(f'\n\nDiplicate {duplicate_hash} has already been consolidated.')
+                print(f'Duplicate {duplicate_hash} has already been consolidated.')
     else:
-        print('\n\nIt is not possible to consolidate posts.')
+        print('\nIt is not possible to consolidate posts.')
 
 
 
