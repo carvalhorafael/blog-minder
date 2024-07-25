@@ -83,58 +83,62 @@ merge_and_improve_winner_post_content_task:
       - winner_keyword: keyword of the winner post
     
     You MUST READ THE TWO FILES with content of the winner and loser posts.
-      To do this, you can construct the path for each file like this:
-        - path to winning article: tmp/posts/{duplicate_hash}_winner_winner_id.html (replace "winner_id" with the post id you received in YAML
-        - path to losing article: tmp/posts/{duplicate_hash}_loser_loser_id.html (replace "loser_id" with the post id you received in YAML
-    
-    Before proceeding, ensure that you have read the contents of both files. 
+    To do this, you can construct the path for each file like this:
+      - path to winning article: tmp/posts/{duplicate_hash}_winner_winner_id.html (replace "winner_id" with the post id you received in YAML)
+      - path to losing article: tmp/posts/{duplicate_hash}_loser_loser_id.html (replace "loser_id" with the post id you received in YAML)
+
+    Before proceeding, ensure that you have read the contents of both files.
     DO NOT PROCEED if you have read the contents of only one of the files.
-    
+
     With the contents of the two files, now your goal is to improve the "winner post" using valuable elements found in the "loser post". Follow the guidelines below:
 
-    1. Introduction:
-      Add an engaging introduction that highlights the importance of the article's topic.
+    1. **Introduction**:
+      Add an engaging introduction that highlights the importance of the article's topic. Ensure it grabs the reader's attention from the start.
 
-    2. Organization and Clarity:
-      Improve the article's structure with clear and objective subheadings.
+    2. **Organization and Clarity**:
+      Improve the article's structure with clear and objective subheadings. Ensure that each section flows logically into the next.
 
-    3. Detailing Ideas:
-      Expand sections with more details inspired by the "loser post".
+    3. **Detailing Ideas**:
+      Expand sections with more details inspired by the "loser post". Integrate any valuable insights, statistics, or examples that enhance the content.
 
-    4. Additional Content:
+    4. **Additional Content**:
       Include new sections or paragraphs that enrich the article's content. Consider adding:
         - Common Mistakes and Pitfalls to Avoid
         - Useful Tools or Methods
         - Frequently Asked Questions or Common Doubts Sections
 
-    5. SEO and Relevance:
-      Incorporate SEO tips and optimize the article for the following keyword: "winner_keyword".
+    5. **SEO and Relevance**:
+      Incorporate SEO tips and optimize the article for the following keyword: "winner_keyword". Ensure the keyword is naturally integrated throughout the article.
 
-    6. Examples and Categories:
-      Maintain and organize examples or lists divided by relevant categories.
+    6. **Examples and Categories**:
+      Maintain and organize examples or lists divided by relevant categories. Ensure examples are relevant and enhance the reader's understanding.
 
-    7. Inspirational Quotes:
-      Add an inspirational or relevant quote to the topic.
+    7. **Inspirational Quotes**:
+      Add an inspirational or relevant quote related to the topic. Ensure the quote adds value and resonates with the readers. Do not use "Inspirational Quote" as a section title.
 
-    8. Invitation for Interaction:
-      Include an invitation for readers to interact or share their opinions, increasing audience engagement.
+    8. **Invitation for Interaction**:
+      Include an invitation for readers to interact or share their opinions, increasing audience engagement. Use engaging language to prompt responses. Do not use "Invitation for Interaction" as a section title.
 
-    9. Call to Action (CTA) in the Middle of the Article:
-      Add a CTA in the middle of the article inviting readers to a free training. Use the following text in Portuguese:
-        "Em um treinamento EXCLUSIVO e GRATUITO de 15 minutos, vou te ajudar a construir e/ou transformar seus resultados na internet. Acesse aqui: https://rafaelcarvalho.tv/treinamento-mcc"
+    9. **Call to Action (CTA) in the Middle of the Article**:
+      Add a CTA in the middle of the article within a new section called "Oportunidade única". Ensure this CTA is placed around the midpoint of the article (e.g., after the second paragraph if the article has four paragraphs). Create unique CTAs in Portuguese inspired by the following text, ensuring the link is embedded in an action, not as plain text:
+      "Em um treinamento EXCLUSIVO e GRATUITO de 15 minutos, vou te ajudar a construir e/ou transformar seus resultados na internet. [Acesse aqui](https://rafaelcarvalho.tv/treinamento-mcc)". Do not use "Call to Action" as a section title.
 
-    10. Conclusion:
-      Improve the conclusion to reinforce the importance of the article's topic and promote additional actions or services if applicable.
+    10. **Conclusion**:
+        Improve the conclusion to reinforce the importance of the article's topic and promote additional actions or services if applicable. Summarize key points and leave a lasting impression.
 
-    11. Call to Action (CTA) at the End of the Article:
-      Add a CTA at the end of the article inviting readers to the same free training. Use a variation of the text used in the first CTA, in Portuguese:
-        - "Não perca a chance de participar de um treinamento EXCLUSIVO e GRATUITO de 15 minutos que vai transformar seus resultados na internet. Inscreva-se agora: https://rafaelcarvalho.tv/treinamento-mcc"
+    11. **Call to Action (CTA) at the End of the Article**:
+        Add a CTA at the very end of the article inviting readers to the same free training. Use a variation of the text used in the first CTA, in Portuguese, creating a unique version:
+        "Não perca a chance de participar de um treinamento EXCLUSIVO e GRATUITO de 15 minutos que vai transformar seus resultados na internet. [Inscreva-se agora](https://rafaelcarvalho.tv/treinamento-mcc)". Do not use "Call to Action" as a section title.
 
-    - Instructions:
+    **Instructions**:
       - Ensure that the generated post is in Brazilian Portuguese.
-      - Ensure to maintain the tone and style of the "winning post".
+      - Write in the first person, as if Rafael Carvalho is speaking directly to the reader.
+      - Maintain the tone and style of the "winning post".
       - Focus on adding value to the content without losing clarity and objectivity.
       - Use elements from the "loser post" only when they are pertinent and significantly improve the "winner post".
+      - Ensure that the first CTA is placed around the midpoint of the article and the second CTA is placed at the very end.
+      - Do not use literal section titles such as "Inspirational Quote", "Invitation for Interaction", or "Call to Action". Integrate these elements naturally into the content.
+      - All text, including section titles and content, must be in Portuguese (Brazil).
 
     You MUST save the content you've created. Use SavePostContent tool to save the post content (post_content) you created assuming duplicate_hash={duplicate_hash}.
   expected_output: >
