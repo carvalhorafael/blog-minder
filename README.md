@@ -115,11 +115,20 @@ The credentials for accessing the Google Search Console API are in a `.json` fil
 
 The path to this file must be added to the `GOOGLE_SEARCH_CONSOLE_JSON_CREDENTIAL` variable in the `.env` file.
 
-# Open Ollama-WebUI
+## Open Ollama-WebUI
 A positive side effect of this project is the possibility of interacting with LLM models from the browser (similar to ChatGPT). To do this, simply:
 
 - open the browser
 - enter the address: `http://localhost:8080/`
 
-# Stop docker containers
-- `docker-compose stop`
+# Contribution
+Blog Minder is open-source and we welcome contributions. If you're looking to contribute, please:
+
+- Fork the repository.
+- Create a new branch for your feature.
+- Add your feature or improvement.
+- Send a pull request.
+- We appreciate your input!
+
+# License
+Blog Minder is released under the MIT License.
