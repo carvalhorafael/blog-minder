@@ -139,10 +139,8 @@ merge_and_improve_winner_post_content_task:
       - Ensure that the first CTA is placed around the midpoint of the article and the second CTA is placed at the very end.
       - Do not use literal section titles such as "Inspirational Quote", "Invitation for Interaction", or "Call to Action". Integrate these elements naturally into the content.
       - All text, including section titles and content, must be in Portuguese (Brazil).
-
-    You MUST save the content you've created. Use SavePostContent tool to save the post content (post_content) you created assuming duplicate_hash={duplicate_hash}.
   expected_output: >
-    New post with the content of the winning post and improvements added from the losing post saved as a file.
+    The new content created to improve the winning post.
 
 
 update_winner_post_content_task:

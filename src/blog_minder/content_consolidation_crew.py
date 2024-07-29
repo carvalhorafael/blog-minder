@@ -1,6 +1,8 @@
 import os
+import json
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai.tasks.task_output import TaskOutput
 
 # Importing tools
 from blog_minder.tools.blog_posts_manager import FetchAndSavePostsContent, UpdatePostStatus, SavePostContent, UpdatePostContent
@@ -36,6 +38,16 @@ gpt_3_turbo = ChatOpenAI(
 	temperature = 0.8)
 
 
+# Callbacks
+def save_new_post(output: TaskOutput):
+	content = output.raw_output
+	print(f"""
+    	Task Output RAW\n
+	   	Task output: {content}
+		\n\n
+    """)
+
+
 @CrewBase
 class ContentConsolidationCrew():
 	"""Content Consolidation Crew"""
@@ -58,7 +70,7 @@ class ContentConsolidationCrew():
 			verbose=True,
 			allow_delegation=False,
 			llm=gpt_4o,
-			tools=[FileReadTool(), SavePostContent()]
+			tools=[FileReadTool()]
 		)
 
 	@agent
@@ -73,12 +85,13 @@ class ContentConsolidationCrew():
 
 	@task
 	def decide_winning_post_task(self) -> Task:
+		print(self)
 		return Task(
 			config=self.tasks_config['decide_winning_post_task'],
 			agent=self.content_evaluator(),
 			tools=[IdentifyWinningPost()]
-		)
-	
+		)	
+
 	@task
 	def fetch_and_save_content_of_posts_task(self) -> Task:
 		return Task(
@@ -92,35 +105,36 @@ class ContentConsolidationCrew():
 		return Task(
 			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
 			agent=self.content_writer(),
-			context=[self.decide_winning_post_task()]
+			context=[self.decide_winning_post_task()],
+			callback=save_new_post
 		)
 	
-	@task
-	def put_the_losing_post_in_draft_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['put_the_losing_post_in_draft_task'],
-			agent=self.blog_editor(),
-			context=[self.decide_winning_post_task()],
-			tools=[UpdatePostStatus()]
-		)
+	# @task
+	# def put_the_losing_post_in_draft_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.decide_winning_post_task()],
+	# 		tools=[UpdatePostStatus()]
+	# 	)
 	
-	@task
-	def put_the_winning_post_in_pending_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['put_the_winning_post_in_pending_task'],
-			agent=self.blog_editor(),
-			context=[self.decide_winning_post_task()],
-			tools=[UpdatePostStatus()]
-		)
+	# @task
+	# def put_the_winning_post_in_pending_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['put_the_winning_post_in_pending_task'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.decide_winning_post_task()],
+	# 		tools=[UpdatePostStatus()]
+	# 	)
 
-	@task
-	def update_winner_post_content_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['update_winner_post_content_task'],
-			agent=self.blog_editor(),
-			context=[self.decide_winning_post_task()],
-			tools=[UpdatePostContent()]
-		)
+	# @task
+	# def update_winner_post_content_task(self) -> Task:
+	# 	return Task(
+	# 		config=self.tasks_config['update_winner_post_content_task'],
+	# 		agent=self.blog_editor(),
+	# 		context=[self.decide_winning_post_task()],
+	# 		tools=[UpdatePostContent()]
+	# 	)
 	
 
 	@crew
