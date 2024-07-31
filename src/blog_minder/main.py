@@ -55,7 +55,6 @@ def run():
             if not find_files(f'{duplicate_hash}_winner_new', 'tmp/posts'):
                 print(f'\nPutting Content Consolidation Crew to work on: {duplicate_hash}\n\n')
                 duplicate_and_similar_post['blog_url'] = blog_url
-                # ContentConsolidationCrew().crew().kickoff(inputs=duplicate_and_similar_post)
                 content_consolidation_crew = ContentConsolidationCrew(inputs=duplicate_and_similar_post)
                 content_consolidation_crew.crew().kickoff(inputs=duplicate_and_similar_post)
             else:
