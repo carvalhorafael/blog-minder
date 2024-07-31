@@ -39,13 +39,11 @@ gpt_3_turbo = ChatOpenAI(
 
 
 # Callbacks
-def save_new_post(output: TaskOutput):
-	content = output.raw_output
-	print(f"""
-    	Task Output RAW\n
-	   	Task output: {content}
-		\n\n
-    """)
+def save_new_post_callback(output: TaskOutput, duplicate_hash: str):
+	content = output.raw_output.replace("```html", "").replace("```", "") # remove possible html formating code
+	filepath = f'tmp/posts/{duplicate_hash}_winner_new.html'
+	with open(filepath, 'w') as file:
+            file.write(content)
 
 
 @CrewBase
@@ -53,6 +51,9 @@ class ContentConsolidationCrew():
 	"""Content Consolidation Crew"""
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
+
+	def __init__(self, inputs):
+		self.inputs = inputs
 
 	@agent
 	def content_evaluator(self) -> Agent:
@@ -85,13 +86,12 @@ class ContentConsolidationCrew():
 
 	@task
 	def decide_winning_post_task(self) -> Task:
-		print(self)
 		return Task(
 			config=self.tasks_config['decide_winning_post_task'],
 			agent=self.content_evaluator(),
-			tools=[IdentifyWinningPost()]
+			tools=[IdentifyWinningPost()]			
 		)	
-
+	
 	@task
 	def fetch_and_save_content_of_posts_task(self) -> Task:
 		return Task(
@@ -102,39 +102,46 @@ class ContentConsolidationCrew():
 	
 	@task
 	def merge_and_improve_winner_post_content_task(self) -> Task:
+		duplicate_hash = self.inputs['duplicate_hash']
 		return Task(
 			config=self.tasks_config['merge_and_improve_winner_post_content_task'],
 			agent=self.content_writer(),
 			context=[self.decide_winning_post_task()],
-			callback=save_new_post
+			callback=self.create_callback(save_new_post_callback, duplicate_hash)
 		)
 	
-	# @task
-	# def put_the_losing_post_in_draft_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['put_the_losing_post_in_draft_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 		tools=[UpdatePostStatus()]
-	# 	)
+	# Wraps the callback to pass the duplicate_hash as parameter
+	def create_callback(self, save_new_post_callback, duplicate_hash):
+		def wrapper(output: TaskOutput):
+			return save_new_post_callback(output, duplicate_hash)
+		return wrapper
 	
-	# @task
-	# def put_the_winning_post_in_pending_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['put_the_winning_post_in_pending_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 		tools=[UpdatePostStatus()]
-	# 	)
+	@task
+	def put_the_losing_post_in_draft_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['put_the_losing_post_in_draft_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostStatus()]
+		)
+	
+	@task
+	def put_the_winning_post_in_pending_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['put_the_winning_post_in_pending_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostStatus()]
+		)
 
-	# @task
-	# def update_winner_post_content_task(self) -> Task:
-	# 	return Task(
-	# 		config=self.tasks_config['update_winner_post_content_task'],
-	# 		agent=self.blog_editor(),
-	# 		context=[self.decide_winning_post_task()],
-	# 		tools=[UpdatePostContent()]
-	# 	)
+	@task
+	def update_winner_post_content_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['update_winner_post_content_task'],
+			agent=self.blog_editor(),
+			context=[self.decide_winning_post_task()],
+			tools=[UpdatePostContent()]
+		)
 	
 
 	@crew
