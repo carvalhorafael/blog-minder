@@ -158,3 +158,10 @@ update_winner_post_content_task:
       - file_path = tmp/posts/{duplicate_hash}_winner_new.html
   expected_output: >
     Updated post content.
+
+
+get_posts_metrics_task:
+  description: >
+    Your goal is get metrics about posts page of a wordpress blog.
+  expected_output: >
+    A list of page metrics.

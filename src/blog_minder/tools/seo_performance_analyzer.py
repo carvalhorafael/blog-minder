@@ -14,13 +14,13 @@ credentials = service_account.Credentials.from_service_account_file(
 
 today = datetime.today().strftime('%Y-%m-%d')
 a_month_ago = (datetime.today() - timedelta(days=30)).strftime('%Y-%m-%d')
+site_url = 'sc-domain:' + os.environ["GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN"]
 
 # Build Google Search Console service
 webmasters_service = build('searchconsole', 'v1', credentials=credentials)
 
 
 def get_search_console_data(url):
-    site_url = 'sc-domain:' + os.environ["GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN"]
     request = {
         'startDate': a_month_ago,
         'endDate': today,
@@ -73,3 +73,34 @@ class IdentifyWinningPost(BaseTool):
                 return post01_url
             else:
                 return post02_url
+
+
+class GetPagesMetrics(BaseTool):
+    name: str = "Get pages metrics of a website."
+    description: str = (
+        "Returns pages metrics."
+    )
+
+    def _run(self) -> str:
+        request = {
+            'startDate': a_month_ago,
+            'endDate': today,
+            'dimensions': ['page'],
+            'rowLimit': 20,
+            'orderBy': [{
+                'field': 'impressions',
+                'direction': 'descending'
+            }]
+        }
+        response = webmasters_service.searchanalytics().query(siteUrl=site_url, body=request).execute()
+        
+        for row in response.get('rows', []):
+            page = row['keys'][0]
+            clicks = row['clicks']
+            impressions = row['impressions']
+            ctr = row['ctr']
+            position = row['position']
+            
+            print(f'URL: {page}, Cliques: {clicks}, Impressões: {impressions}, CTR: {ctr:.2%}, Posição: {position:.2f}')
+
+        return "all OK"

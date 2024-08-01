@@ -1,5 +1,4 @@
 import os
-import json
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.tasks.task_output import TaskOutput
@@ -14,17 +13,8 @@ from langchain_community.llms import Ollama
 from langchain_openai import ChatOpenAI
 
 ollama_base_url = os.environ["OLLAMA_BASE_URL"]
-llama3 = Ollama(
-    model = "llama3",
-    base_url = ollama_base_url)
 gemma2 = Ollama(
     model = "gemma2",
-    base_url = ollama_base_url)
-gemma2_27b = Ollama(
-    model = "gemma2:27b",
-    base_url = ollama_base_url)
-mistral = Ollama(
-    model = "mistral",
     base_url = ollama_base_url)
 
 # About Temperature - 0 to 1
@@ -33,10 +23,6 @@ mistral = Ollama(
 gpt_4o = ChatOpenAI(
 	model = 'gpt-4o',
 	temperature = 0.8)
-gpt_3_turbo = ChatOpenAI(
-	model = 'gpt-3.5-turbo',
-	temperature = 0.8)
-
 
 # Callbacks
 def save_new_post_callback(output: TaskOutput, duplicate_hash: str):
