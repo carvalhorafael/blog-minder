@@ -2,6 +2,7 @@
 import sys
 import os
 import yaml
+import sqlite3
 from blog_minder.content_integrity_crew import ContentIntegrityCrew
 from blog_minder.content_consolidation_crew import ContentConsolidationCrew
 from blog_minder.content_improvement_crew import ContentImprovementCrew
@@ -21,6 +22,7 @@ def run():
     blog_posts_csv_file_path = os.environ["BLOG_POSTS_CSV_FILE_PATH"]
     duplicate_and_similar_posts_path = os.environ["LIST_OF_DUPLICATE_POSTS_PATH"]
     blog_url = os.environ["BLOG_URL"]
+    posts_to_improve_database_path = os.environ["BLOG_POSTS_TO_IMPROVE_DB_PATH"]
 
     print('\n\nStarting Blog Minder...')
 
@@ -63,7 +65,28 @@ def run():
     # else:
     #     print('\nIt is not possible to consolidate posts.')
 
-    ContentImprovementCrew().crew().kickoff()
+    
+    conn = sqlite3.connect(posts_to_improve_database_path)
+    cur = conn.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS posts_to_improve (
+            post_id INTEGER,
+            url TEXT,
+            title TEXT,
+            keyword TEXT,
+            clicks INTEGER,
+            impressions INTEGER,
+            ctr REAL,
+            position REAL
+        )
+    ''')
+    conn.close()
+
+    ContentImprovementCrew().crew().kickoff(inputs={
+        'blog_url': blog_url,
+        'posts_to_improve_database_path': posts_to_improve_database_path,
+        'posts_to_improve_table_name': 'posts_to_improve'
+    })
 
 
 def train():

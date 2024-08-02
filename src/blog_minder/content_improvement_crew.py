@@ -4,6 +4,7 @@ from crewai.project import CrewBase, agent, crew, task
 
 # Importing tools
 from blog_minder.tools.seo_performance_analyzer import GetPagesMetrics
+from blog_minder.tools.blog_posts_manager import FetchPostsSaveToDatabase
 
 # LLM Models
 from langchain_community.llms import Ollama
@@ -29,6 +30,17 @@ class ContentImprovementCrew():
     tasks_config = 'config/tasks.yaml'
 	
     @agent
+    def blog_editor(self) -> Agent:
+        return Agent(
+            config=self.agents_config['blog_editor'],
+            verbose=True,
+            allow_delegation=False,
+            llm=gemma2,
+            tools=[FetchPostsSaveToDatabase()]
+        )
+        
+    
+    @agent
     def junior_data_analyst(self) -> Agent:
         return Agent(
 			config=self.agents_config['junior_data_analyst'],
@@ -39,11 +51,18 @@ class ContentImprovementCrew():
 		)
     
     @task
-    def get_posts_metrics_task(self) -> Task:
+    def fetch_all_posts_save_to_database_task(self) -> Task:
         return Task(
-			config=self.tasks_config['get_posts_metrics_task'],
-			agent=self.junior_data_analyst()			
-		)	
+			config=self.tasks_config['fetch_all_posts_save_to_database_task'],
+			agent=self.blog_editor()			
+		)
+    
+    # @task
+    # def get_posts_metrics_task(self) -> Task:
+    #     return Task(
+	# 		config=self.tasks_config['get_posts_metrics_task'],
+	# 		agent=self.junior_data_analyst()			
+	# 	)	
     
 
     @crew

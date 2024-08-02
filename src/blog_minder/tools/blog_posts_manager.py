@@ -3,6 +3,7 @@ import requests
 import base64
 import csv
 import re
+import sqlite3
 from crewai_tools import BaseTool
 
 
@@ -91,7 +92,8 @@ class FetchAndSavePostsContent(BaseTool):
             file.write(loser_post_content)
 
         return 'Posts were saved!'
-    
+
+
 class UpdatePostStatus(BaseTool):
     name: str = "Update status of a blog post."
     description: str = (
@@ -151,3 +153,51 @@ class UpdatePostContent(BaseTool):
             raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
         
         return response.status_code
+    
+
+class FetchPostsSaveToDatabase(BaseTool):
+    name: str = "Fetch posts and save to a Database."
+    description: str = (
+        "Fetches all posts from the WordPress blog {blog_url} and store in a database at {posts_to_improve_database_path} in the table {posts_to_improve_table_name}."
+    )
+
+    def _run(self, blog_url: str, database_path: str, table_name: str) -> str:
+        # connect to database or create one
+        conn = sqlite3.connect(database_path)
+        cur = conn.cursor()
+        # clean table deleting all content
+        cur.execute(f'DELETE FROM {table_name}')
+        conn.commit()
+        
+        # pagination and posts per page to wordpress request
+        page = 1
+        per_page = 100
+        
+        while True:
+            response = requests.get(f'{blog_url}/wp-json/wp/v2/posts', headers=wordpress_header, params={'per_page': per_page, 'page': page, 'status': 'publish'})
+            data = response.json()
+
+            # Break when finish all pages and receive an error
+            if ((response.status_code == 400) and (data['code'] == 'rest_post_invalid_page_number')):
+                break
+            
+            # Raise an error to other possible things
+            if response.status_code != 200:
+                raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
+
+            # Insert posts into the Database
+            
+            #
+            # TO-DO: inserir apenas se for novo, já não existir
+            # depois remover a parte ali em cima em que deleta a tabela
+            for post in data:
+                cur.execute(f'''
+                    INSERT INTO {table_name} (post_id, url, title, keyword)
+                    VALUES (?, ?, ?, ?)
+                ''', (post['id'], post['link'], post['title']['rendered'], post['slug'].replace('-', ' ')))
+                conn.commit()
+
+            page += 1
+            
+        conn.close()
+        return "Posts were saved!"
