@@ -165,7 +165,7 @@ class UpdatePostContent(BaseTool):
 class FetchPostsSaveToDatabase(BaseTool):
     name: str = "Fetch posts and save to a Database."
     description: str = (
-        "Fetches all posts from the WordPress blog {blog_url} and store in a database at {posts_to_improve_database_path} in the table {posts_to_improve_table_name}."
+        "Fetches all posts from the WordPress blog {blog_url} and store in a database at {database_path} in the table {table_name}."
     )
 
     def _run(self, blog_url: str, database_path: str, table_name: str) -> str:
@@ -217,4 +217,4 @@ class FetchPostsSaveToDatabase(BaseTool):
             page += 1
             
         conn.close()
-        return "Posts were saved!"
+        return "Posts were saved."

@@ -37,8 +37,7 @@ class ContentImprovementCrew():
             allow_delegation=False,
             llm=gemma2,
             tools=[FetchPostsSaveToDatabase()]
-        )
-        
+        )        
     
     @agent
     def junior_data_analyst(self) -> Agent:
@@ -57,12 +56,12 @@ class ContentImprovementCrew():
 			agent=self.blog_editor()			
 		)
     
-    # @task
-    # def get_posts_metrics_task(self) -> Task:
-    #     return Task(
-	# 		config=self.tasks_config['get_posts_metrics_task'],
-	# 		agent=self.junior_data_analyst()			
-	# 	)	
+    @task
+    def get_posts_metrics_task(self) -> Task:
+        return Task(
+			config=self.tasks_config['get_posts_metrics_task'],
+			agent=self.junior_data_analyst()			
+		)	
     
 
     @crew

@@ -87,8 +87,8 @@ def run():
 
     ContentImprovementCrew().crew().kickoff(inputs={
         'blog_url': blog_url,
-        'posts_to_improve_database_path': posts_to_improve_database_path,
-        'posts_to_improve_table_name': 'posts_to_improve'
+        'database_path': posts_to_improve_database_path,
+        'table_name': 'posts_to_improve'
     })
 
 

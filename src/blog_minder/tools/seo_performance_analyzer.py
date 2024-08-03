@@ -5,6 +5,7 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from datetime import datetime, timedelta
 from crewai_tools import BaseTool
+import sqlite3
 
 # Credentials here
 credentials = service_account.Credentials.from_service_account_file(
@@ -76,31 +77,37 @@ class IdentifyWinningPost(BaseTool):
 
 
 class GetPagesMetrics(BaseTool):
-    name: str = "Get pages metrics of a website."
+    name: str = "Get pages metrics of a website and save to a Database."
     description: str = (
-        "Returns pages metrics."
+        "Get pages metrics of a blog at {blog_url} and store in a databse at {database_url} in the table {table_name}."
     )
 
-    def _run(self) -> str:
+    def _run(self, blog_url: str, database_path: str, table_name: str) -> str:
+        domain = 'sc-domain:' + blog_url[len('https://'):]
         request = {
             'startDate': a_month_ago,
             'endDate': today,
             'dimensions': ['page'],
-            'rowLimit': 20,
+            'rowLimit': 200,
             'orderBy': [{
                 'field': 'impressions',
                 'direction': 'descending'
             }]
         }
-        response = webmasters_service.searchanalytics().query(siteUrl=site_url, body=request).execute()
-        
-        for row in response.get('rows', []):
-            page = row['keys'][0]
-            clicks = row['clicks']
-            impressions = row['impressions']
-            ctr = row['ctr']
-            position = row['position']
-            
-            print(f'URL: {page}, Cliques: {clicks}, Impressões: {impressions}, CTR: {ctr:.2%}, Posição: {position:.2f}')
+        response = webmasters_service.searchanalytics().query(siteUrl=domain, body=request).execute()
 
-        return "all OK"
+        conn = sqlite3.connect(database_path)
+        cursor = conn.cursor()
+
+        for row in response.get('rows', []):
+
+            cursor.execute(f'''
+                UPDATE {table_name}
+                SET clicks = ?, impressions = ?, ctr = ?, position = ?
+                WHERE link = ?
+            ''', (row['clicks'], row['impressions'], row['ctr'], row['position'], row['keys'][0]))
+
+        conn.commit()
+        conn.close()
+
+        return "Posts metrics were updated."

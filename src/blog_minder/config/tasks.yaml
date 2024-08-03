@@ -162,13 +162,13 @@ update_winner_post_content_task:
 
 get_posts_metrics_task:
   description: >
-    Your goal is get metrics about posts page of a wordpress blog.
+    Your goal is get metrics of a blog at {blog_url} and store in a databse at {database_path} in the table {table_name}.
   expected_output: >
-    A list of page metrics.
+    Metrics about blog posts updated.
 
 fetch_all_posts_save_to_database_task:
   description: >
     Fetch all blog posts from the blog {blog_url}.
-    Save these posts to a database at {posts_to_improve_database_path} in the table {posts_to_improve_table_name}.
+    Save these posts to a database at {database_path} in the table {table_name}.
   expected_output: >
-    A string with the information that posts were saved.
+    Posts saved.
