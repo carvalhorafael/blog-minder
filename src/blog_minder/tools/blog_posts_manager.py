@@ -4,6 +4,7 @@ import base64
 import csv
 import re
 import sqlite3
+from datetime import datetime
 from crewai_tools import BaseTool
 
 
@@ -14,6 +15,12 @@ wordpress_header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
     'Accept': 'application/json'
 }
+
+def data_exists(cur, table_name, id):
+    query = f'SELECT 1 FROM {table_name} WHERE id = ?'
+    cur.execute(query, (id,))
+    return cur.fetchone() is not None
+
 
 class FetchPosts(BaseTool):
     name: str = "Fetch posts"
@@ -165,9 +172,6 @@ class FetchPostsSaveToDatabase(BaseTool):
         # connect to database or create one
         conn = sqlite3.connect(database_path)
         cur = conn.cursor()
-        # clean table deleting all content
-        cur.execute(f'DELETE FROM {table_name}')
-        conn.commit()
         
         # pagination and posts per page to wordpress request
         page = 1
@@ -185,17 +189,30 @@ class FetchPostsSaveToDatabase(BaseTool):
             if response.status_code != 200:
                 raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
 
-            # Insert posts into the Database
             
-            #
-            # TO-DO: inserir apenas se for novo, já não existir
-            # depois remover a parte ali em cima em que deleta a tabela
+            # format date to be used as interted_ad
+            now = datetime.now()
+            formatted_now = now.strftime('%Y-%m-%dT%H:%M:%S')
+            
+            # Insert posts into the Database
             for post in data:
-                cur.execute(f'''
-                    INSERT INTO {table_name} (post_id, url, title, keyword)
-                    VALUES (?, ?, ?, ?)
-                ''', (post['id'], post['link'], post['title']['rendered'], post['slug'].replace('-', ' ')))
-                conn.commit()
+                # insert only if not exists
+                if not data_exists(cur, table_name, post['id']):
+                    cur.execute(f'''
+                        INSERT INTO {table_name} (id, link, title, keyword, original_content, updated_at, inserted_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        post['id'], 
+                        post['link'], 
+                        post['title']['rendered'], 
+                        post['slug'].replace('-', ' '),                    
+                        post['content']['rendered'],
+                        post['modified'],
+                        formatted_now
+                        ))
+                    conn.commit()
+                else:
+                    print(f'''Post already added ID: {post['id']}''')
 
             page += 1
             

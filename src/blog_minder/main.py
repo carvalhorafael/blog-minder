@@ -70,14 +70,17 @@ def run():
     cur = conn.cursor()
     cur.execute('''
         CREATE TABLE IF NOT EXISTS posts_to_improve (
-            post_id INTEGER,
-            url TEXT,
+            id INTEGER,
+            link TEXT,
             title TEXT,
-            keyword TEXT,
+            keyword TEXT,            
+            original_content TEXT,
             clicks INTEGER,
             impressions INTEGER,
             ctr REAL,
-            position REAL
+            position REAL,
+            updated_at TEXT,
+            inserted_at TEXT
         )
     ''')
     conn.close()
