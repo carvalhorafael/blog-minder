@@ -44,6 +44,14 @@ In detail, this team is responsible for:
 
 File: `content_consolidation_crew.py`.
 
+### Content Performance Analyzer Crew
+Responsible for:
+- downloading the list of blog posts and saving it in a SQLite database;
+- enriching the information about the posts with performance data from Google Search Console;
+- deciding which posts should have their content improved;
+
+File: `content_performance_analyzer_crew.py`
+
 # Setup the project
 ## Ollama to local LLM models
 ### MacOS users

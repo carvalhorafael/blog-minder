@@ -24,8 +24,8 @@ gpt_4o = ChatOpenAI(
 
 
 @CrewBase
-class ContentImprovementCrew():
-    """Content Improvement Crew"""
+class ContentPerformanceAnalyzerCrew():
+    """Content Performance Analyzer Crew"""
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 	
@@ -63,10 +63,18 @@ class ContentImprovementCrew():
 			agent=self.junior_data_analyst()			
 		)	
     
+# Como escolher posts para melhorar conteúdo?
+# - não podem ter sido atualizados tão recentemente
+# - precisam ter potencial para subir posições
+# - não podem já estar em posição muito alta
+# - não podem ser "mega posts"
+
+
+
 
     @crew
     def crew(self) -> Crew:
-        """Creates the Content Improvement Crew"""
+        """Creates the Content Performance Analyzer Crew"""
         return Crew(
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator

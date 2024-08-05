@@ -5,7 +5,7 @@ import yaml
 import sqlite3
 from blog_minder.content_integrity_crew import ContentIntegrityCrew
 from blog_minder.content_consolidation_crew import ContentConsolidationCrew
-from blog_minder.content_improvement_crew import ContentImprovementCrew
+from blog_minder.content_performance_analyzer_crew import ContentPerformanceAnalyzerCrew
 
 
 
@@ -85,7 +85,7 @@ def run():
     ''')
     conn.close()
 
-    ContentImprovementCrew().crew().kickoff(inputs={
+    ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
         'blog_url': blog_url,
         'database_path': posts_to_improve_database_path,
         'table_name': 'posts_to_improve'
