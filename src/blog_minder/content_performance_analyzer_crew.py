@@ -5,6 +5,7 @@ from crewai.project import CrewBase, agent, crew, task
 # Importing tools
 from blog_minder.tools.seo_performance_analyzer import GetPagesMetrics
 from blog_minder.tools.blog_posts_manager import FetchPostsSaveToDatabase
+from blog_minder.tools.blog_posts_enhancers import MarkPostsForImprovement
 
 # LLM Models
 from langchain_community.llms import Ollama
@@ -46,7 +47,7 @@ class ContentPerformanceAnalyzerCrew():
 			verbose=True,
 			allow_delegation=False,
 			llm=gemma2,
-            tools=[GetPagesMetrics()]
+            tools=[GetPagesMetrics(), MarkPostsForImprovement()]
 		)
     
     @task
@@ -63,14 +64,13 @@ class ContentPerformanceAnalyzerCrew():
 			agent=self.junior_data_analyst()			
 		)	
     
-# Como escolher posts para melhorar conteúdo?
-# - não podem ter sido atualizados tão recentemente
-# - precisam ter potencial para subir posições
-# - não podem já estar em posição muito alta
-# - não podem ser "mega posts"
-
-
-
+    @task
+    def mark_posts_to_be_improved_task(self) -> Task:
+        return Task(
+			config=self.tasks_config['mark_posts_to_be_improved_task'],
+			agent=self.junior_data_analyst()			
+		)	
+    
 
     @crew
     def crew(self) -> Crew:

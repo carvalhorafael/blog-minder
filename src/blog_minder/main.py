@@ -66,25 +66,10 @@ def run():
     #     print('\nIt is not possible to consolidate posts.')
 
     
-    conn = sqlite3.connect(posts_to_improve_database_path)
-    cur = conn.cursor()
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS posts_to_improve (
-            id INTEGER,
-            link TEXT,
-            title TEXT,
-            keyword TEXT,            
-            original_content TEXT,
-            clicks INTEGER,
-            impressions INTEGER,
-            ctr REAL,
-            position REAL,
-            updated_at TEXT,
-            inserted_at TEXT
-        )
-    ''')
-    conn.close()
-
+    #
+    #  Download, analyze and mark posts to be improved
+    # 
+    print('\n\nAnalyzing and marking posts for improvement...')
     ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
         'blog_url': blog_url,
         'database_path': posts_to_improve_database_path,

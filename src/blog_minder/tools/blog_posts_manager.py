@@ -172,7 +172,24 @@ class FetchPostsSaveToDatabase(BaseTool):
         # connect to database or create one
         conn = sqlite3.connect(database_path)
         cur = conn.cursor()
-        
+        # create the table to store posts if not exists
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS posts_to_improve (
+                id INTEGER,
+                link TEXT,
+                title TEXT,
+                keyword TEXT,            
+                original_content TEXT,
+                clicks INTEGER,
+                impressions INTEGER,
+                ctr REAL,
+                position REAL,
+                updated_at TEXT,
+                inserted_at TEXT
+            )
+        ''')
+        conn.close()
+
         # pagination and posts per page to wordpress request
         page = 1
         per_page = 100
