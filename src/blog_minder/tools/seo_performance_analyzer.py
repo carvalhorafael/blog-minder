@@ -88,7 +88,7 @@ class GetPagesMetrics(BaseTool):
             'startDate': a_month_ago,
             'endDate': today,
             'dimensions': ['page'],
-            'rowLimit': 200,
+            'rowLimit': 2000,
             'orderBy': [{
                 'field': 'impressions',
                 'direction': 'descending'
@@ -100,7 +100,6 @@ class GetPagesMetrics(BaseTool):
         cursor = conn.cursor()
 
         for row in response.get('rows', []):
-
             cursor.execute(f'''
                 UPDATE {table_name}
                 SET clicks = ?, impressions = ?, ctr = ?, position = ?

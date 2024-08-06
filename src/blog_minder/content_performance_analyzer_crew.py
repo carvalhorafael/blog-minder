@@ -9,19 +9,11 @@ from blog_minder.tools.blog_posts_enhancers import MarkPostsForImprovement
 
 # LLM Models
 from langchain_community.llms import Ollama
-from langchain_openai import ChatOpenAI
 
 ollama_base_url = os.environ["OLLAMA_BASE_URL"]
 gemma2 = Ollama(
     model = "gemma2",
     base_url = ollama_base_url)
-
-# About Temperature - 0 to 1
-# Higher values like 0.8 will make the output more random, 
-# while lower values like 0.2 will make it more focused and deterministic.
-gpt_4o = ChatOpenAI(
-	model = 'gpt-4o',
-	temperature = 0.8)
 
 
 @CrewBase
@@ -50,19 +42,19 @@ class ContentPerformanceAnalyzerCrew():
             tools=[GetPagesMetrics(), MarkPostsForImprovement()]
 		)
     
-    # @task
-    # def fetch_all_posts_save_to_database_task(self) -> Task:
-    #     return Task(
-	# 		config=self.tasks_config['fetch_all_posts_save_to_database_task'],
-	# 		agent=self.blog_editor()			
-	# 	)
+    @task
+    def fetch_all_posts_save_to_database_task(self) -> Task:
+        return Task(
+			config=self.tasks_config['fetch_all_posts_save_to_database_task'],
+			agent=self.blog_editor()			
+		)
     
-    # @task
-    # def get_posts_metrics_task(self) -> Task:
-    #     return Task(
-	# 		config=self.tasks_config['get_posts_metrics_task'],
-	# 		agent=self.junior_data_analyst()			
-	# 	)	
+    @task
+    def get_posts_metrics_task(self) -> Task:
+        return Task(
+			config=self.tasks_config['get_posts_metrics_task'],
+			agent=self.junior_data_analyst()			
+		)	
     
     @task
     def mark_posts_to_be_improved_task(self) -> Task:
