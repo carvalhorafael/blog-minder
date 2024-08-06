@@ -5,6 +5,7 @@ import csv
 import re
 import sqlite3
 from datetime import datetime
+from typing import List
 from crewai_tools import BaseTool
 
 
@@ -15,11 +16,6 @@ wordpress_header = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
     'Accept': 'application/json'
 }
-
-def data_exists(cur, table_name, id):
-    query = f'SELECT 1 FROM {table_name} WHERE id = ?'
-    cur.execute(query, (id,))
-    return cur.fetchone() is not None
 
 
 class FetchPosts(BaseTool):
@@ -168,13 +164,17 @@ class FetchPostsSaveToDatabase(BaseTool):
         "Fetches all posts from the WordPress blog {blog_url} and store in a database at {database_path} in the table {table_name}."
     )
 
-    def _run(self, blog_url: str, database_path: str, table_name: str) -> str:
-        # connect to database or create one
+    def data_exists(self, cur, table_name, id):
+        query = f'SELECT 1 FROM {table_name} WHERE id = ?'
+        cur.execute(query, (id,))
+        return cur.fetchone() is not None
+    
+    def create_table_if_necessary(self, database_path: str, table_name: str) -> None:
         conn = sqlite3.connect(database_path)
         cur = conn.cursor()
         # create the table to store posts if not exists
-        cur.execute('''
-            CREATE TABLE IF NOT EXISTS posts_to_improve (
+        cur.execute(f'''
+            CREATE TABLE IF NOT EXISTS {table_name} (
                 id INTEGER,
                 link TEXT,
                 title TEXT,
@@ -185,15 +185,33 @@ class FetchPostsSaveToDatabase(BaseTool):
                 ctr REAL,
                 position REAL,
                 updated_at TEXT,
-                inserted_at TEXT
+                inserted_at TEXT,
+                is_human_writer INTEGER DEFAULT 0,
+                to_improve INTEGER DEFAULT 0
             )
         ''')
         conn.close()
+    
+    # check if a post was written by humans and should not be improved by the crew
+    def is_human_writer(self, tags: List[int]) -> int:
+        if int(os.environ["TAG_ID_HUMAN_WRITER_POSTS"]) in tags:
+            return 1
+        else:
+            return 0
 
-        # pagination and posts per page to wordpress request
+
+    def _run(self, blog_url: str, database_path: str, table_name: str) -> str:        
+        # configure pagination and posts per page to wordpress request
         page = 1
         per_page = 100
+
+        # creates the table to store posts if necessary
+        self.create_table_if_necessary(database_path, table_name)
         
+        # starts the coneection with database
+        conn = sqlite3.connect(database_path)
+        cur = conn.cursor()
+
         while True:
             response = requests.get(f'{blog_url}/wp-json/wp/v2/posts', headers=wordpress_header, params={'per_page': per_page, 'page': page, 'status': 'publish'})
             data = response.json()
@@ -205,19 +223,14 @@ class FetchPostsSaveToDatabase(BaseTool):
             # Raise an error to other possible things
             if response.status_code != 200:
                 raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
-
             
-            # format date to be used as interted_ad
-            now = datetime.now()
-            formatted_now = now.strftime('%Y-%m-%dT%H:%M:%S')
-            
-            # Insert posts into the Database
+            # Insert posts from a page into the Database
             for post in data:
-                # insert only if not exists
-                if not data_exists(cur, table_name, post['id']):
+                # insert only if not exists in database
+                if not self.data_exists(cur, table_name, post['id']):
                     cur.execute(f'''
-                        INSERT INTO {table_name} (id, link, title, keyword, original_content, updated_at, inserted_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO {table_name} (id, link, title, keyword, original_content, updated_at, inserted_at, is_human_writer)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         post['id'], 
                         post['link'], 
@@ -225,11 +238,21 @@ class FetchPostsSaveToDatabase(BaseTool):
                         post['slug'].replace('-', ' '),                    
                         post['content']['rendered'],
                         post['modified'],
-                        formatted_now
+                        datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
+                        self.is_human_writer(post['tags'])
                         ))
                     conn.commit()
                 else:
-                    print(f'''Post already added ID: {post['id']}''')
+                    print(f'''Post already added ID: {post['id']}. Updating is_human_writer...''')
+                    cur.execute(f'''
+                        UPDATE {table_name}
+                        SET is_human_writer = ?
+                        WHERE id = ?
+                    ''', (
+                        self.is_human_writer(post['tags']),
+                        post['id']
+                        ))
+                    conn.commit()
 
             page += 1
             

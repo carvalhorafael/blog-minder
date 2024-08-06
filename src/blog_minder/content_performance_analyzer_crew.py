@@ -50,19 +50,19 @@ class ContentPerformanceAnalyzerCrew():
             tools=[GetPagesMetrics(), MarkPostsForImprovement()]
 		)
     
-    @task
-    def fetch_all_posts_save_to_database_task(self) -> Task:
-        return Task(
-			config=self.tasks_config['fetch_all_posts_save_to_database_task'],
-			agent=self.blog_editor()			
-		)
+    # @task
+    # def fetch_all_posts_save_to_database_task(self) -> Task:
+    #     return Task(
+	# 		config=self.tasks_config['fetch_all_posts_save_to_database_task'],
+	# 		agent=self.blog_editor()			
+	# 	)
     
-    @task
-    def get_posts_metrics_task(self) -> Task:
-        return Task(
-			config=self.tasks_config['get_posts_metrics_task'],
-			agent=self.junior_data_analyst()			
-		)	
+    # @task
+    # def get_posts_metrics_task(self) -> Task:
+    #     return Task(
+	# 		config=self.tasks_config['get_posts_metrics_task'],
+	# 		agent=self.junior_data_analyst()			
+	# 	)	
     
     @task
     def mark_posts_to_be_improved_task(self) -> Task:

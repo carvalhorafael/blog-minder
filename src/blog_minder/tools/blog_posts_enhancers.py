@@ -1,3 +1,5 @@
+from crewai_tools import BaseTool
+
 class MarkPostsForImprovement(BaseTool):
     name: str = "Mark posts to be improved."
     description: str = (
@@ -12,6 +14,5 @@ class MarkPostsForImprovement(BaseTool):
 
 # Como escolher posts para melhorar conteúdo?
 # - não podem ter sido atualizados tão recentemente
-# - precisam ter potencial para subir posições
-# - não podem já estar em posição muito alta
-# - não podem ser "mega posts"
+# - precisam ter potencial para subir posições (posicao > 10)
+# - não podem ser "mega posts" (tag id = 3508)

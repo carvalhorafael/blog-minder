@@ -172,3 +172,9 @@ fetch_all_posts_save_to_database_task:
     Save these posts to a database at {database_path} in the table {table_name}.
   expected_output: >
     Posts saved.
+
+mark_posts_to_be_improved_task:
+  description: >
+    Analyze the posts stored in database {database_path} and table {table_name} and mark the ones that need improvement.
+  expected_output: >
+    Posts tagged for improvement.

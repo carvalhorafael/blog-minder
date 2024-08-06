@@ -105,6 +105,11 @@ GOOGLE_SEARCH_CONSOLE_SITE_DOMAIN=
 # Paths to some utils files
 LIST_OF_DUPLICATE_POSTS_PATH=
 BLOG_POSTS_CSV_FILE_PATH=
+BLOG_POSTS_TO_IMPROVE_DB_PATH=
+
+# TAG ID to identify that the post was written by humans and should not be improved by the crew
+# You should change this value to the tag id you use to mark posts that should not be improved.
+TAG_ID_HUMAN_WRITER_POSTS=
 ~~~
 
 ## Directory for temporary files
