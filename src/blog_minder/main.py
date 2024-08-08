@@ -82,34 +82,55 @@ def run():
     #
     #  Starts Content Enhancement Crew for each post that needs to be improved
     # 
+    conn = sqlite3.connect(posts_to_improve_database_path)
+    conn.row_factory = sqlite3.Row  # This allows us to access columns by name
+    cur = conn.cursor()
+    cur.execute(f'''
+        SELECT * FROM {posts_to_improve_table_name}
+        WHERE to_improve = 1
+    ''')
+    posts = cur.fetchall()
+    conn.close()
+    for post in posts:
+        inputs = {
+            'blog_url': blog_url,
+            'database_path': posts_to_improve_database_path,
+            'table_name': posts_to_improve_table_name,
+            'post_id': post['id'],
+            'post_link': post['link'],
+            'keyword': post['keyword']
+        }    
+        content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
+        content_enhancement_crew.crew().kickoff(inputs=inputs)
+        
+
+# pode deletar o que está comentado daqui para baixo        
+        # ContentEnhancementCrew().crew().kickoff(inputs={
+        #     'blog_url': blog_url,
+        #     'post_id': post['id'],
+        #     'link': post['link'],
+        #     'keyword': post['keyword']
+        # })
+
+
     # conn = sqlite3.connect(posts_to_improve_database_path)
-    # conn.row_factory = sqlite3.Row  # This allows us to access columns by name
     # cur = conn.cursor()
     # cur.execute(f'''
-    #     SELECT * FROM {posts_to_improve_table_name}
-    #     WHERE to_improve = 1
+    #     ALTER TABLE {posts_to_improve_table_name}
+    #     ADD COLUMN was_improved INTEGER DEFAULT 0
     # ''')
-    # posts = cur.fetchall()
-    # conn.close()
-    # for post in posts:
-    #     ContentEnhancementCrew().crew().kickoff(inputs={
-    #         'blog_url': blog_url,
-    #         'post_id': post['id'],
-    #         'link': post['link'],
-    #         'keyword': post['keyword']
-    #     })
 
 
-    inputs = {
-        'blog_url': blog_url,
-        'database_path': posts_to_improve_database_path,
-        'table_name': posts_to_improve_table_name,
-        'post_id': 6470,
-        'post_link': 'https://rafaelcarvalho.tv/profissoes-do-futuro-o-que-esperar-para-2030/',
-        'keyword': 'profissoes do futuro o que esperar para 2030'
-    }
-    content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
-    content_enhancement_crew.crew().kickoff(inputs=inputs)
+    # inputs = {
+    #     'blog_url': blog_url,
+    #     'database_path': posts_to_improve_database_path,
+    #     'table_name': posts_to_improve_table_name,
+    #     'post_id': 6470,
+    #     'post_link': 'https://rafaelcarvalho.tv/profissoes-do-futuro-o-que-esperar-para-2030/',
+    #     'keyword': 'profissoes do futuro o que esperar para 2030'
+    # }
+    # content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
+    # content_enhancement_crew.crew().kickoff(inputs=inputs)
     
 
 def train():

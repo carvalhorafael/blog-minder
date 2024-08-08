@@ -5,8 +5,9 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.tasks.task_output import TaskOutput
 
 # Importing tools
-# from blog_minder.tools.blog_posts_enhancers import AppendContentToPost
-
+from blog_minder.tools.blog_posts_manager import UpdatePostStatus 
+from blog_minder.tools.blog_posts_manager import UpdatePostContentFromDatabase
+from blog_minder.tools.blog_posts_enhancers import MarkPostWasImproved
 
 # LLM Models
 from langchain_community.llms import Ollama
@@ -120,6 +121,55 @@ class ContentEnhancementCrew():
             context=[self.recommend_improvements_task()],
             callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name)
         )
+    
+    @task
+    def rewrite_article_third_part_task(self) -> Task:
+        post_id = self.inputs['post_id']
+        database_path = self.inputs['database_path']
+        table_name = self.inputs['table_name']
+        return Task(
+            config=self.tasks_config['rewrite_article_third_part_task'],
+            agent=self.content_writer(),
+            context=[self.recommend_improvements_task()],
+            callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name)
+        )
+    
+    @task
+    def rewrite_article_fourth_part_task(self) -> Task:
+        post_id = self.inputs['post_id']
+        database_path = self.inputs['database_path']
+        table_name = self.inputs['table_name']
+        return Task(
+            config=self.tasks_config['rewrite_article_fourth_part_task'],
+            agent=self.content_writer(),
+            context=[self.recommend_improvements_task()],
+            callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name)
+        )
+
+
+    @task
+    def put_post_in_pending_status_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['put_post_in_pending_status_task'],
+            agent=self.blog_editor(),
+            tools=[UpdatePostStatus()]
+        )
+
+    @task
+    def update_improved_post_content_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['update_improved_post_content_task'],
+            agent=self.blog_editor(),
+            tools=[UpdatePostContentFromDatabase()]
+        )    
+    
+    @task
+    def mark_post_was_improved_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['mark_post_was_improved_task'],
+            agent=self.blog_editor(),
+            tools=[MarkPostWasImproved()]
+        )    
     
     # Wraps the callback to pass the duplicate_hash as parameter
     def create_callback(self, append_post_content_callback, post_id, database_path, table_name):

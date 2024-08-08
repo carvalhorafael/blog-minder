@@ -188,7 +188,8 @@ class FetchPostsSaveToDatabase(BaseTool):
                 updated_at TEXT,
                 inserted_at TEXT,
                 is_human_writer INTEGER DEFAULT 0,
-                to_improve INTEGER DEFAULT 0
+                to_improve INTEGER DEFAULT 0,
+                was_improved INTEGER DEFAULT 0
             )
         ''')
         conn.close()
@@ -259,3 +260,33 @@ class FetchPostsSaveToDatabase(BaseTool):
             
         conn.close()
         return "Posts were saved."
+    
+
+class UpdatePostContentFromDatabase(BaseTool):
+    name: str = "Update the content of a blog post."
+    description: str = (
+        "Update content of a Wordpress blog post hosted at {blog_url} with content from a database table."
+    )
+
+    def _run(self, blog_url: str, post_id: int, database_path: str, table_name: str) -> str:        
+        conn = sqlite3.connect(database_path)
+        cur = conn.cursor()
+        cur.execute(f'''
+            SELECT new_content
+            FROM {table_name}
+            WHERE id = {post_id}
+        ''')
+        result = cur.fetchone()
+        post_content = result[0]
+        conn.close()
+        
+        post_data = {
+            'content': post_content
+        }
+        response = requests.put(f'{blog_url}/wp-json/wp/v2/posts/{post_id}', json=post_data, headers=wordpress_header)
+
+        # Raise an error to other possible things
+        if response.status_code != 200:
+            raise Exception(f'Error fetching posts: {response.status_code} {response.text}')
+        
+        return "The post content was updated."

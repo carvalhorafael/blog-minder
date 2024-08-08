@@ -214,31 +214,157 @@ append_article_content_task:
 
 rewrite_article_first_part_task:
   description: >
-    Write the content of part 1 of the article recommendation report.
     Consider the report's recommendations for text quality and word count for each section.
-    Optimize the text for SEO considering the keyword {keyword}.
+    Write the content of part 1 of the article recommendation report.
+    Focus keyword: {keyword}.
 
-    **Additional instructions for writing the article**:
+    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
+    Remember to produce original and relevant content.
+    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
+    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    
+    Instructions for writing:
+      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
+      - Pay attention to the recommended number of words for each section.
+      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
+      - Optimize the text for SEO considering the keyword: {keyword}.
       - Ensure that the generated post is in Brazilian Portuguese.
       - All text, including section titles and content, must be in Portuguese (Brazil).
-      - Write in the first person, as if Rafael Carvalho is speaking directly to the reader.
-      - Use HTML formatting for titles, paragraphs, lists, and links.
-      - Never write fewer than the recommended number of words for each section or subsection. You can write more words than recommended, never fewer words.
+      - Use internal links naturally throughout your text to improve structure and relevance.
+      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
+      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
+      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
+      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
+      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
+      - For phrases, messages and quotes: use html italic quotes.
+      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
   expected_output: >
     Content created for part 1 according to the report recommendations and optimized for SEO.
 
 
 rewrite_article_second_part_task:
   description: >
-    Write the content of part 2 of the article recommendation report.
     Consider the report's recommendations for text quality and word count for each section.
-    Optimize the text for SEO considering the keyword {keyword}.
+    Write the content of part 2 of the article recommendation report.
+    Focus keyword: {keyword}.
 
-    **Additional instructions for writing the article**:
+    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
+    Remember to produce original and relevant content.
+    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
+    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    
+    Add a CTA within a new section called "Oportunidade única".
+    Create unique CTAs in Portuguese inspired by the following text, ensuring the link is embedded in an action, not as plain text:
+    "Em um treinamento EXCLUSIVO e GRATUITO de 15 minutos, vou te ajudar a construir e/ou transformar seus resultados na internet. [Acesse aqui](https://rafaelcarvalho.tv/treinamento-mcc)".
+    Do not use "Call to Action" as a section title.
+
+    Instructions for writing:
+      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
+      - Pay attention to the recommended number of words for each section.
+      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
+      - Optimize the text for SEO considering the keyword: {keyword}.
       - Ensure that the generated post is in Brazilian Portuguese.
       - All text, including section titles and content, must be in Portuguese (Brazil).
-      - Write in the first person, as if Rafael Carvalho is speaking directly to the reader.
-      - Use HTML formatting for titles, paragraphs, lists, and links.
-      - Never write fewer than the recommended number of words for each section or subsection. You can write more words than recommended, never fewer words.
+      - Use internal links naturally throughout your text to improve structure and relevance.
+      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
+      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
+      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
+      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
+      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
+      - For phrases, messages and quotes: use html italic quotes.
+      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
   expected_output: >
     Content created for part 2 according to the report recommendations and optimized for SEO.
+
+
+rewrite_article_third_part_task:
+  description: >
+    Consider the report's recommendations for text quality and word count for each section.
+    Write the content of part 3 of the article recommendation report.
+    Focus keyword: {keyword}.
+
+    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
+    Remember to produce original and relevant content.
+    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
+    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    
+    Instructions for writing:
+      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
+      - Pay attention to the recommended number of words for each section.
+      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
+      - Optimize the text for SEO considering the keyword: {keyword}.
+      - Ensure that the generated post is in Brazilian Portuguese.
+      - All text, including section titles and content, must be in Portuguese (Brazil).
+      - Use internal links naturally throughout your text to improve structure and relevance.
+      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
+      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
+      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
+      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
+      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
+      - For phrases, messages and quotes: use html italic quotes.
+      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
+  expected_output: >
+    Content created for part 3 according to the report recommendations and optimized for SEO.
+
+
+rewrite_article_fourth_part_task:
+  description: >
+    Consider the report's recommendations for text quality and word count for each section.
+    Write the content of part 4 of the article recommendation report.
+    Focus keyword: {keyword}.
+
+    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
+    Remember to produce original and relevant content.
+    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
+    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    
+    Add a CTA at the very end of the article inviting readers to a free training.
+    Create unique CTAs in Portuguese inspired by the following text, ensuring the link is embedded in an action, not as plain text:
+    "Em um treinamento EXCLUSIVO e GRATUITO de 15 minutos, vou te ajudar a construir e/ou transformar seus resultados na internet. [Acesse aqui](https://rafaelcarvalho.tv/treinamento-mcc)".
+    Do not use "Call to Action" as a section title.
+    
+    Instructions for writing:
+      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
+      - Pay attention to the recommended number of words for each section.
+      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
+      - Optimize the text for SEO considering the keyword: {keyword}.
+      - Ensure that the generated post is in Brazilian Portuguese.
+      - All text, including section titles and content, must be in Portuguese (Brazil).
+      - Use internal links naturally throughout your text to improve structure and relevance.
+      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
+      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
+      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
+      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
+      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
+      - For phrases, messages and quotes: use html italic quotes.
+      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
+  expected_output: >
+    Content created for part 4 according to the report recommendations and optimized for SEO.
+
+
+put_post_in_pending_status_task:
+  description: >
+    Update the status of the post identified by {post_id} hosted at {blog_url}, to "pending".
+  expected_output: >
+    A string informing that the post status were changed.
+
+
+update_improved_post_content_task:
+  description: >
+    Your goal is update the content of a post hosted at {blog_url} and identified by the id {post_id} with the new and improved content from the database at {database_path} and table {table_name}.
+    To do that you should the provided tool. Don't try to figure out how to retrieve the post content before updating it. Just use the tool with the data below:
+      - post_id = {post_id}
+      - database_path = {database_path}
+      - table_name = {table_name}
+  expected_output: >
+    A string informing that the post content was updated.
+
+mark_post_was_improved_task:
+  description: >
+    Mark that a post with id {post_id} was improved.
+    To do that assume:
+      - post_id = {post_id}
+      - database_path = {database_path}
+      - table_name = {table_name}
+  expected_output: >
+    A string informing that the post was masked.
