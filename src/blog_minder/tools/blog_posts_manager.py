@@ -180,6 +180,7 @@ class FetchPostsSaveToDatabase(BaseTool):
                 title TEXT,
                 keyword TEXT,            
                 original_content TEXT,
+                new_content TEXT,
                 clicks INTEGER,
                 impressions INTEGER,
                 ctr REAL,

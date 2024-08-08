@@ -166,6 +166,7 @@ get_posts_metrics_task:
   expected_output: >
     Metrics about blog posts updated.
 
+
 fetch_all_posts_save_to_database_task:
   description: >
     Fetch all blog posts from the blog {blog_url}.
@@ -173,8 +174,71 @@ fetch_all_posts_save_to_database_task:
   expected_output: >
     Posts saved.
 
+
 mark_posts_to_be_improved_task:
   description: >
     Analyze the posts stored in database {database_path} and table {table_name} and mark the ones that need improvement.
   expected_output: >
     Posts tagged for improvement.
+
+
+analyze_article_task:
+  description: >
+    Analyze the article at {post_link} and identify areas for improvement.
+  expected_output: >
+    A detailed report with areas that need improvement.
+
+
+recommend_improvements_task:
+  description: >
+    Provide detailed report of recommendations for improvements based on your analysis of the article, considering the keyword: {keyword}.
+    Provide a new section organization for the article, including topics and subtopics.
+    For each topic and subtopic, include a brief statement of what should be written and a suggested word length.
+    The new structure should be richer in content, expand the section structure, and improve SEO for the given keyword.
+    In your final recommendation report, separate the new article structure into 4 parts, you can call them part 1, part 2, part 3 and part 4. This division into parts will be used to delegate the writing of each of the parts to different writers.
+  expected_output: >
+    A report of detailed recommendations for improving the article.
+
+
+append_article_content_task:
+  description: >
+    You will receive the content created for a blog post and you must add this content to the post. 
+    To do this consider:
+      - article_content: the content you received;
+      - post_id: {post_id}
+      - database_path: {database_path}
+      - table_name: {table_name}
+  expected_output: >
+    The content appended to the post.
+
+
+rewrite_article_first_part_task:
+  description: >
+    Write the content of part 1 of the article recommendation report.
+    Consider the report's recommendations for text quality and word count for each section.
+    Optimize the text for SEO considering the keyword {keyword}.
+
+    **Additional instructions for writing the article**:
+      - Ensure that the generated post is in Brazilian Portuguese.
+      - All text, including section titles and content, must be in Portuguese (Brazil).
+      - Write in the first person, as if Rafael Carvalho is speaking directly to the reader.
+      - Use HTML formatting for titles, paragraphs, lists, and links.
+      - Never write fewer than the recommended number of words for each section or subsection. You can write more words than recommended, never fewer words.
+  expected_output: >
+    Content created for part 1 according to the report recommendations and optimized for SEO.
+
+
+rewrite_article_second_part_task:
+  description: >
+    Write the content of part 2 of the article recommendation report.
+    Consider the report's recommendations for text quality and word count for each section.
+    Optimize the text for SEO considering the keyword {keyword}.
+
+    **Additional instructions for writing the article**:
+      - Ensure that the generated post is in Brazilian Portuguese.
+      - All text, including section titles and content, must be in Portuguese (Brazil).
+      - Write in the first person, as if Rafael Carvalho is speaking directly to the reader.
+      - Use HTML formatting for titles, paragraphs, lists, and links.
+      - Never write fewer than the recommended number of words for each section or subsection. You can write more words than recommended, never fewer words.
+  expected_output: >
+    Content created for part 2 according to the report recommendations and optimized for SEO.

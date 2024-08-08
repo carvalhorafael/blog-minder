@@ -6,6 +6,7 @@ import sqlite3
 from blog_minder.content_integrity_crew import ContentIntegrityCrew
 from blog_minder.content_consolidation_crew import ContentConsolidationCrew
 from blog_minder.content_performance_analyzer_crew import ContentPerformanceAnalyzerCrew
+from blog_minder.content_enhancement_crew import ContentEnhancementCrew
 
 
 
@@ -23,6 +24,7 @@ def run():
     duplicate_and_similar_posts_path = os.environ["LIST_OF_DUPLICATE_POSTS_PATH"]
     blog_url = os.environ["BLOG_URL"]
     posts_to_improve_database_path = os.environ["BLOG_POSTS_TO_IMPROVE_DB_PATH"]
+    posts_to_improve_table_name = 'posts_to_improve'
 
     print('\n\nStarting Blog Minder...')
 
@@ -66,16 +68,49 @@ def run():
     #     print('\nIt is not possible to consolidate posts.')
 
     
+    # #
+    # #  Download, analyze and mark posts to be improved
+    # # 
+    # print('\n\nAnalyzing and marking posts for improvement...')
+    # ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
+    #     'blog_url': blog_url,
+    #     'database_path': posts_to_improve_database_path,
+    #     'table_name': posts_to_improve_table_name
+    # })
+
+    
     #
-    #  Download, analyze and mark posts to be improved
+    #  Starts Content Enhancement Crew for each post that needs to be improved
     # 
-    print('\n\nAnalyzing and marking posts for improvement...')
-    ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
+    # conn = sqlite3.connect(posts_to_improve_database_path)
+    # conn.row_factory = sqlite3.Row  # This allows us to access columns by name
+    # cur = conn.cursor()
+    # cur.execute(f'''
+    #     SELECT * FROM {posts_to_improve_table_name}
+    #     WHERE to_improve = 1
+    # ''')
+    # posts = cur.fetchall()
+    # conn.close()
+    # for post in posts:
+    #     ContentEnhancementCrew().crew().kickoff(inputs={
+    #         'blog_url': blog_url,
+    #         'post_id': post['id'],
+    #         'link': post['link'],
+    #         'keyword': post['keyword']
+    #     })
+
+
+    inputs = {
         'blog_url': blog_url,
         'database_path': posts_to_improve_database_path,
-        'table_name': 'posts_to_improve'
-    })
-
+        'table_name': posts_to_improve_table_name,
+        'post_id': 6470,
+        'post_link': 'https://rafaelcarvalho.tv/profissoes-do-futuro-o-que-esperar-para-2030/',
+        'keyword': 'profissoes do futuro o que esperar para 2030'
+    }
+    content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
+    content_enhancement_crew.crew().kickoff(inputs=inputs)
+    
 
 def train():
     """
