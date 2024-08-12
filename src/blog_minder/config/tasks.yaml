@@ -184,20 +184,26 @@ mark_posts_to_be_improved_task:
 
 analyze_article_task:
   description: >
-    Analyze the article at {post_link} and identify areas for improvement.
+    Analise o artigo em {post_link} e identifique pontos de melhoria.
   expected_output: >
-    A detailed report with areas that need improvement.
+    Um relatório detalhado com os pontos que precisam ser melhorados no artigo.
 
 
 recommend_improvements_task:
   description: >
-    Provide detailed report of recommendations for improvements based on your analysis of the article, considering the keyword: {keyword}.
-    Provide a new section organization for the article, including topics and subtopics.
-    For each topic and subtopic, include a brief statement of what should be written and a suggested word length.
-    The new structure should be richer in content, expand the section structure, and improve SEO for the given keyword.
-    In your final recommendation report, separate the new article structure into 4 parts, you can call them part 1, part 2, part 3 and part 4. This division into parts will be used to delegate the writing of each of the parts to different writers.
+    Considere o relatório que recebeu com pontos de melhoria para o artigo {post_link}.
+    A partir do relatório recebido e da sua análise do artigo, crie nova estrutura de conteúdo para artigo.
+    Essa nova estrutura será utilizada como instrução para redatores escreverem um novo artigo, muito melhor do que o analisado.
+    
+    A nova estrutura deve conter a organização do artigo em seções e sub-seções.
+    Para cada seção, ou sub-seção, inclua instruções detalhadas para os redadores seguirem no momento da escrita, como:
+      - número mínimo de palavras
+      - o que deve ser melhorado (a partir do relatório que recebeu com recomendações de melhoria do artigo)
+      - otimização de SEO para a palavra-chave: {keyword}
+    
+    Separe seu relatório final em 4 partes, porque eles serão divididos para 4 redatores diferentes.
   expected_output: >
-    A report of detailed recommendations for improving the article.
+    Um relatório completo com as instruções de escrita para o artigo, separado em 4 partes para ser distribuído entre os redatores.
 
 
 append_article_content_task:
