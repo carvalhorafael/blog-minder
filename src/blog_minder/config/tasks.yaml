@@ -192,16 +192,23 @@ analyze_article_task:
 recommend_improvements_task:
   description: >
     Considere o relatório que recebeu com pontos de melhoria para o artigo {post_link}.
-    A partir do relatório recebido e da sua análise do artigo, crie nova estrutura de conteúdo para artigo.
-    Essa nova estrutura será utilizada como instrução para redatores escreverem um novo artigo, muito melhor do que o analisado.
+    Seu objetivo é criar uma nova estrutura de conteúdo para o tema abordado no artigo.
+    Na nova estrutura Você deve expandir e detalhar mais os assuntos abordados no artigo de referência.
+    Essa nova estrutura será utilizada como instrução para redatores escreverem um novo artigo, melhor e mais completo que o original.
     
     A nova estrutura deve conter a organização do artigo em seções e sub-seções.
     Para cada seção, ou sub-seção, inclua instruções detalhadas para os redadores seguirem no momento da escrita, como:
-      - número mínimo de palavras
+      - títulos das seções e sub-seções
+      - número mínimo de palavras para cada seção e sub-seção
       - o que deve ser melhorado (a partir do relatório que recebeu com recomendações de melhoria do artigo)
       - otimização de SEO para a palavra-chave: {keyword}
     
-    Separe seu relatório final em 4 partes, porque eles serão divididos para 4 redatores diferentes.
+    Separe seu relatório final em 4 partes, que serão entregues para 4 redatores diferentes escreverem.
+    Essas 4 partes não devem ter títulos, elas não fazem parte do artigo que será escrito.
+    Elas devem apenas marcar a separação da estrutura de conteúdo do artigo para a divisão entre os redatores.
+
+    Não inclua seções que não sejam relacionadas a estrutura de conteúdo em si.
+    Seções como "Call to Action", "Links Internos e Externos", "Imagens" não devem ser inseridas no relatório, pois não fazem parte do conteúdo do artigo que será escrito.
   expected_output: >
     Um relatório completo com as instruções de escrita para o artigo, separado em 4 partes para ser distribuído entre os redatores.
 
