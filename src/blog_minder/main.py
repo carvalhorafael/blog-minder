@@ -108,6 +108,7 @@ def run():
             'database_path': posts_to_improve_database_path,
             'table_name': posts_to_improve_table_name,
             'post_id': 12958,
+            'post_title': 'Mensagens de aniversário para esposa: surpreenda-a!',
             'post_link': 'https://rafaelcarvalho.tv/mensagens-de-aniversario-para-esposa/',
             'keyword': 'mensagens de aniversário para esposa'
         }    

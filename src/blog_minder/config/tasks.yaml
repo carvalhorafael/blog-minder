@@ -191,7 +191,7 @@ analyze_article_task:
 
 recommend_improvements_task:
   description: >
-    Considere o relatório que recebeu com pontos de melhoria para o artigo {post_link}.
+    Considere o relatório que recebeu com pontos de melhoria para o artigo {post_link} com título {post_title}.
     Seu objetivo é criar uma nova estrutura de conteúdo para o tema abordado no artigo.
     Na nova estrutura Você deve expandir e detalhar mais os assuntos abordados no artigo de referência.
     Essa nova estrutura será utilizada como instrução para redatores escreverem um novo artigo, melhor e mais completo que o original.
@@ -227,97 +227,119 @@ append_article_content_task:
 
 rewrite_article_first_part_task:
   description: >
-    Consider the report's recommendations for text quality and word count for each section.
-    Write the content of part 1 of the article recommendation report.
-    Focus keyword: {keyword}.
+    Considere o relatório que recebeu com a estrutura e instruções para escrita do artigo com título "{post_title}".
+    Seu objetivo é escrever o conteúdo para as seções e sub-seções que estão na Parte 1 do relatório.
+    O conteúdo deve ser otimizado para SEO considerando a palavra-chave: "{keyword}".
 
-    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
-    Remember to produce original and relevant content.
-    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
-    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    O principal objetivo desse conteúdo é ficar bem posicionado no Google.
+    Faça sua pesquisa de palavras-chave e inclua a palavra-chave foco do artigo ({keyword}) estrategicamente ao longo do texto que produzir.
     
-    Instructions for writing:
-      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
-      - Pay attention to the recommended number of words for each section.
-      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
-      - Optimize the text for SEO considering the keyword: {keyword}.
-      - Ensure that the generated post is in Brazilian Portuguese.
-      - All text, including section titles and content, must be in Portuguese (Brazil).
-      - Use internal links naturally throughout your text to improve structure and relevance.
-      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
-      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
-      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
-      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
-      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
-      - For phrases, messages and quotes: use html italic quotes.
-      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
+    Produza um conteúdo original e relevante.
+    Tenha certeza que o texto produzido não contém plágio e proporciona uma boa e engajante experiência de leitura.
+    Esteja atento à exatidão e precisão das informações, mantendo um tom confiável e autoritário.
+    
+    Lembre que você está escrevendo apenas a Parte 1 do artigo.
+    Não se preocupe em concluir o assunto, escreva apenas seguindo as instruções da Parte 1 do relatório com a estrutura do artigo.
+    
+    Instruções para a escrita:
+    - Escreva na primeira pessoa.
+    - Escreva o artigo de forma criativa e em linguagem pessoal para se conectar melhor com o público-alvo. 
+    - Preste atenção ao número recomendado de palavras para cada seção.
+    - JAMAIS escreva menos palavras do que o recomendado em cada seção ou sub-seção.
+    - Use links internos naturalmente em todo o seu texto para melhorar a estrutura e a relevância.
+    - Use listas não ordenadas (<ul>), citações (<quote>), tabelas (<table>) e outras formatações HTML para enriquecer seu conteúdo.
+    - Sempre formate sua resposta final em HTML para títulos, parágrafos, links, listas, citações, tabelas e muito mais.
+    - NÃO escreva itens de estrutura em sua resposta. Use apenas a estrutura, mas NÃO escreva coisas como: CTA, Seção 1:, Seção 2:, Seção 3:, Seção 4:, Seção 5:, Tabela.
+    - NÃO escreva tags HTML, doctype, Body, Title ou head.
+    - Para artigos que indiquem sites ou IA, certifique-se de fornecer sites reais. Por exemplo: "recomendação de IA para escrita". Neste caso, dê-me "chatgpt" e outros como resposta. Sempre que possível, indique meu site RafaelCarvalho.tv.
+    - Para frases, mensagens e citações: use aspas em itálico html.
+    - Para mensagens, frases, nomes e citações: escreva sempre o número (ou mais) de mensagens, frases, nomes e citações no título do artigo.
+    - Utilize o marcador html h2 para título das seções e o h3 para título das sub-seções.
+    - Inicie seu texto com um parágrafo, omitindo o título da primeira seção.
   expected_output: >
-    Content created for part 1 according to the report recommendations and optimized for SEO.
+    Conteúdo criado para as seções e sub-seções da Parte 1 da estrutura do artigo.
 
 
 rewrite_article_second_part_task:
   description: >
-    Consider the report's recommendations for text quality and word count for each section.
-    Write the content of part 2 of the article recommendation report.
-    Focus keyword: {keyword}.
+    Considere o relatório que recebeu com a estrutura e instruções para escrita do artigo com título "{post_title}".
+    Seu objetivo é escrever o conteúdo para as seções e sub-seções que estão na Parte 2 do relatório.
+    O conteúdo deve ser otimizado para SEO considerando a palavra-chave: "{keyword}".
 
-    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
-    Remember to produce original and relevant content.
-    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
-    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    O principal objetivo desse conteúdo é ficar bem posicionado no Google.
+    Faça sua pesquisa de palavras-chave e inclua a palavra-chave foco do artigo ({keyword}) estrategicamente ao longo do texto que produzir.
     
-    Add a CTA within a new section called "Oportunidade única".
-    Create unique CTAs in Portuguese inspired by the following text, ensuring the link is embedded in an action, not as plain text:
-    "Em um treinamento EXCLUSIVO e GRATUITO de 15 minutos, vou te ajudar a construir e/ou transformar seus resultados na internet. [Acesse aqui](https://rafaelcarvalho.tv/treinamento-mcc)".
-    Do not use "Call to Action" as a section title.
+    Produza um conteúdo original e relevante.
+    Tenha certeza que o texto produzido não contém plágio e proporciona uma boa e engajante experiência de leitura.
+    Esteja atento à exatidão e precisão das informações, mantendo um tom confiável e autoritário.
+    
+    Lembre que você está escrevendo apenas a Parte 2 do artigo.
+    Não se preocupe em concluir o assunto, escreva apenas seguindo as instruções da Parte 2 do relatório com a estrutura do artigo.
+    
+    Adicione uma seção chamada "Quer ter resultados reais como Expert na Internet?" entre as seções do texto que produzir.
+    Dentro desta seção adicione um texto inspirado no bloco abaixo:
+    <bloco-para-inspirar>
+      Eu sei como é dedicar tanto tempo, energia e não ver o retorno que merece. Até parece que o mercado digital é INJUSTO!!!
 
-    Instructions for writing:
-      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
-      - Pay attention to the recommended number of words for each section.
-      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
-      - Optimize the text for SEO considering the keyword: {keyword}.
-      - Ensure that the generated post is in Brazilian Portuguese.
-      - All text, including section titles and content, must be in Portuguese (Brazil).
-      - Use internal links naturally throughout your text to improve structure and relevance.
-      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
-      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
-      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
-      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
-      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
-      - For phrases, messages and quotes: use html italic quotes.
-      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
+      Sabe o que está acontecendo? Você está se deixando levar por promessas ilusórias ou até mesmo  cometendo o que eu chamo de "erros invisíveis" nas suas estratégias digitais.
+
+      Quer descobrir quais são esses erros e como corrigi-los rapidamente? Em um treinamento exclusivo e gratuito de 15 minutos, vou te mostrar quais são esses erros e te ajudar a construir e/ou transformar seus resultados na internet!!
+
+      [Clique aqui e acesse imediatamente esse treinamento exclusivo.](https://rafaelcarvalho.tv/treinamento-mcc/?utm_source=blog&utm_medium=cta_meio_post&utm_campaign=organico_blog).
+    </bloco-para-inspirar>
+    O conteúdo dentro de <bloco-para-inspirar> deve ser usado como inspiração.
+    Você deve criar algo novo a partir desse conteúdo para adicionar nesta nova seção.
+    
+    Instruções para a escrita:
+      - Escreva na primeira pessoa.
+      - Escreva o artigo de forma criativa e em linguagem pessoal para se conectar melhor com o público-alvo. 
+      - Preste atenção ao número recomendado de palavras para cada seção.
+      - JAMAIS escreva menos palavras do que o recomendado em cada seção ou sub-seção.
+      - Use links internos naturalmente em todo o seu texto para melhorar a estrutura e a relevância.
+      - Use listas não ordenadas (<ul>), citações (<quote>), tabelas (<table>) e outras formatações HTML para enriquecer seu conteúdo.
+      - Sempre formate sua resposta final em HTML para títulos, parágrafos, links, listas, citações, tabelas e muito mais.
+      - NÃO escreva itens de estrutura em sua resposta. Use apenas a estrutura, mas NÃO escreva coisas como: CTA, Seção 1:, Seção 2:, Seção 3:, Seção 4:, Seção 5:, Tabela.
+      - NÃO escreva tags HTML, doctype, Body, Title ou head.
+      - Para artigos que indiquem sites ou IA, certifique-se de fornecer sites reais. Por exemplo: "recomendação de IA para escrita". Neste caso, dê-me "chatgpt" e outros como resposta. Sempre que possível, indique meu site RafaelCarvalho.tv.
+      - Para frases, mensagens e citações: use aspas em itálico html.
+      - Para mensagens, frases, nomes e citações: escreva sempre o número (ou mais) de mensagens, frases, nomes e citações no título do artigo.
+      - Utilize o marcador html h2 para título das seções e o h3 para título das sub-seções.
   expected_output: >
-    Content created for part 2 according to the report recommendations and optimized for SEO.
+    Conteúdo criado para as seções e sub-seções da Parte 2 da estrutura do artigo.
 
 
 rewrite_article_third_part_task:
   description: >
-    Consider the report's recommendations for text quality and word count for each section.
-    Write the content of part 3 of the article recommendation report.
-    Focus keyword: {keyword}.
+    Considere o relatório que recebeu com a estrutura e instruções para escrita do artigo com título "{post_title}".
+    Seu objetivo é escrever o conteúdo para as seções e sub-seções que estão na Parte 3 do relatório.
+    O conteúdo deve ser otimizado para SEO considerando a palavra-chave: "{keyword}".
 
-    The main goal of this content is to rank high on Google, so make sure you do your keyword research and include your focus keyword strategically throughout the text. 
-    Remember to produce original and relevant content.
-    Make sure the text is plagiarism-free and provides an enjoyable and engaging reading experience.
-    Be mindful of the accuracy and precision of the information, while maintaining a trustworthy and authoritative tone.
+    O principal objetivo desse conteúdo é ficar bem posicionado no Google.
+    Faça sua pesquisa de palavras-chave e inclua a palavra-chave foco do artigo ({keyword}) estrategicamente ao longo do texto que produzir.
     
-    Instructions for writing:
-      - Write the article creatively and in personal language to better connect with the target audience. Write in the first person.
-      - Pay attention to the recommended number of words for each section.
-      - You can exceed the recommended word count for each section, but you should never write fewer words than recommended.
-      - Optimize the text for SEO considering the keyword: {keyword}.
-      - Ensure that the generated post is in Brazilian Portuguese.
-      - All text, including section titles and content, must be in Portuguese (Brazil).
-      - Use internal links naturally throughout your text to improve structure and relevance.
-      - Use unordered lists (<ul>), quotes (<quote>), tables (<table>), and other HTML formatting to enrich your content.
-      - Always format your final response in HTML for headings, paragraphs, links, lists, quotes, tables, and more.
-      - DO NOT write structure items in your answer. Use only the structure, but DO NOT write things like: CTA, Section 1:, Section 2:, Section 3:, Section 4:, Section 5:, Table.
-      - DO NOT write HTML tags, doctype, Body, Title, or head tags.
-      - For articles that indicate websites or AI, make sure you provide real websites. For example: "AI recommendation for writing". In this case, give me "chatgpt" and others as an answer. Whenever possible, indicate my website RafaelCarvalho.tv.
-      - For phrases, messages and quotes: use html italic quotes.
-      - For messages, phrases, names and quotes: always write the number (or more) of messages, phrases, names and quotes in the article title.      
+    Produza um conteúdo original e relevante.
+    Tenha certeza que o texto produzido não contém plágio e proporciona uma boa e engajante experiência de leitura.
+    Esteja atento à exatidão e precisão das informações, mantendo um tom confiável e autoritário.
+    
+    Lembre que você está escrevendo apenas a Parte 3 do artigo.
+    Não se preocupe em concluir o assunto, escreva apenas seguindo as instruções da Parte 3 do relatório com a estrutura do artigo.
+
+    Instruções para a escrita:
+      - Escreva na primeira pessoa.
+      - Escreva o artigo de forma criativa e em linguagem pessoal para se conectar melhor com o público-alvo. 
+      - Preste atenção ao número recomendado de palavras para cada seção.
+      - JAMAIS escreva menos palavras do que o recomendado em cada seção ou sub-seção.
+      - Use links internos naturalmente em todo o seu texto para melhorar a estrutura e a relevância.
+      - Use listas não ordenadas (<ul>), citações (<quote>), tabelas (<table>) e outras formatações HTML para enriquecer seu conteúdo.
+      - Sempre formate sua resposta final em HTML para títulos, parágrafos, links, listas, citações, tabelas e muito mais.
+      - NÃO escreva itens de estrutura em sua resposta. Use apenas a estrutura, mas NÃO escreva coisas como: CTA, Seção 1:, Seção 2:, Seção 3:, Seção 4:, Seção 5:, Tabela.
+      - NÃO escreva tags HTML, doctype, Body, Title ou head.
+      - Para artigos que indiquem sites ou IA, certifique-se de fornecer sites reais. Por exemplo: "recomendação de IA para escrita". Neste caso, dê-me "chatgpt" e outros como resposta. Sempre que possível, indique meu site RafaelCarvalho.tv.
+      - Para frases, mensagens e citações: use aspas em itálico html.
+      - Para mensagens, frases, nomes e citações: escreva sempre o número (ou mais) de mensagens, frases, nomes e citações no título do artigo.
+      - Utilize o marcador html h2 para título das seções e o h3 para título das sub-seções.
   expected_output: >
-    Content created for part 3 according to the report recommendations and optimized for SEO.
+    Conteúdo criado para as seções e sub-seções da Parte 3 da estrutura do artigo.
 
 
 rewrite_article_fourth_part_task:
