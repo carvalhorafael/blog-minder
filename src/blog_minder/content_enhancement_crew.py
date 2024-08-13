@@ -21,7 +21,7 @@ gemma2 = Ollama(
 # Higher values like 0.8 will make the output more random, 
 # while lower values like 0.2 will make it more focused and deterministic.
 gpt_4o = ChatOpenAI(
-	model = 'gpt-4o',
+	model = 'gpt-4o-mini',
 	temperature = 0.8)
 
 
