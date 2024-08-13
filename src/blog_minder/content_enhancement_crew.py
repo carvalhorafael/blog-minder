@@ -106,28 +106,28 @@ class ContentEnhancementCrew():
         )
     
     @task
-    # def rewrite_article_first_part_task(self) -> Task:
-    #     post_id = self.inputs['post_id']
-    #     database_path = self.inputs['database_path']
-    #     table_name = self.inputs['table_name']
-    #     return Task(
-    #         config=self.tasks_config['rewrite_article_first_part_task'],
-    #         agent=self.content_writer(),
-    #         context=[self.recommend_improvements_task()],
-    #         callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, True)
-    #     )
+    def rewrite_article_first_part_task(self) -> Task:
+        post_id = self.inputs['post_id']
+        database_path = self.inputs['database_path']
+        table_name = self.inputs['table_name']
+        return Task(
+            config=self.tasks_config['rewrite_article_first_part_task'],
+            agent=self.content_writer(),
+            context=[self.recommend_improvements_task()],
+            callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, True)
+        )
     
-    # @task
-    # def rewrite_article_second_part_task(self) -> Task:
-    #     post_id = self.inputs['post_id']
-    #     database_path = self.inputs['database_path']
-    #     table_name = self.inputs['table_name']
-    #     return Task(
-    #         config=self.tasks_config['rewrite_article_second_part_task'],
-    #         agent=self.content_writer(),
-    #         context=[self.recommend_improvements_task()],
-    #         callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, False)
-    #     )
+    @task
+    def rewrite_article_second_part_task(self) -> Task:
+        post_id = self.inputs['post_id']
+        database_path = self.inputs['database_path']
+        table_name = self.inputs['table_name']
+        return Task(
+            config=self.tasks_config['rewrite_article_second_part_task'],
+            agent=self.content_writer(),
+            context=[self.recommend_improvements_task()],
+            callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, False)
+        )
     
     @task
     def rewrite_article_third_part_task(self) -> Task:
@@ -141,42 +141,42 @@ class ContentEnhancementCrew():
             callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, False)
         )
     
-    # @task
-    # def rewrite_article_fourth_part_task(self) -> Task:
-    #     post_id = self.inputs['post_id']
-    #     database_path = self.inputs['database_path']
-    #     table_name = self.inputs['table_name']
-    #     return Task(
-    #         config=self.tasks_config['rewrite_article_fourth_part_task'],
-    #         agent=self.content_writer(),
-    #         context=[self.recommend_improvements_task()],
-    #         callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, False)
-    #     )
+    @task
+    def rewrite_article_fourth_part_task(self) -> Task:
+        post_id = self.inputs['post_id']
+        database_path = self.inputs['database_path']
+        table_name = self.inputs['table_name']
+        return Task(
+            config=self.tasks_config['rewrite_article_fourth_part_task'],
+            agent=self.content_writer(),
+            context=[self.recommend_improvements_task()],
+            callback=self.create_callback(append_post_content_callback, post_id, database_path, table_name, False)
+        )
 
 
-    # @task
-    # def put_post_in_pending_status_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config['put_post_in_pending_status_task'],
-    #         agent=self.blog_editor(),
-    #         tools=[UpdatePostStatus()]
-    #     )
+    @task
+    def put_post_in_pending_status_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['put_post_in_pending_status_task'],
+            agent=self.blog_editor(),
+            tools=[UpdatePostStatus()]
+        )
 
-    # @task
-    # def update_improved_post_content_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config['update_improved_post_content_task'],
-    #         agent=self.blog_editor(),
-    #         tools=[UpdatePostContentFromDatabase()]
-    #     )    
+    @task
+    def update_improved_post_content_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['update_improved_post_content_task'],
+            agent=self.blog_editor(),
+            tools=[UpdatePostContentFromDatabase()]
+        )    
     
-    # @task
-    # def mark_post_was_improved_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config['mark_post_was_improved_task'],
-    #         agent=self.blog_editor(),
-    #         tools=[MarkPostWasImproved()]
-    #     )    
+    @task
+    def mark_post_was_improved_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['mark_post_was_improved_task'],
+            agent=self.blog_editor(),
+            tools=[MarkPostWasImproved()]
+        )    
     
     # Wraps the callback to pass the duplicate_hash as parameter
     def create_callback(self, append_post_content_callback, post_id, database_path, table_name, reset):

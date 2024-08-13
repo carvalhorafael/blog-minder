@@ -28,93 +28,81 @@ def run():
     print('\n\nStarting Blog Minder...')
 
 
-    # #
-    # # Check if is necessary put Content Integrity Crew to work
-    # #
-    # print('\n\nChecking if is necessary to analyze the integrity of posts...')
-    # if not find_files('duplicate_and_similar', 'tmp'):
-    #     print('Yes. Its necessary. Putting Content Integrity Crew to work.')
-    #     ContentIntegrityCrew().crew().kickoff(inputs={
-    #         'blog_url': blog_url,
-    #         'blog_posts_file_path': blog_posts_csv_file_path,
-    #         'result_of_analysis_path': duplicate_and_similar_posts_path
-    #     })
-    # else:
-    #     print('It is not necessary to check the integrity of posts.')
+    #
+    # Check if is necessary put Content Integrity Crew to work
+    #
+    print('\n\nChecking if is necessary to analyze the integrity of posts...')
+    if not find_files('duplicate_and_similar', 'tmp'):
+        print('Yes. Its necessary. Putting Content Integrity Crew to work.')
+        ContentIntegrityCrew().crew().kickoff(inputs={
+            'blog_url': blog_url,
+            'blog_posts_file_path': blog_posts_csv_file_path,
+            'result_of_analysis_path': duplicate_and_similar_posts_path
+        })
+    else:
+        print('It is not necessary to check the integrity of posts.')
 
 
-    # #
-    # # Check if is necessary start Content Consolidation Crew avaliation
-    # #
-    # print('\n\nChecking if is possible to consolidate posts...')
-    # if os.path.isfile(duplicate_and_similar_posts_path):    
-    #     with open(duplicate_and_similar_posts_path, 'r') as yaml_file:
-    #         duplicate_and_similar_posts = yaml.safe_load(yaml_file)
+    #
+    # Check if is necessary start Content Consolidation Crew avaliation
+    #
+    print('\n\nChecking if is possible to consolidate posts...')
+    if os.path.isfile(duplicate_and_similar_posts_path):    
+        with open(duplicate_and_similar_posts_path, 'r') as yaml_file:
+            duplicate_and_similar_posts = yaml.safe_load(yaml_file)
 
-    #     print('\nChecking DUPLICATE posts to consolidate...')
-    #     for duplicate_and_similar_post in duplicate_and_similar_posts['duplicates']:
+        print('\nChecking DUPLICATE posts to consolidate...')
+        for duplicate_and_similar_post in duplicate_and_similar_posts['duplicates']:
             
-    #         # Check is is necessary put Content Consolidation Crew to work
-    #         duplicate_hash = duplicate_and_similar_post['duplicate_hash']
-    #         if not find_files(f'{duplicate_hash}_winner_new', 'tmp/posts'):
-    #             print(f'\nPutting Content Consolidation Crew to work on: {duplicate_hash}\n\n')
-    #             duplicate_and_similar_post['blog_url'] = blog_url
-    #             content_consolidation_crew = ContentConsolidationCrew(inputs=duplicate_and_similar_post)
-    #             content_consolidation_crew.crew().kickoff(inputs=duplicate_and_similar_post)
-    #         else:
-    #             print(f'Duplicate {duplicate_hash} has already been consolidated.')
-    # else:
-    #     print('\nIt is not possible to consolidate posts.')
+            # Check is is necessary put Content Consolidation Crew to work
+            duplicate_hash = duplicate_and_similar_post['duplicate_hash']
+            if not find_files(f'{duplicate_hash}_winner_new', 'tmp/posts'):
+                print(f'\nPutting Content Consolidation Crew to work on: {duplicate_hash}\n\n')
+                duplicate_and_similar_post['blog_url'] = blog_url
+                content_consolidation_crew = ContentConsolidationCrew(inputs=duplicate_and_similar_post)
+                content_consolidation_crew.crew().kickoff(inputs=duplicate_and_similar_post)
+            else:
+                print(f'Duplicate {duplicate_hash} has already been consolidated.')
+    else:
+        print('\nIt is not possible to consolidate posts.')
 
     
-    # #
-    # #  Download, analyze and mark posts to be improved
-    # # 
-    # print('\n\nAnalyzing and marking posts for improvement...')
-    # ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
-    #     'blog_url': blog_url,
-    #     'database_path': posts_to_improve_database_path,
-    #     'table_name': posts_to_improve_table_name
-    # })
+    #
+    #  Download, analyze and mark posts to be improved
+    # 
+    print('\n\nAnalyzing and marking posts for improvement...')
+    ContentPerformanceAnalyzerCrew().crew().kickoff(inputs={
+        'blog_url': blog_url,
+        'database_path': posts_to_improve_database_path,
+        'table_name': posts_to_improve_table_name
+    })
 
     
-    # #
-    # #  Starts Content Enhancement Crew for each post that needs to be improved
-    # # 
-    # conn = sqlite3.connect(posts_to_improve_database_path)
-    # conn.row_factory = sqlite3.Row  # This allows us to access columns by name
-    # cur = conn.cursor()
-    # cur.execute(f'''
-    #     SELECT * FROM {posts_to_improve_table_name}
-    #     WHERE to_improve = 1
-    # ''')
-    # posts = cur.fetchall()
-    # conn.close()
-    # for post in posts:
-    #     inputs = {
-    #         'blog_url': blog_url,
-    #         'database_path': posts_to_improve_database_path,
-    #         'table_name': posts_to_improve_table_name,
-    #         'post_id': post['id'],
-    #         'post_link': post['link'],
-    #         'keyword': post['keyword']
-    #     }    
-    #     content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
-    #     content_enhancement_crew.crew().kickoff(inputs=inputs)
-        
-
-    inputs = {
+    #
+    #  Starts Content Enhancement Crew for each post that needs to be improved
+    # 
+    conn = sqlite3.connect(posts_to_improve_database_path)
+    conn.row_factory = sqlite3.Row  # This allows us to access columns by name
+    cur = conn.cursor()
+    cur.execute(f'''
+        SELECT * FROM {posts_to_improve_table_name}
+        WHERE to_improve = 1
+    ''')
+    posts = cur.fetchall()
+    conn.close()
+    for post in posts:
+        inputs = {
             'blog_url': blog_url,
             'database_path': posts_to_improve_database_path,
             'table_name': posts_to_improve_table_name,
-            'post_id': 12958,
-            'post_title': 'Mensagens de aniversário para esposa: surpreenda-a!',
-            'post_link': 'https://rafaelcarvalho.tv/mensagens-de-aniversario-para-esposa/',
-            'keyword': 'mensagens de aniversário para esposa'
+            'post_id': post['id'],
+            'post_title': post['title'],
+            'post_link': post['link'],
+            'keyword': post['keyword']
         }    
-    content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
-    content_enhancement_crew.crew().kickoff(inputs=inputs)
-    
+        content_enhancement_crew = ContentEnhancementCrew(inputs=inputs)
+        content_enhancement_crew.crew().kickoff(inputs=inputs)
+            
 
 def train():
     """
